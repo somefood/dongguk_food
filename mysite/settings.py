@@ -54,6 +54,9 @@ MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
+# Debug Toolbar 용으로 추가
+INTERNAL_IPS = ('127.0.0.1')
+
 ROOT_URLCONF = 'mysite.urls'
 
 TEMPLATES = [
