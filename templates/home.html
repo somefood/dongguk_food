@@ -6,22 +6,11 @@
 
 {% if user.is_authenticated %}
     Hi {{ user.username }}!
-    <p><a href="{% url 'logout' %}">logout</a></p>
+    <p><a href="{% url 'accounts:signout' %}">logout</a></p>
 {% else %}
-    <h2>Login</h2>
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        <p>
-            <label for="id_username">Username:</label>
-            <input type="text" name="username">
-        </p>
-        <p>
-            <label for="id_password">Password:</label>
-            <input type="password" name="password">
-        </p>
-        <button type="submit">Login</button>
-    </form>
-    <a href="{% url 'login' %}">login</a>
+    <h2>동국대 맛집 탐방</h2>
+    <a href="{% url 'accounts:signin' %}">로그인</a>
+	<a href="{% url 'accounts:signup' %}">회원가입</a>
 {% endif %}
     <br>
     <a href="{% url 'food:index' %}">동국대 맛집 알려주기</a>

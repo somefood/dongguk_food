@@ -13,7 +13,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT_DIR = os.path.dirname(BASE_DIR)
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +26,7 @@ SECRET_KEY = 'fmu@j4pvgehq&k4+rhp^j&omc7%8xcoy04)opj(@fy+_i!81a0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*',]
 
 
 # Application definition
@@ -111,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko-kr'
 
 TIME_ZONE = 'Asia/Seoul'
 
@@ -125,12 +126,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+# 웹페이지에 사용할 정적파일의 최상위 URL 경로
 STATIC_URL = '/static/'
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
-# 어디서나 접근할 수 있게끔 하는거?
+# 정적파일이 위치한 경로들을 지정하는 설정 항목, 이 설정 통해서 앱 밑에 static 파일 만들고 그런듯 함
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "staticfiles"),
+    STATIC_DIR,
 ]
+
+# collectstatic 시 파일 위치
+STATIC_ROOT = os.path.join(BASE_DIR, '.static_root')
+
+MEDIA_URL='/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
 
 # 로그인 성공 시, 리다이렉트 url
 LOGIN_REDIRECT_URL = 'home'

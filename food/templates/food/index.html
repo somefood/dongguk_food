@@ -6,7 +6,7 @@
 {{ user.username }}님
 {% else %}
 Not logged in
-<a href="{% url 'login' %}">로그인</a>
+<a href="{% url 'accounts:signin' %}">로그인</a>
 {% endif %}
 
 <br>

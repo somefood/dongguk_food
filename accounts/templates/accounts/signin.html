@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<body>
+	{% if error %}
+	<p>{{ error }}</p>
+	{% endif %}
+
+	<form action="" method="POST">
+		{% csrf_token %}
+		<table>
+		{{ f.as_table }}
+		</table>
+		<input type="submit" value="로그인">
+	</form>
+	<a href="{% url 'accounts:signup' %}">회원가입</a>
+</body>
+</html>
+
