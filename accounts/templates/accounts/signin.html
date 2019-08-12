@@ -30,11 +30,11 @@
 				<p>지금 바로 회원가입하시고,<br>더 많은 정보를 만나보세요</p>
 			</div>
 			<p class="gubun"></p>
-			<a class="privatePolicy">개인정보처리방침</a>
+			<a href="{% url 'cs_service:index' %}" class="privatePolicy">개인정보처리방침</a>
 			<p class="userHR">|</p>
-			<a class="userRull">이용약관</a>
+			<a href="{% url 'cs_service:terms' %}"class="userRull">이용약관</a>
 			<p class="userHR">|</p>
-			<a class="voc">고객의 소리</a>
+			<a href="{% url 'cs_service:voice' %}"class="voc">고객의 소리</a>
 		</div>
 	</div>
 </form>

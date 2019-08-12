@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'accounts',
     'polls',
     'food',
+    'cs_service',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

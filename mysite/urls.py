@@ -19,6 +19,7 @@ from django.views.generic.base import TemplateView
 from django.conf import settings
 
 urlpatterns = [
+    path('cs_service', include('cs_service.urls')),
     path('food/', include('food.urls')),
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
