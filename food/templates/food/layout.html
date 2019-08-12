@@ -1,1 +1,12 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
+
+{% block content %}
+{% block user_check %}
+{% if user.is_authenticated %}
+{{ user.username }}님
+<a href="{% url 'accounts:signout' %}">로그아웃</a>
+{% else %}
+<a href="{% url 'accounts:signin' %}">로그인</a>
+{% endif %}
+{% endblock %}
+{% endblock %}

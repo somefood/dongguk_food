@@ -1,14 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}동국푸드{% endblock %}
 
 {% block content %}
-
 {% if user.is_authenticated %}
     Hi {{ user.username }}!
     <p><a href="{% url 'accounts:signout' %}">logout</a></p>
 {% else %}
-    <h2>동국대 맛집 탐방</h2>
     <a href="{% url 'accounts:signin' %}">로그인</a>
 	<a href="{% url 'accounts:signup' %}">회원가입</a>
 {% endif %}

@@ -4,4 +4,4 @@ from .models import Store
 
 def index(request):
     store = Store.objects.all()
-    return render(request, 'food/index.html', {'store': store})
+    return render(request, 'food/index.html', {'store': store })

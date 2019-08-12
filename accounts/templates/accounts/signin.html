@@ -1,22 +1,46 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
-</head>
-<body>
-	{% if error %}
-	<p>{{ error }}</p>
-	{% endif %}
+{% extends 'base.html' %}
 
-	<form action="" method="POST">
-		{% csrf_token %}
-		<table>
-		{{ f.as_table }}
-		</table>
-		<input type="submit" value="로그인">
-	</form>
-	<a href="{% url 'accounts:signup' %}">회원가입</a>
-</body>
-</html>
+{% block title %}로그인 {% endblock %}
+{% block main_logo %}{% endblock %}
+{% block content %}
 
+{% if error %}
+    <p>{{ error }}</p>
+{% endif %}
+
+<form action="" method="POST">
+{% csrf_token %}
+    <div class="wrap">
+		<h1><a href="{% url 'home' %}"><img src="/static/img/logo.png" class="mainLogo"></a></h1>
+<!--        <h1><img src="{{STATIC_URL}}images/logo.png" class="mainLogo"></h1>-->
+		<div class="loginB">
+			<form method="post" action="">
+			<div class="loginIDB">
+				{{ f.username }}
+			</div>
+			<div class="loginPWB">
+				{{ f.password }}
+			</div>
+			<button type="submit" class="sButton">로그인</button>
+			</form>
+			<a href="{% url 'accounts:signup' %}"class="createUser clearfix">회원가입</a>
+			<a class="idFine clearfix">아이디 찾기</a>
+			<a class="passwordFine clearfix">비밀번호 찾기</a>
+			<div class="createTool">
+				<p>지금 바로 회원가입하시고,<br>더 많은 정보를 만나보세요</p>
+			</div>
+			<p class="gubun"></p>
+			<a class="privatePolicy">개인정보처리방침</a>
+			<p class="userHR">|</p>
+			<a class="userRull">이용약관</a>
+			<p class="userHR">|</p>
+			<a class="voc">고객의 소리</a>
+		</div>
+	</div>
+</form>
+<!--{{ f.username }}-->
+<!--{{ f.as_p }}-->
+<!--<input type="submit" value="로그인">-->
+<!--<a href="{% url 'accounts:signup' %}">회원가입</a>-->
+
+{% endblock %}

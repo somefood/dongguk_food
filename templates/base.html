@@ -11,6 +11,10 @@
 </head>
 <body>
   <main>
+    {% block main_logo %}
+    <h1><a href="{% url 'home' %}"><img src="/static/img/logo.png" class="mainLogo" alt="동국푸드"></a></h1>
+    {% endblock %}
+
     {% block content %}
     {% endblock %}
   </main>
