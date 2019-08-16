@@ -1,11 +1,11 @@
 <div class="col-md-12">
     <div class="container">
         {% for list in board_list %}
-            {{ list.name }} <br>
+            <div class="list-group-item"><input type="checkbox" name={{list.name}} value={{list.name}}><a href="{% url 'board:board_detail' list.pk %}">{{ list.name }}</a></div>
         {% endfor %}
     </div>
 </div>
 
-<button type="button" class='btn btn-primary' onclick="location.href='{% url 'board:board_insert' %} '">
-    일정추가
+<button type="button" class='btn btn-primary' onclick="location.href='{% url 'board:board_insert' %}'">
+    게시글 추가
 </button>
