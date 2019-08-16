@@ -9,4 +9,7 @@ class UserBoard(models.Model):
     hits = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return '{} - {}'.format(self.name, self.subject)
+        return '유저:{}   제목:{}'.format(self.name, self.subject)
+
+    def board_save(self):
+        self.save()

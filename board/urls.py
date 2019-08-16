@@ -5,4 +5,5 @@ app_name = 'board'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('insert/', views.check_post, name='board_insert'),
 ]
