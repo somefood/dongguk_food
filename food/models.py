@@ -4,6 +4,7 @@ class Store(models.Model):
     name = models.CharField(max_length=50)
     location = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=30, blank=True)
+    description = models.TextField(verbose_name='des', null=True)
 
     def __str__(self):
         return self.name

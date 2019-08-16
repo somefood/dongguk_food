@@ -5,9 +5,16 @@
 {{ block.super }}
 {% endblock %}
 <br>
-{% for i in store %}
-<a href="{% url 'food:recom' i.pk %}">{{ i.name }}</a>
-{{ i.menu_set.all }}
+
+<h1>{{ store.name }}</h1>
+
+<h2> 설명 </h2>
+<h4>{{ store.description }}</h4>
+
+<br>
+{% for j in store.menu_set.all %}
+{{ j.menu }}
 <br>
 {% endfor %}
+
 {% endblock %}

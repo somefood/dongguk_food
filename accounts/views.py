@@ -51,7 +51,7 @@ def signup(request):  # 역시 GET/POST 방식을 사용하여 구현한다.
                 new_user.first_name = form.cleaned_data['first_name']
                 # 나머지 입력하지 못한 last_name과, first_name은 따로 지정해준다.
                 new_user.save()
-                return HttpResponseRedirect(reverse('vote:index'))
+                return HttpResponseRedirect(reverse('home'))
             else:
                 return render(request, 'accounts/signup.html', {'f': form, 'error': '비밀번호와 비밀번호 확인이 다릅니다.'})  # password와 password_check가 다를 것을 대비하여 error를 지정해준다.
         else:  # form.is_valid()가 아닐 경우, 즉 유효한 값이 들어오지 않았을 경우는
