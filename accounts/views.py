@@ -37,7 +37,7 @@ def signout(request):
 
 def signup(request):  # 역시 GET/POST 방식을 사용하여 구현한다.
     if request.method == "GET":
-        return render(request, 'accounts/signup.html', {'f': SignupForm()})
+        return render(request, 'accounts/sign_term00.html', {'f': SignupForm()})
         # return render(request, 'accounts/signup.html', {'f': SignupForm()})
     elif request.method == "POST":
         form = SignupForm(request.POST)
