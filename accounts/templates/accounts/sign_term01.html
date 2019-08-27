@@ -11,9 +11,9 @@
 {% if error %}
 	<h3 style="color:red">{{error}}</h3>
 {% endif %}
-<form>
+<form action="" method="POST">
 	{% csrf_token %}
-	{{ f.as_table }}
+	<!--{{ f.as_table }}-->
 	<div class="wrap">
 		<h1><img src="{% static 'img/logo.png' %}" class="mainLogo"></h1>
 		<fieldset>
@@ -27,39 +27,37 @@
 				<button style="display:block;float:left;font-size:10px;width:90px;height:42px;margin-left:10px;background-color:white;letter-spacing:2px;border:3px solid #ffbf64;font-weight:bold;cursor:pointer;">중복 확인</button>
 			</p>
 			<p class="nameT" style="margin-bottom:5px;">패스워드</p>
-			<p class="nameI"  style="margin-bottom:5px;"><input type="password" class="signName" placeholder="비밀번호를 입력해주세요"></p>
-			<p class="nameI passwordRE" style="margin-bottom:10px;"><input type="password" class="signName" placeholder='다시한번 입력해주세요'></p>
-			<p class="nameI passwordRE" style="text-align:center;margin-right:100px;width:500px;margin-left:140px;border:2px dashed #ff690e;height:30px;line-height:30px;">비밀번호의 경우 알파벳/숫자/특수문자 포함 8자리 이상입니다.</p>
-			<p class="tellT">전화번호</p>
-			<p class="tellI">
-				<select class="tell1">
-					<option>010</option>
-					<option>011</option>
-					<option>016</option>
-					<option>019</option>
-				</select> -
-				<input type="number" class="tell2"> -
-				<input type="number" class="tell3">
-			</p>
-			<p class="addressT" style="margin-bottom:30px">거주 형태</p>
-			<p class="addressI" style="margin-bottom:30px">
-				<label>자취 <input type="radio" name="1"></label>
-				<label>가족과 동거 <input type="radio" name="1"></label>
-			</p>
-			<p class="faFT">선호 음식</p>
-			<div class="faFI">
-				<label style="cursor:pointer;margin-right:30px;">한식 <input type="checkbox" style="margin-left:10px;"></label>
-				<label style="cursor:pointer;margin-right:30px;">중식 <input type="checkbox" style="margin-left:10px;"></label>
-				<label style="cursor:pointer;margin-right:30px;">일식 <input type="checkbox" style="margin-left:10px;"></label>
-				<label style="cursor:pointer;margin-right:30px;">분식 <input type="checkbox" style="margin-left:10px;"></label>
-				<label style="cursor:pointer;margin-right:30px;">양식 <input type="checkbox" style="margin-left:10px;"></label><br>
-				<label style="cursor:pointer;margin-right:30px;">간편식 <input type="checkbox" style="margin-left:10px;"></label>
-				<label style="cursor:pointer;margin-right:30px;">다이어트식 <input type="checkbox" style="margin-left:10px;"></label>
-				<label style="cursor:pointer;margin-right:30px;">디저트 <input type="checkbox" style="margin-left:10px;"></label>
-				<label style="cursor:pointer;margin-right:30px;">혼밥 <input type="checkbox" style="margin-left:10px;"></label><br>
-				<label style="cursor:pointer;margin-right:30px;">배달 전문 <input type="checkbox" style="margin-left:10px;"></label>
-				<label style="cursor:pointer;margin-right:30px;">도시락 <input type="checkbox" style="margin-left:10px;"></label>
-			</div>
+			<p class="nameI"  style="margin-bottom:5px;">{{ f.password }}</p>
+			<!--<p class="tellT">전화번호</p>-->
+			<!--<p class="tellI">-->
+				<!--<select class="tell1">-->
+					<!--<option>010</option>-->
+					<!--<option>011</option>-->
+					<!--<option>016</option>-->
+					<!--<option>019</option>-->
+				<!--</select> - -->
+				<!--<input type="number" class="tell2"> - -->
+				<!--<input type="number" class="tell3">-->
+			<!--</p>-->
+			<!--<p class="addressT" style="margin-bottom:30px">거주 형태</p>-->
+			<!--<p class="addressI" style="margin-bottom:30px">-->
+				<!--<label>자취 <input type="radio" name="1"></label>-->
+				<!--<label>가족과 동거 <input type="radio" name="1"></label>-->
+			<!--</p>-->
+			<!--<p class="faFT">선호 음식</p>-->
+			<!--<div class="faFI">-->
+				<!--<label style="cursor:pointer;margin-right:30px;">한식 <input type="checkbox" style="margin-left:10px;"></label>-->
+				<!--<label style="cursor:pointer;margin-right:30px;">중식 <input type="checkbox" style="margin-left:10px;"></label>-->
+				<!--<label style="cursor:pointer;margin-right:30px;">일식 <input type="checkbox" style="margin-left:10px;"></label>-->
+				<!--<label style="cursor:pointer;margin-right:30px;">분식 <input type="checkbox" style="margin-left:10px;"></label>-->
+				<!--<label style="cursor:pointer;margin-right:30px;">양식 <input type="checkbox" style="margin-left:10px;"></label><br>-->
+				<!--<label style="cursor:pointer;margin-right:30px;">간편식 <input type="checkbox" style="margin-left:10px;"></label>-->
+				<!--<label style="cursor:pointer;margin-right:30px;">다이어트식 <input type="checkbox" style="margin-left:10px;"></label>-->
+				<!--<label style="cursor:pointer;margin-right:30px;">디저트 <input type="checkbox" style="margin-left:10px;"></label>-->
+				<!--<label style="cursor:pointer;margin-right:30px;">혼밥 <input type="checkbox" style="margin-left:10px;"></label><br>-->
+				<!--<label style="cursor:pointer;margin-right:30px;">배달 전문 <input type="checkbox" style="margin-left:10px;"></label>-->
+				<!--<label style="cursor:pointer;margin-right:30px;">도시락 <input type="checkbox" style="margin-left:10px;"></label>-->
+			<!--</div>-->
 			<button type="submit" class="finSign">회원가입하기</button>
 		</fieldset>
 	</div>

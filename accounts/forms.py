@@ -17,7 +17,7 @@ class SignupForm(ModelForm): #회원가입을 제공하는 class이다.
     class Meta:
         model=User
         widgets = {'password':forms.PasswordInput}
-        fields = ['username','password','last_name','first_name','email']
+        fields = ['username', 'password', 'password_check', 'last_name', 'first_name', 'email']
 #User model에 정의된 username, passwordm last_name, first_name, email을 입력양식으로
 
 class SigninForm(ModelForm): #로그인을 제공하는 class이다.

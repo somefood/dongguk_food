@@ -37,7 +37,7 @@ def signout(request):
 
 def signup(request):  # 역시 GET/POST 방식을 사용하여 구현한다.
     if request.method == "GET":
-        return render(request, 'accounts/sign_term01.html', {'f': SignupForm()})
+        return render(request, 'accounts/signup.html', {'f': SignupForm()})
         # return render(request, 'accounts/signup.html', {'f': SignupForm()})
     elif request.method == "POST":
         form = SignupForm(request.POST)
@@ -55,11 +55,11 @@ def signup(request):  # 역시 GET/POST 방식을 사용하여 구현한다.
                 return render(request, 'accounts/sign_finish.html', {'user_name':form.cleaned_data['username']})
                 # return HttpResponseRedirect(reverse('home'))
             else:
-                return render(request, 'accounts/sign_term01.html', {'f': form,
+                return render(request, 'accounts/signup.html', {'f': form,
                                                                 'error': '비밀번호와 비밀번호 확인이 다릅니다.'})  # password와 password_check가 다를 것을 대비하여 error를 지정해준다.
                 # return render(request, 'accounts/signup.html', {'f': form, 'error': '비밀번호와 비밀번호 확인이 다릅니다.'})  # password와 password_check가 다를 것을 대비하여 error를 지정해준다.
         else:  # form.is_valid()가 아닐 경우, 즉 유효한 값이 들어오지 않았을 경우는
-            return render(request, 'accounts/sign_term01.html', {'f': form})
+            return render(request, 'accounts/signup.html', {'f': form})
             # return render(request, 'accounts/signup.html', {'f': form})
 # 원래는 error 메시지를 지정해줘야 하지만 따로 지정해주지 않는다.
 # 그 이유는 User 모델 클래스에서 자동으로 error 메시지를 넘겨줌
