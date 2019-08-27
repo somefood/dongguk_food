@@ -1,0 +1,283 @@
+﻿body{
+	background-color:#F6F6F6;
+}
+.wrap{
+	width:1000px;
+	height:600px;
+	position:relative;
+	margin-top:30px;
+	left:50%;
+	margin-left:-500px;
+}
+.wrap .mainLogo{
+	width:300px;
+	margin:0 auto;
+	display:block;
+}
+.wrap .agreeBody_1{
+	width:800px;
+	height:200px;
+	margin:0 auto;
+	border:1px solid black;
+	box-sizing:border-box;
+	margin-top:30px;
+	position:relative;
+	border-radius:10px;
+}
+.wrap .agreeBody_1 > p{
+	width:100%;
+	height:50px;
+	border-bottom:1px solid black;
+	box-sizing:border-box;
+	font-size:20px;
+	padding-left:15px;
+	line-height:50px;
+	font-weight:bold;
+	background-color:white;
+	border-top-left-radius:10px;
+	border-top-right-radius:10px;
+}
+.wrap .agreeBody_1 > .agree_1{
+	width:755px;
+	height:100px;
+	padding:20px;
+	overflow:auto;
+}
+.wrap .agreeBody_1 > p > .agree1_button{
+	width:25px;
+	height:25px;
+}
+#agree1_button{
+	display:none;
+}
+#agree2_button{
+	display:none;
+}
+#agree3_button{
+	display:none;
+}
+.agree1_label{
+	width:25px;
+	height:25px;
+	position:absolute;
+	right:50px;
+	top:10px;
+	cursor:pointer;
+	background-image:url('../img/button1.png')
+}
+.agree2_label{
+	width:25px;
+	height:25px;
+	position:absolute;
+	right:50px;
+	top:10px;
+	cursor:pointer;
+	background-image:url('../img/button1.png')
+}
+.agree3_label{
+	width:25px;
+	height:25px;
+	position:absolute;
+	right:50px;
+	top:10px;
+	cursor:pointer;
+	background-image:url('../img/button1.png')
+}
+.agree4_label{
+	width:25px;
+	height:25px;
+	position:absolute;
+	right:50px;
+	top:10px;
+	cursor:pointer;
+	background-image:url('../img/button1.png')
+}
+.agreeALL{
+	width:770px;
+	height:50px;
+	margin:0 auto;
+	border:3px solid #ffbf64;
+	margin-top:50px;
+	line-height:50px;
+	padding-left:30px;
+	font-size:18px;
+	color:#ffbf64;
+	font-weight:bold;
+	background-color:white;
+}
+.nextButton{
+	width:360px;
+	height:50px;
+	margin-top:30px;
+	background-color:#ff690e;
+	color:white;
+	font-weight:bold;
+	text-align:center;
+	border:none;
+	margin-left:110px;
+	font-size:20px;
+	text-align:center;
+	margin-right:50px;
+	margin-bottom:100px;
+	cursor:pointer;
+}
+.rsButton{
+	width:360px;
+	height:50px;
+	margin-top:30px;
+	background-color:white;
+	border:1px solid black;
+	font-weight:bold;
+	text-align:center;
+	font-size:20px;
+	text-align:center;
+	cursor:pointer;
+}
+fieldset{
+	width:800px;
+	border:none;
+	padding-top:20px;
+	margin:0 auto;
+	margin-top:50px;
+}
+fieldset > .nameT{
+	width:100px;
+	height:50px;
+	font-weight:bold;
+	line-height:50px;
+	padding-left:20px;
+	float:left;
+	font-size:20px;
+}
+fieldset > .nameI{
+	width:660px;
+	height:50px;
+	line-height:50px;
+	padding-left:20px;
+	float:left;
+	margin-bottom:30px;
+}
+fieldset > .nameI > input{
+	width:500px;
+	height:40px;
+	line-height:40px;
+	font-size:18px;
+	padding-left:20px;
+	border:1px solid black;
+}
+fieldset > .tellT{
+	width:100px;
+	height:40px;
+	font-weight:bold;
+	line-height:40px;
+	padding-left:20px;
+	float:left;
+	font-size:20px;
+}
+fieldset > .tellI{
+	width:660px;
+	height:40px;
+	line-height:40px;
+	padding-left:20px;
+	float:left;
+	font-size:25px;
+	margin-bottom:30px
+}
+.tell1{
+	width:100px;
+	height:40px;
+	line-height:40px;
+	text-align:center;
+	margin-right:10px;
+	border:1px solid black;
+	font-size:19px;
+}
+.tell2{
+	width:168px;
+	height:40px;
+	line-height:40px;
+	text-align:center;
+	margin-left:10px;
+	margin-right:10px;
+	border:1px solid black;
+	font-size:19px;
+}
+.tell3{
+	width:168px;
+	height:40px;
+	line-height:40px;
+	text-align:center;
+	margin-left:10px;
+	border:1px solid black;
+	font-size:19px;
+}
+fieldset > .faFT{
+	width:100px;
+	height:150px;
+	font-weight:bold;
+	line-height:150px;
+	padding-left:20px;
+	float:left;
+	font-size:20px;
+}
+.faFI{
+	float:left;
+	width:520px;
+	height:150px;
+	font-size:18px;
+	line-height:50px;
+	padding-left:20px;
+	border:3px solid #ffbf64;
+	box-sizing:border-box;
+	margin-left:20px;
+	margin-right:100px;
+}
+.faFI > label > input{
+	width:18px;
+	height:18px;
+}
+.passwordRE{
+	margin-left:120px;
+}
+fieldset > .addressT{
+	width:100px;
+	height:50px;
+	font-weight:bold;
+	line-height:50px;
+	padding-left:20px;
+	float:left;
+	font-size:20px;
+	margin-top:10px;
+}
+fieldset > .addressI{
+	width:660px;
+	height:50px;
+	line-height:50px;
+	padding-left:20px;
+	float:left;
+	margin-bottom:30px;
+	margin-top:10px;
+}
+fieldset > .addressI > label {
+	margin-right:20px;
+	font-size:18px;
+}
+fieldset > .addressI > label > input {
+	margin-left:10px;
+}
+.finSign{
+	width:400px;
+	height:50px;
+	display:block;
+	margin:0 auto;
+	margin-bottom:50px;
+	margin-top:690px;
+	border:none;
+	background-color:#ff690e;
+	letter-spacing:3px;
+	color:white;
+	font-size:18px;
+	font-weight:bold;
+	cursor:pointer;
+
+}

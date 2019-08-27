@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} 환영합니다 {% endblock %}
+{% block main_logo %}{% endblock %}
+{% block jscode %}
+<script src="https://code.jquery.com/jquery-1.12.4.js" crossorigin="anonymous"></script>
+<script src="{% static 'js/sign.js' %}"></script>
+{% endblock %}
+{% block content %}
+
+	<div class="wrap">
+		<h1><a href="{% url 'home' %}"><img src="{% static 'img/logo.png' %}" class="mainLogo"></a></h1>
+		<p style="font-size:20px;margin-top:50px;padding-left:200px;">
+		안녕하세요 {{ user_name }}님! 세상에 있는 <span style="color:#ffbf64;font-weight:bold;font-size:25px;">맛을</span> 찾다
+		<span style="color:#ff690e;font-weight:bold;font-size:25px;">DG푸드</span>입니다.</p>
+		<p style="font-size:20px;margin-top:10px;margin-bottom:100px;padding-left:200px;">회원가입 해주셔서 감사합니다. </p>
+		<img src="{% static 'img/signFin.png' %}" style="display:block;margin:0 auto;">
+        <a href="{% url 'accounts:signin' %}">로그인 하기</a>
+	</div>
+{% endblock %}
