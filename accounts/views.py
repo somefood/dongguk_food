@@ -4,6 +4,7 @@ from django.http.response import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy, reverse
 from .models import Profile
+from django.http import HttpResponse
 
 from django.contrib.auth import login, authenticate
 # login과 authenticate 기능을 사용하기 위해 선언
@@ -38,9 +39,15 @@ def signout(request):
 
 def signup(request):  # 역시 GET/POST 방식을 사용하여 구현한다.
     if request.method == "GET":
-        return render(request, 'accounts/signup.html', {'f': SignupForm(),
-                                                        'ef': ProfileForm()
-                                                        })
+        if not request.GET.get('type', None):
+            return render(request, 'accounts/sign_term00.html')
+        return render(request, 'accounts/sign_term01.html', {'type': request.GET['type'],
+                                                             'f': SignupForm(),
+                                                             'ef': ProfileForm(),
+                                                             })
+        # return render(request, 'accounts/signup.html', {'f': SignupForm(),
+        #                                                 'ef': ProfileForm()
+        #                                                 })
         # return render(request, 'accounts/signup.html', {'f': SignupForm()})
     elif request.method == "POST":
         form = SignupForm(request.POST)
@@ -60,15 +67,16 @@ def signup(request):  # 역시 GET/POST 방식을 사용하여 구현한다.
                 new_user.profile.phone_number = profile_form.cleaned_data['phone_number']
                 new_user.profile.address = profile_form.cleaned_data['address']
                 new_user.profile.faFT = profile_form.cleaned_data['faFT']
+                new_user.profile.agree = request.POST['type']
                 new_user.save()
-                return render(request, 'accounts/sign_finish.html', {'user_name':form.cleaned_data['username']})
+                return render(request, 'accounts/sign_finish.html', {'user_name':profile_form.cleaned_data['nickname']})
                 # return HttpResponseRedirect(reverse('home'))
             else:
-                return render(request, 'accounts/signup.html', {'f': form,
+                return render(request, 'accounts/sign_term01.html', {'f': form,
                                                                 'ef': profile_form,
                                                                 'error': '비밀번호와 비밀번호 확인이 다릅니다.'})  # password와 password_check가 다를 것을 대비하여 error를 지정해준다.
         else:  # form.is_valid()가 아닐 경우, 즉 유효한 값이 들어오지 않았을 경우는
-            return render(request, 'accounts/signup.html', {'f': form,
+            return render(request, 'accounts/sign_term01.html', {'f': form,
                                                             'ef': profile_form,
                                                             })
             # return render(request, 'accounts/signup.html', {'f': form})

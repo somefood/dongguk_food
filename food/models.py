@@ -6,6 +6,10 @@ class Store(models.Model):
     phone_number = models.CharField(max_length=30, blank=True)
     description = models.TextField(verbose_name='des', null=True)
 
+    class Meta:
+        verbose_name = '가게'
+        verbose_name_plural = '가게'
+
     def __str__(self):
         return self.name
 
@@ -13,6 +17,10 @@ class Menu(models.Model):
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
     menu = models.CharField(max_length=50)
     votes = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name = '메뉴'
+        verbose_name_plural = '메뉴'
 
     def __str__(self):
         return self.menu

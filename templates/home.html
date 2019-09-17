@@ -4,7 +4,11 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-    {{ user.username }}님
+    {% if user.profile.nickname %}
+        {{ user.profile.nickname }}님
+    {% else %}
+        {{ user.username }}님
+    {% endif %}
     <p><a href="{% url 'accounts:signout' %}">logout</a></p>
 {% else %}
     <a href="{% url 'accounts:signin' %}">로그인</a>

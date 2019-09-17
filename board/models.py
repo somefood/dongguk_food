@@ -7,7 +7,7 @@ class UserBoard(models.Model):
     created_date = models.DateTimeField(null=True, blank=True)
     mail = models.CharField(max_length=50, blank=True)
     memo = models.CharField(max_length=50, blank=True)
-    hits = models.IntegerField(null=True, blank=True)
+    hits = models.IntegerField(null=True, blank=True, verbose_name='좋아요')
 
     def __str__(self):
         return '유저:{}   제목:{}'.format(self.writer, self.title)

@@ -14,9 +14,10 @@ def check_post(request):
         form = BoardForm(request.POST)
         if form.is_valid():
             item = form.save(commit=False)
+            item.writer = 'admin'
             item.board_save()
             message = "항목을 추가하였습니다."
-            return render(request, template_name, {"message":message})
+            return render(request, template_name, {"message": message})
     else:
         template_name = 'board/insert.html'
         form = BoardForm
