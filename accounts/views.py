@@ -17,7 +17,7 @@ from django.views import generic
 
 def signin(request): #로그인 기능
     if request.method == "GET":
-        return render(request, 'accounts/signin.html', {'f':SigninForm})
+        return render(request, 'accounts/signin.html', {'f': SigninForm})
     elif request.method == "POST":
         form = SigninForm(request.POST)
         id = request.POST['username']
@@ -39,10 +39,7 @@ def signout(request):
 
 def signup(request):  # 역시 GET/POST 방식을 사용하여 구현한다.
     if request.method == "GET":
-        if not request.GET.get('type', None):
-            return render(request, 'accounts/sign_term00.html')
-        return render(request, 'accounts/sign_term01.html', {'type': request.GET['type'],
-                                                             'f': SignupForm(),
+        return render(request, 'accounts/sign_term01.html', {'f': SignupForm(),
                                                              'ef': ProfileForm(),
                                                              })
         # return render(request, 'accounts/signup.html', {'f': SignupForm(),

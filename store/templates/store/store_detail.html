@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% block user_check %}
+{{ block.super }}
+{% endblock %}
+<h1>{{ store.name }}</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">메뉴</th>
+      <th scope="col">설명</th>
+      <th scope="col">추천수</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for menu in store.menu_set.all %}
+  {{ menu.name }}
+  {% endfor %}
+
+    {% for menu in store.menu_set.all %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{ menu.name }}</td>
+      <td>{{ menu.description }}</td>
+      <td>{{ menu.votes }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

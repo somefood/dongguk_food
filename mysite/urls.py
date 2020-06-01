@@ -18,11 +18,11 @@ from django.urls import path, include
 from django.views.generic.base import TemplateView
 from django.conf import settings
 
+
+
 urlpatterns = [
     path('board/', include('board.urls')),
-    path('cs_service/', include('cs_service.urls')),
-    path('food/', include('food.urls')),
-    path('polls/', include('polls.urls')),
+    path('store/', include('store.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
 #    path('accounts/', include('django.contrib.auth.urls')),

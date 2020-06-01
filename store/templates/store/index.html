@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% block user_check %}
+{{ block.super }}
+{% endblock %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">가게</th>
+      <th scope="col">연락처</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for store in store_list %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td><a href="{% url 'food:detail' store.pk %}">{{ store.name }}</a></td>
+      <td>{{store.phone_number}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -32,17 +32,17 @@ ALLOWED_HOSTS = ['*',]
 # Application definition
 
 INSTALLED_APPS = [
-    'accounts',
-    'board',
-    'polls',
-    'food',
-    'cs_service',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
+INSTALLED_APPS += [
+    'accounts',
+    'board',
+    'store',
     'debug_toolbar',
 ]
 
@@ -143,6 +143,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, '.static_root')
 MEDIA_URL='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
+LOGIIN_URL = '/accounts/static/'
 
 # 로그인 성공 시, 리다이렉트 url
 LOGIN_REDIRECT_URL = 'home'

@@ -12,7 +12,7 @@ from .models import Profile
 
 class ProfileInline(admin.StackedInline):
     model = Profile
-    con_delete = False
+    can_delete = False
 
 class CustomUserAdmin(UserAdmin):
     inlines = (ProfileInline, )

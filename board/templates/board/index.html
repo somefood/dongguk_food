@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="row mt-lg-5">
+    <div class="col">
+        <button type="button" class='btn btn-primary float-right' onclick="location.href='{% url 'board:post_new' %}'">
+            게시글 작성
+        </button>
+    </div>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">제목</th>
+      <th scope="col">닉네임</th>
+      <th scope="col">날짜</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for list in board_list %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td><a href="{% url 'board:detail' list.pk %}">{{ list.title }}</a></td>
+      <td>{% if list.writer.profile.nickname %}{{ list.writer.profile.nickname }}{% else %}{{ list.writer }}{% endif %}</td>
+      <td>{{ list.created_date }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

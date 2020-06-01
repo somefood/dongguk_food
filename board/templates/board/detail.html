@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<button class="btn btn-primary" onclick="location.href='{% url 'board:post_edit' userboard.pk %}'">수정</button>
+<button class="btn btn-primary" onclick="location.href='{% url 'board:post_delete' userboard.pk %}'">삭제</button>
+<div class="row">
+    <div class="col"><h1>{{ userboard.writer }}</h1></div>
+</div>
+<div class="row">
+    <div class="col"><h1>{{ userboard.title }}</h1></div>
+</div>
+<div class="row mt-5">
+    <div class="col">{{ userboard.content|safe}}</div>
+</div>
+
+{% endblock %}

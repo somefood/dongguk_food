@@ -46,8 +46,8 @@ class SigninForm(ModelForm): #로그인을 제공하는 class이다.
     class Meta:
         model = User
         widgets = {
-            'username': forms.TextInput(attrs={'id': 'loginID', 'placeholder': '학번을 입력해주세요.'}),
-            'password':forms.PasswordInput(attrs={'id': 'loginPW', 'placeholder': '패스워드를 입력해주세요.'})
+            'username': forms.TextInput(attrs={'class': 'form-control', 'id': 'loginID', 'placeholder': '학번을 입력해주세요.'}),
+            'password': forms.PasswordInput(attrs={'class': 'form-control', 'id': 'loginPW', 'placeholder': '패스워드를 입력해주세요.'})
         }
         fields = ['username', 'password']
 
