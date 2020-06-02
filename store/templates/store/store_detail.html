@@ -5,6 +5,10 @@
 {{ block.super }}
 {% endblock %}
 <h1>{{ store.name }}</h1>
+{% if user.is_athenticated %}
+<button class="btn btn-primary" onclick="location.href='{% url 'home' %}'">수정</button>
+<button class="btn btn-primary" onclick="location.href='{% url 'home' %}'">삭제</button>
+{% endif %}
 <table class="table">
   <thead>
     <tr>
@@ -22,6 +26,7 @@
     {% for menu in store.menu_set.all %}
     <tr>
       <th scope="row">{{ forloop.counter }}</th>
+      <td><img class=".food-image" src="{{ menu.food_image.url }}" alt=""></td>
       <td>{{ menu.name }}</td>
       <td>{{ menu.description }}</td>
       <td>{{ menu.votes }}</td>

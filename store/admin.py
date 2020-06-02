@@ -1,10 +1,12 @@
 from django.contrib import admin
 from .models import Store, Menu
 
-@admin.register(Store)
-class StoreAdmin(admin.ModelAdmin):
-    pass
+class MenuInine(admin.TabularInline):
+    model = Menu
 
-@admin.register(Menu)
 class StoreAdmin(admin.ModelAdmin):
-    pass
+    inlines = [
+        MenuInine,
+    ]
+
+admin.site.register(Store, StoreAdmin)

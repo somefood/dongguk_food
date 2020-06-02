@@ -140,8 +140,8 @@ STATICFILES_DIRS = [
 # collectstatic 시 파일 위치
 STATIC_ROOT = os.path.join(BASE_DIR, '.static_root')
 
-MEDIA_URL='/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIIN_URL = '/accounts/static/'
 

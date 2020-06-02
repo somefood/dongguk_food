@@ -16,7 +16,7 @@
     {% for store in store_list %}
     <tr>
       <th scope="row">{{ forloop.counter }}</th>
-      <td><a href="{% url 'food:detail' store.pk %}">{{ store.name }}</a></td>
+      <td><a href="{% url 'store:detail' store.pk %}">{{ store.name }}</a></td>
       <td>{{store.phone_number}}</td>
     </tr>
     {% endfor %}

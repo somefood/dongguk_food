@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import SigninForm, SignupForm, ProfileForm
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth.models import User
@@ -16,6 +16,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views import generic
 
 def signin(request): #로그인 기능
+    if request.user.is_authenticated:
+        return redirect(reverse('home'))
     if request.method == "GET":
         return render(request, 'accounts/signin.html', {'f': SigninForm})
     elif request.method == "POST":
@@ -39,13 +41,9 @@ def signout(request):
 
 def signup(request):  # 역시 GET/POST 방식을 사용하여 구현한다.
     if request.method == "GET":
-        return render(request, 'accounts/sign_term01.html', {'f': SignupForm(),
+        return render(request, 'accounts/signup.html', {'f': SignupForm(),
                                                              'ef': ProfileForm(),
                                                              })
-        # return render(request, 'accounts/signup.html', {'f': SignupForm(),
-        #                                                 'ef': ProfileForm()
-        #                                                 })
-        # return render(request, 'accounts/signup.html', {'f': SignupForm()})
     elif request.method == "POST":
         form = SignupForm(request.POST)
         profile_form = ProfileForm(request.POST)
@@ -53,7 +51,7 @@ def signup(request):  # 역시 GET/POST 방식을 사용하여 구현한다.
             if form.cleaned_data['password'] == form.cleaned_data['password_check']:
             # cleaned_data는 사용자가 입력한 데이터를 뜻한다.
             # 즉 사용자가 입력한 password와 password_check가 맞는지 확인하기위해 작성해주었다.
-                new_user = User.objects.create_user(form.cleaned_data['username'], form.cleaned_data['email'],form.cleaned_data['password'])
+                new_user = User.objects.create_user(form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password'])
                 # User.object.create_user는 사용자가 입력한 name, email, password를 가지고 아이디를 만든다.
                 # 바로 .save를 안해주는 이유는 User.object.create를 먼저 해주어야 비밀번호가 암호화되어 저장된다.
                 # new_user.last_name = form.cleaned_data['last_name']
@@ -62,18 +60,16 @@ def signup(request):  # 역시 GET/POST 방식을 사용하여 구현한다.
                 # new_user.save(commit=False)
                 new_user.profile.nickname = profile_form.cleaned_data['nickname']
                 new_user.profile.phone_number = profile_form.cleaned_data['phone_number']
-                new_user.profile.address = profile_form.cleaned_data['address']
-                new_user.profile.faFT = profile_form.cleaned_data['faFT']
-                new_user.profile.agree = request.POST['type']
                 new_user.save()
-                return render(request, 'accounts/sign_finish.html', {'user_name':profile_form.cleaned_data['nickname']})
+                # return render(request, 'accounts/sign_finish.html', {'user_name':profile_form.cleaned_data['nickname']})
+                return redirect('home')
                 # return HttpResponseRedirect(reverse('home'))
             else:
-                return render(request, 'accounts/sign_term01.html', {'f': form,
+                return render(request, 'accounts/signup.html', {'f': form,
                                                                 'ef': profile_form,
                                                                 'error': '비밀번호와 비밀번호 확인이 다릅니다.'})  # password와 password_check가 다를 것을 대비하여 error를 지정해준다.
         else:  # form.is_valid()가 아닐 경우, 즉 유효한 값이 들어오지 않았을 경우는
-            return render(request, 'accounts/sign_term01.html', {'f': form,
+            return render(request, 'accounts/signup.html', {'f': form,
                                                             'ef': profile_form,
                                                             })
             # return render(request, 'accounts/signup.html', {'f': form})

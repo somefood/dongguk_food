@@ -1,23 +1,41 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
-</head>
-<body>
-	{% if error %}
-	<h3 style="color:red">{{error}}</h3>
-	{% endif %}
-	<form action="" method="POST">
-		{% csrf_token %}
-		<table>
-		{{ f.as_table }}
-		</table>
-		<table>
-			{{ ef.as_table }}
-		</table>
-		<input type="submit" value="회원가입">
-	</form>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
 
+{% block title %} 회원가입 {% endblock %}
+{% block main_logo %}{% endblock %}
+{% block jscode %}
+<script src="https://code.jquery.com/jquery-1.12.4.js" crossorigin="anonymous"></script>
+<script src="{% static 'js/sign.js' %}"></script>
+{% endblock %}
+{% block content %}
+{% if error %}
+	<h3 style="color:red">{{error}}</h3>
+{% endif %}
+<form action="" method="POST">
+	{% csrf_token %}
+	<!--{{ f.as_table }}-->
+	<div class="form-group">
+		<h1><img src="{% static 'img/logo.png' %}" class="mainLogo"></h1>
+		<label for="id">ID</label>
+		{{ f.username }}
+	</div>
+	<div class="form-group">
+		<label for="nickname">닉네임</label>
+		{{ ef.nickname }}
+	</div>
+	<button class="btn btn-outline-primary">중복 확인</button>
+	<div class="form-group">
+		<label for="password">비밀번호</label>
+		{{ f.password }}
+	</div>
+	<div>
+		<label for="re-password">재확인</label>
+		{{ f.password_check }}
+	</div>
+	<div class="form-group">
+		<label for="phonenumber">전화번호</label>
+		{{ ef.phone_number }}
+	</div>
+		<button type="submit" class="btn btn-outline-primary">회원가입하기</button>
+</form>
+ {% endblock %}

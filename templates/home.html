@@ -1,4 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="row">
+    <div class="col-sm">
+    <h2>맛집 리스트</h2>
+    <a href="{% url 'store:index'%}">더보기</a>
+    {% for store in popular_stores %}
+        {{ store.name }}
+    {% endfor %}
+    </div>
+    <div class="col-sm">
+    <h2>게시판</h2>
+    <a href="{% url 'board:index'%}">더보기</a>
+        {% for article in latest_articles %}
+            {{ article.title }}
+        {% endfor %}
+    </div>
+</div>
+
+
 {% endblock %}
