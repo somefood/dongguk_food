@@ -4,22 +4,13 @@
 {% block user_check %}
 {{ block.super }}
 {% endblock %}
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">가게</th>
-      <th scope="col">연락처</th>
-    </tr>
-  </thead>
-  <tbody>
+<ul class="list-group">
     {% for store in store_list %}
-    <tr>
-      <th scope="row">{{ forloop.counter }}</th>
-      <td><a href="{% url 'store:detail' store.pk %}">{{ store.name }}</a></td>
-      <td>{{store.phone_number}}</td>
-    </tr>
+        <li class="list-group-item">
+            {% if store.store_image %}<img src="{{ store.store_image.url }}" alt="">{% else %}이미지 준비중{% endif %}
+            <a href="{% url 'store:detail' store.pk %}">{{ store.name }}</a>
+            <p>{{store.location}}</p>
+            <p>{{store.description}}</p>
+        </li>
     {% endfor %}
-  </tbody>
-</table>
 {% endblock %}

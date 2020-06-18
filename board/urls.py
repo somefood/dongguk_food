@@ -2,7 +2,6 @@ from django.urls import path
 from . import views
 
 app_name = 'board'
-
 urlpatterns = [
     path('', views.BoardIndex.as_view(), name='index'),
     path('post/<int:pk>', views.BoardDetail.as_view(), name='detail'),

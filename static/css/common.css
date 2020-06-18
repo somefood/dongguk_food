@@ -5,9 +5,10 @@
   	width: 150px;
 }
 
-.container {
-	padding-right: 15px;
-	padding-left: 15px;
+div.container {
+	padding-right: 50px;
+	padding-left: 50px;
+	margin-top: 40px;
 	margin-right: auto;
 	margin-left: auto;
 }

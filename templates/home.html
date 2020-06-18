@@ -5,16 +5,22 @@
     <div class="col-sm">
     <h2>맛집 리스트</h2>
     <a href="{% url 'store:index'%}">더보기</a>
+    <ul class="list-group">
     {% for store in popular_stores %}
-        {{ store.name }}
+        <li class="list-group-item"><a href="{% url 'store:detail' store.id %}">{{ store.name }}</a></li>
     {% endfor %}
+    </ul>
     </div>
     <div class="col-sm">
     <h2>게시판</h2>
     <a href="{% url 'board:index'%}">더보기</a>
+    <ul class="list-group">
         {% for article in latest_articles %}
-            {{ article.title }}
+        <li class="list-group-item">
+            <a href="{% url 'board:detail' article.id %}">{{ article.title }}</a>
+        </li>
         {% endfor %}
+    </ul>
     </div>
 </div>
 

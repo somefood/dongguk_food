@@ -44,6 +44,7 @@ INSTALLED_APPS += [
     'board',
     'store',
     'debug_toolbar',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

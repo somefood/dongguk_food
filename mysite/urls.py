@@ -24,6 +24,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
 #    path('accounts/', include('django.contrib.auth.urls')),
     path('', HomePageView.as_view(), name='home'),
+    path('about/', TemplateView.as_view(template_name='about.html'), name='about'),
 ]
 
 if settings.DEBUG:
