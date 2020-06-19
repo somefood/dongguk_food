@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>검색결과: {{ search_word }}</h2>
+{% for store in store_list %}
+<a href="{{ store.get_absolute_url }}">{{ store.name }}</a>
+{% endfor %}
+
+{% for board in board_list %}
+<a href="{{ board.get_absolute_url }}">{{ board.title }}</a>
+{% endfor %}
+{% endblock %}

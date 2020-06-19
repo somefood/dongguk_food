@@ -43,6 +43,7 @@ INSTALLED_APPS += [
     'accounts',
     'board',
     'store',
+    'helpers',
     'debug_toolbar',
     'widget_tweaks',
 ]

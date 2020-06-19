@@ -7,6 +7,8 @@ class Store(models.Model):
     phone_number = models.CharField(max_length=30, blank=True, verbose_name="연락처")
     description = models.TextField(blank=True, verbose_name="설명")
     store_image = models.ImageField(blank=True, upload_to="store/store_pic")
+    created_dt = models.DateTimeField(auto_now_add=True)
+    modified_dt = models.DateTimeField(auto_now=True)
     likes = models.IntegerField()
 
     class Meta:

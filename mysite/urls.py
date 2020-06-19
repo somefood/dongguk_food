@@ -20,6 +20,7 @@ class HomePageView(TemplateView):
 urlpatterns = [
     path('board/', include('board.urls')),
     path('store/', include('store.urls')),
+    path('helpers/', include('helpers.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
 #    path('accounts/', include('django.contrib.auth.urls')),

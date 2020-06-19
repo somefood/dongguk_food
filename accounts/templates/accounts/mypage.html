@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>내가 쓴 글</p>
+<ul class="list-group">
+{% for list in mylists %}
+    <li class="list-group-item">
+        <a href="{{ list.get_absolute_url }}">{{ list.title }}</a>
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}

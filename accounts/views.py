@@ -4,7 +4,9 @@ from django.http.response import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy, reverse
 from .models import Profile
-from django.http import HttpResponse
+
+from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.contrib.auth import login, authenticate
 # login과 authenticate 기능을 사용하기 위해 선언
@@ -33,6 +35,16 @@ def signin(request): #로그인 기능
             return HttpResponseRedirect(reverse('home'))
         else:
             return render(request, 'accounts/signin.html',{'f':form, 'error':'아이디나 비밀번호가 일치하지 않습니다.'})
+
+
+class MyPageV(LoginRequiredMixin, TemplateView):
+    template_name = 'accounts/mypage.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        u = User.objects.get(username=self.request.user)
+        context['mylists'] = u.userboard_set.all()
+        return context
 
 def signout(request):
     logout(request)

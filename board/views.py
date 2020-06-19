@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.urls import reverse_lazy
 from .models import UserBoard
 from .forms import BoardForm
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from mysite.views import OwnerOnlyMixin
+from django.views.generic import CreateView, UpdateView, DeleteView
 
 class BoardIndex(ListView):
     template_name = 'board/index.html'
@@ -18,26 +22,27 @@ class BoardIndex(ListView):
     def get_queryset(self):
         return UserBoard.objects.all()
 
-@login_required
-def post_new(request):
-    template_name = 'board/board_success.html'
-    if request.method == "POST":
-        print(request.POST)
-        username = request.user
-        form = BoardForm(request.POST)
-        if form.is_valid():
-            item = form.save(commit=False)
-            user = User.objects.get(username=username)
-            item.writer = user
-            item.board_save()
-            message = "항목을 추가하였습니다."
-            return render(request, template_name, {"message": message})
-    else:
-        template_name = 'board/post.html'
-        form = BoardForm
-        print(request.GET)
-        print(request.user.profile.nickname)
-        return render(request, template_name, {"form": form})
+class BoardCreateV(LoginRequiredMixin, CreateView):
+    model = UserBoard
+    fields = ('title', 'content')
+    success_url = reverse_lazy('board:index')
+    template_name = 'board/board_form.html'
+
+    def form_valid(self, form):
+        form.instance.writer = self.request.user
+        return super().form_valid(form)
+
+
+class BoardUpdateV(OwnerOnlyMixin, UpdateView):
+    model = UserBoard
+    fields = ('title', 'content')
+    template_name = 'board/board_form.html'
+
+
+class BoardDeleteV(OwnerOnlyMixin, DeleteView):
+    model = UserBoard
+    success_url = reverse_lazy('board:index')
+    template_name = 'board/board_confirm_delete.html'
 
 @login_required
 def post_edit(request, pk):
@@ -50,7 +55,7 @@ def post_edit(request, pk):
             return HttpResponseRedirect(reverse('board:detail', kwargs={'pk':pk}))
     else:
         form = BoardForm(instance=post)
-    return render(request, 'board/post.html', {"form": form})
+    return render(request, 'board/board_form.html', {"form": form})
 
 # def test(request, pk):
 #     return HttpResponse('hi {}'.format(pk))
