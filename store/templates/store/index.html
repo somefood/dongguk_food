@@ -1,9 +1,28 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% block user_check %}
-{{ block.super }}
-{% endblock %}
+<div class="row">
+
+      <!-- Blog Entries Column -->
+      <div class="col-md-8">
+
+        <h1 class="my-4">가게 소개
+        </h1>
+        {% for store in store_list %}
+        <!-- Blog Post -->
+        <div class="card mb-5">
+          <img class="card-img-top" src="{% if store.store_image %}{{ store.store_image.url }}{% else %}http://placehold.it/750x300{% endif %}" alt="Card image cap">
+          <div class="card-body">
+            <h2 class="card-title">{{ store.name }}</h2>
+            <p class="card-text">{{ store.description }}</p>
+            <a href="{{ store.get_absolute_url }}" class="btn btn-primary">Read More &rarr;</a>
+          </div>
+          <div class="card-footer text-muted">
+            Posted on {{ store.created_dt|date:"Y-m-d" }}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
 <ul class="list-group">
     {% for store in store_list %}
         <li class="list-group-item">

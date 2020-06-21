@@ -24,7 +24,7 @@
       <th scope="row">{{ forloop.counter }}</th>
       <td><a href="{% url 'board:detail' list.pk %}">{{ list.title }}</a></td>
       <td>{% if list.writer.profile.nickname %}{{ list.writer.profile.nickname }}{% else %}{{ list.writer }}{% endif %}</td>
-      <td>{{ list.created_date }}</td>
+      <td>{{ list.created_dt }}</td>
     </tr>
     {% endfor %}
   </tbody>
