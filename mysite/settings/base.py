@@ -46,6 +46,9 @@ INSTALLED_APPS += [
     'helpers',
     'debug_toolbar',
     'widget_tweaks',
+    'taggit',
+    'taggit_templatetags2',
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
@@ -145,9 +148,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, '.static_root')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+TAGGIT_CASE_INSENSITIVE = True
+TAGGIT_LIMIT = 50
+
 LOGIIN_URL = '/accounts/static/'
 
 # 로그인 성공 시, 리다이렉트 url
 LOGIN_REDIRECT_URL = 'home'
 # 로그아웃 성공 시, 리다이렉트 url
 LOGOUT_REDIRECT_URL ='home'
+
+DISQUS_SHORTNAME = 'dongguk-food'
+DISQUS_MY_DOMAIN = 'http://127.0.0.1:8000'

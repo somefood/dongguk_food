@@ -1,15 +1,18 @@
 from django.db import models
 from django.shortcuts import reverse
+from taggit.managers import TaggableManager
 
 class Store(models.Model):
     name = models.CharField(max_length=50, verbose_name="가게명")
+    slug = models.SlugField('SLUG', unique=True, allow_unicode=True, help_text='one word for alias')
     location = models.CharField(max_length=100, verbose_name="위치")
     phone_number = models.CharField(max_length=30, blank=True, verbose_name="연락처")
     description = models.TextField(blank=True, verbose_name="설명")
     store_image = models.ImageField(blank=True, upload_to="store/store_pic")
     created_dt = models.DateTimeField(auto_now_add=True)
     modified_dt = models.DateTimeField(auto_now=True)
-    likes = models.IntegerField()
+    likes = models.IntegerField(verbose_name='좋아요', default=0)
+    tags = TaggableManager(blank=True)
 
     class Meta:
         verbose_name = '가게'
@@ -19,7 +22,7 @@ class Store(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('store:detail', args=[self.id])
+        return reverse('store:detail', args=[self.slug])
 
 class Menu(models.Model):
     store = models.ForeignKey(Store, on_delete=models.CASCADE, verbose_name="가게명")

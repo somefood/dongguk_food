@@ -19,12 +19,12 @@
     </tr>
   </thead>
   <tbody>
-    {% for list in board_list %}
+    {% for item in board_list %}
     <tr>
       <th scope="row">{{ forloop.counter }}</th>
-      <td><a href="{% url 'board:detail' list.pk %}">{{ list.title }}</a></td>
-      <td>{% if list.writer.profile.nickname %}{{ list.writer.profile.nickname }}{% else %}{{ list.writer }}{% endif %}</td>
-      <td>{{ list.created_dt }}</td>
+      <td><a href="{% url 'board:detail' item.slug %}">{{ item.title }}</a></td>
+      <td>{% if item.writer.profile.nickname %}{{ item.writer.profile.nickname }}{% else %}{{ item.writer }}{% endif %}</td>
+      <td>{{ item.created_dt }}</td>
     </tr>
     {% endfor %}
   </tbody>

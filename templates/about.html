@@ -1,144 +1,44 @@
 {% extends 'base.html' %}
 {% load static %}
-
-{% block extra-style %}
-<link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+{% extra-style %}
+<style>
+</style>
 {% endblock %}
 {% block content %}
-
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-            <a class="navbar-brand js-scroll-trigger" href="#page-top">
-                <span class="d-block d-lg-none">About Project</span>
-                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="assets/img/profile.jpg" alt="" /></span>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About Project</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#todo">TODO List</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#me">About Me</a></li>
-                </ul>
-            </div>
-        </nav>
-        <!-- Page Content-->
-            <!-- About-->
-            <section class="resume-section" id="about">
-                <div class="resume-section-content">
-                    <h1 class="mb-0">
-                        Dongguk
-                        <span class="text-primary">Food</span>
-                    </h1>
-                    <div class="subheading mb-5">
-                    </div>
-                    <p class="lead mb-5">동국대 주변 음식집과 게시판을 구현하는 프로젝트입니다.</p>
-                </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Skills-->
-            <section class="resume-section" id="skills">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Skills</h2>
-                    <div class="subheading mb-3">Programming Languages & Tools</div>
-                    <div class="row">
-                        <div class="col">
-                            <h3>Front</h3>
-                            <ul class="list-inline dev-icons">
-                                <li class="list-inline-item"><i class="fab fa-html5"></i> HTML</li>
-                                <br>
-                                <li class="list-inline-item"><i class="fab fa-css3-alt"></i> CSS</li>
-                                <br>
-                                <li class="list-inline-item"><i class="fab fa-js-square"></i> JavaScript</li>
-                                <li class="list-inline-item"><i class="fab"></i></li>
-                            </ul>
-                        </div>
-                        <div class="col">
-                            <h3>Back</h3>
-                            <ul class="list-inline dev-icons">
-                                <li class="list-inline-item"><i class="fab fa-python"></i> Python(Django)</li>
-                            </ul>
-                        </div>
-                    </div>
-            </section>
-            <hr class="m-0" />
-            <!-- TODO List-->
-            <section class="resume-section" id="todo">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">TODO LIST</h2>
-                    <ul class="fa-ul mb-0">
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            로그인, 로그아웃, 회원가입 구현
-                        </li>
-                            <ul>
-                                <li>
-                                    <span class="fa-li"><i class="fas fa-check"></i></span>
-                                    회원가입 시, 중복 체크 자바스크립트 구현하
-                                </li>
-                            </ul>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            nav 생성하기
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-uncheck"></i></span>
-                            좋아요 기능 구현하
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            검색기능 구현 (일부 수정 필요)
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-uncheck"></i></span>
-                            댓글기능 구현하기
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-uncheck"></i></span>
-                            태그기능 구현하기
-                        </li>
-                    </ul>
-                </div>
-                </div>
-            </section>
-            <hr class="m-0" />
-            <!-- About ME-->
-            <section class="resume-section" id="me">
-                <div class="resume-section-content">
-                    <h2 class="mb-4">About ME</h2>
-                    <h2 class="subheading mb-3">홍석주 (Seokju Hong)</h2>
-                    <div class="social-icons">
-                        <a class="social-icon" href="mailto:hsj4665@gmail.com"><i class="fas fa-envelope-open-text"></i></a>
-                        <a class="social-icon" href="https://github.com/somefood"><i class="fab fa-github"></i></a>
-                        <a class="social-icon" href="https://somefood.github.io"><i class="fas fa-blog"></i></a>
-                    </div>
-                    <hr>
-                    <h3 class="mb-5">Company</h3>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">(주)트루네트웍스</h3>
-                            <div class="subheading mb-3">Network Engineer</div>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">2015 - 2020</span></div>
-                    </div>
-                    <hr>
-                    <h3 class="mb-5">Education</h3>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">동국대학교</h3>
-                            <div class="subheading mb-3">융합보안학과</div>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">2019 - Continuing</span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">선린인터넷고등학교</h3>
-                            <div class="subheading mb-3">정보통신과</div>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">2012 - 2015</span></div>
-                    </div>
-                </div>
-            </section>
-            <hr class="m-0" />
+<!-- About-->
+<div class="resume-section-content">
+    <h1 class="mb-0">
+        Dongguk
+        <span class="text-primary">Food</span>
+    </h1>
+    <div class="subheading mb-5">
+    </div>
+    <p class="lead mb-5">동국대 주변 음식집과 게시판을 구현하는 프로젝트입니다.</p>
+</div>
+<hr class="m-0"/>
+<!-- Skills-->
+<div class="resume-section-content">
+    <h2 class="mb-5">Skills</h2>
+    <div class="subheading mb-3">Programming Languages & Tools</div>
+    <div class="row">
+        <div class="col">
+            <h3>Front</h3>
+            <ul class="list-inline dev-icons">
+                <li class="list-inline-item"><i class="fab fa-html5"></i> HTML</li>
+                <br>
+                <li class="list-inline-item"><i class="fab fa-css3-alt"></i> CSS</li>
+                <br>
+                <li class="list-inline-item"><i class="fab fa-js-square"></i> JavaScript</li>
+                <li class="list-inline-item"><i class="fab"></i></li>
+            </ul>
+        </div>
+        <div class="col">
+            <h3>Back</h3>
+            <ul class="list-inline dev-icons">
+                <li class="list-inline-item"><i class="fab fa-python"></i> Python(Django)</li>
+            </ul>
+        </div>
+    </div>
         {% block extra-script %}
         <!-- Bootstrap core JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Posts for tag - {{ tagname }}</h1>
+<br>
+{% for store in store_list %}
+<a href="{{ store.get_absolute_url }}">{{ store.name }}</a>
+{% endfor %}
+
+{% for board in board_list %}
+<a href="{{ board.get_absolute_url }}">{{ board.title }}</a>
+{% endfor %}
+{% endblock %}

@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from mysite.views import OwnerOnlyMixin
 from django.views.generic import CreateView, UpdateView, DeleteView
+from django.conf import settings
 
 class BoardIndex(ListView):
     template_name = 'board/index.html'
@@ -37,7 +38,6 @@ class BoardUpdateV(OwnerOnlyMixin, UpdateView):
     model = UserBoard
     fields = ('title', 'content')
     template_name = 'board/board_form.html'
-
 
 class BoardDeleteV(OwnerOnlyMixin, DeleteView):
     model = UserBoard
@@ -68,3 +68,11 @@ def post_delete(request, pk):
 class BoardDetail(DetailView):
     model = UserBoard
     template_name = 'board/detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['disqus_short'] = f"{settings.DISQUS_SHORTNAME}"
+        context['disqus_id'] = f"post-{self.object.id}"
+        context['disqus_url'] = f"{settings.DISQUS_MY_DOMAIN}{self.object.get_absolute_url()}"
+        context['disqus_title'] = f"{self.object.title}"
+        return context

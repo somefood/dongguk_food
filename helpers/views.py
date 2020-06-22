@@ -8,6 +8,7 @@ from .forms import SearchForm
 from django.db.models import Q
 from django.shortcuts import  render
 
+from django.views.generic import ListView, DeleteView, TemplateView
 
 def search_word(request):
     if request.method == "POST":
@@ -45,3 +46,21 @@ def search_word(request):
 #         context['object_list'] = post_list
 #
 #         return render(self.request, 'helpers/search_result', context)
+
+
+class TagCloudTV(TemplateView):
+    template_name = 'taggit/taggit_cloud.html'
+
+
+class TaggedObjectLV(TemplateView):
+    template_name = 'taggit/taggit_post_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        store = Store.objects.filter(tags__name=self.kwargs.get('tag'))
+        board = UserBoard.objects.filter(tags__name=self.kwargs.get('tag'))
+
+        context['store_list'] = store
+        context['board_list'] = board
+        context['tagname'] = self.kwargs['tag']
+        return context

@@ -4,7 +4,7 @@
 <div class="row">
 
       <!-- Blog Entries Column -->
-      <div class="col-md-8">
+      <div class="col-md-8 mx-auto">
 
         <h1 class="my-4">가게 소개
         </h1>
@@ -23,13 +23,4 @@
         </div>
         {% endfor %}
       </div>
-<ul class="list-group">
-    {% for store in store_list %}
-        <li class="list-group-item">
-            {% if store.store_image %}<img src="{{ store.store_image.url }}" alt="">{% else %}이미지 준비중{% endif %}
-            <a href="{% url 'store:detail' store.pk %}">{{ store.name }}</a>
-            <p>{{store.location}}</p>
-            <p>{{store.description}}</p>
-        </li>
-    {% endfor %}
 {% endblock %}

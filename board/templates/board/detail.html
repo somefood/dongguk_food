@@ -1,16 +1,55 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<button class="btn btn-primary" onclick="location.href='{% url 'board:post_edit' userboard.pk %}'">수정</button>
-<button class="btn btn-primary" onclick="location.href='{% url 'board:post_delete' userboard.pk %}'">삭제</button>
-<div class="row">
-    <div class="col"><h1>{{ userboard.writer }}</h1></div>
+<div class="d-flex flex-row-reverse">
+    <button class="btn btn-primary mb-3 p-2" onclick="location.href='{% url 'board:post_delete' userboard.pk %}'">삭제</button>
+    <button class="btn btn-primary mb-3 p-2" onclick="location.href='{% url 'board:post_edit' userboard.pk %}'">수정</button>
 </div>
-<div class="row">
-    <div class="col"><h1>{{ userboard.title }}</h1></div>
+<div class="border border-primary rounded">
+    <div class="row">
+        <div class="col col-md-5"><h1>{{ userboard.title }}</h1></div>
+    </div>
+    <div class="row">
+        <div class="col"><h1>{{ userboard.writer }}</h1></div>
+    </div>
+    <div class="row mt-5">
+        <div class="col">{{ userboard.content|safe}}</div>
+    </div>
+    <br>
+    <div>
+        <b>TAGS</b> <i class="fas fa-tag"></i>
+        {% load taggit_templatetags2_tags %}
+        {% get_tags_for_object object as "tags" %}
+        {% for tag in tags %}
+        <a href="{% url 'helpers:tagged_object_list' tag.name %}">{{tag.name}}</a>
+        {% endfor %}
+        &emsp;
+        <a href="{% url 'helpers:tag_cloud' %}"><span class="btn btn-info btn-sm">TagCloud</span></a>
+    </div>
+    <br>
+    <div id="disqus_thread"></div>
 </div>
-<div class="row mt-5">
-    <div class="col">{{ userboard.content|safe}}</div>
-</div>
+{% endblock %}
 
+{% block extra-script %}
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+    this.page.title = '{{ disqus_title }}'
+    this.page.url = '{{ disqus_url }}';  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = '{{ disqus_id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://{{ disqus_short }}.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 {% endblock %}

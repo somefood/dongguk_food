@@ -61,8 +61,7 @@
         <div class="dropdown-menu">
           <a class="dropdown-item" href="{% url 'admin:index' %}">Admin</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Archive</a>
-          <a class="dropdown-item" href="#">Search</a>
+          <a class="dropdown-item" href="{% url 'helpers:tag_cloud'%}">Tags</a>
         </div>
       </li>
     </ul>
@@ -92,7 +91,7 @@
           </a>
           <div class="dropdown-menu">
               <a class="dropdown-item" href="{% url 'accounts:login' %}">로그인</a>
-              <a class="dropdown-item" href="{% url 'accounts:signup' %}">회원가입</a>
+              <a class="dropdown-item" href="{% url 'accounts:signup' %}" target="_blank">회원가입</a>
           </div>
           {% endif %}
       </li>
