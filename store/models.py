@@ -5,7 +5,7 @@ from taggit.managers import TaggableManager
 class Store(models.Model):
     name = models.CharField(max_length=50, verbose_name="가게명")
     slug = models.SlugField('SLUG', unique=True, allow_unicode=True, help_text='one word for alias')
-    location = models.CharField(max_length=100, verbose_name="위치")
+    location = models.CharField(max_length=100, blank=True, verbose_name="위치")
     phone_number = models.CharField(max_length=30, blank=True, verbose_name="연락처")
     description = models.TextField(blank=True, verbose_name="설명")
     store_image = models.ImageField(blank=True, upload_to="store/store_pic")
@@ -17,6 +17,7 @@ class Store(models.Model):
     class Meta:
         verbose_name = '가게'
         verbose_name_plural = '가게'
+        ordering = ['likes', ]
 
     def __str__(self):
         return self.name
@@ -27,14 +28,12 @@ class Store(models.Model):
 class Menu(models.Model):
     store = models.ForeignKey(Store, on_delete=models.CASCADE, verbose_name="가게명")
     name = models.CharField(max_length=50, verbose_name="메뉴")
-    description = models.CharField(max_length=50, verbose_name="설명")
-    votes = models.IntegerField(default=0, verbose_name="투표수")
+    description = models.CharField(max_length=50, blank=True, verbose_name="설명")
     food_image = models.ImageField(blank=True, upload_to="store/menu_pic")
 
     class Meta:
         verbose_name = '메뉴'
         verbose_name_plural = '메뉴'
-        ordering = ['-votes',]
 
     def __str__(self):
         return "{} - {}".format(self.store, self.name)
