@@ -3,6 +3,11 @@ from django.shortcuts import reverse
 from taggit.managers import TaggableManager
 
 class Store(models.Model):
+    CATEGORIES = (
+        ('restaurant', '음식집'),
+        ('bar', '술집'),
+        ('cafe', '카페'),
+    )
     name = models.CharField(max_length=50, verbose_name="가게명")
     slug = models.SlugField('SLUG', unique=True, allow_unicode=True, help_text='one word for alias')
     location = models.CharField(max_length=100, blank=True, verbose_name="위치")
@@ -13,6 +18,7 @@ class Store(models.Model):
     modified_dt = models.DateTimeField(auto_now=True)
     likes = models.IntegerField(verbose_name='좋아요', default=0)
     tags = TaggableManager(blank=True)
+    category = models.CharField(max_length=10, choices=CATEGORIES)
 
     class Meta:
         verbose_name = '가게'

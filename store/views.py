@@ -14,6 +14,13 @@ class StoreIndexView(ListView):
         return Store.objects.all()
 
 
+class CategoryView(ListView):
+    template_name = 'store/index.html'
+    context_object_name = 'store_list'
+
+    def get_queryset(self):
+        return Store.objects.filter(category=self.kwargs['category'])
+
 def store_like(request, pk):
     store = get_object_or_404(Store, pk=pk)
     store.likes += 1

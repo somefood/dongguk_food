@@ -8,34 +8,17 @@
         <div class="d-flex flex-row-reverse">
             <a class="float-right" href="{% url 'store:index'%}">더보기</a>
         </div>
-        {% for store in popular_stores %}
+        {% for store in store_list %}
             <div class="card d-inline-block mr-3" style="width: 250px;">
-                <img class="card-img-top" src="{{ store.store_image.url }}" alt="Card image cap">
+                <img class="card-img-top" src="{% if store.store_image %}{{ store.store_image.url }}{% endif %}" alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title text-center">{{ store.name }}</h5>
+<!--                    <h5 class="card-title text-center">{{ store.name }}</h5>-->
+                    <h5 class="card-title text-center">{{ store.category }}</h5>
                     <p class="card-text" style="height: 50px;">{{store.description}}</p>
-                    <a href="{{ store.get_absolute_url }}" class="btn btn-primary">가게 보기</a>
+                    <a href="{% url 'store:categories' store.category %}" class="btn btn-primary">가게 보기</a>
                 </div>
             </div>
         {% endfor %}
     </div>
 </div>
-<div class="row mt-5">
-    <div class="col-sm">
-    <h2>게시판</h2>
-    <hr>
-    <div class="d-flex flex-row-reverse">
-        <a href="{% url 'board:index'%}">더보기</a>
-    </div>
-    <ul class="list-group">
-        {% for article in latest_articles %}
-        <li class="list-group-item">
-            <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-    </div>
-</div>
-
-
 {% endblock %}
