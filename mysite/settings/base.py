@@ -158,5 +158,6 @@ LOGIN_REDIRECT_URL = 'home'
 # 로그아웃 성공 시, 리다이렉트 url
 LOGOUT_REDIRECT_URL ='home'
 
-DISQUS_SHORTNAME = 'dongguk-food'
+DISQUS_SHORTNAME = 'donnguk-food' # 오타 사용
+# DISQUS_SHORTNAME = 'pydjango-web-programming'
 DISQUS_MY_DOMAIN = 'http://127.0.0.1:8000'

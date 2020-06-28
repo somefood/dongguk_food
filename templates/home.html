@@ -1,24 +1,46 @@
 {% extends 'base.html' %}
-
+{% block extra-style %}
+<style>
+.card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}
+</style>
+{% endblock %}
 {% block content %}
 <div class="row mt-5">
     <div class="col-sm">
     <h2>맛집 리스트</h2>
         <hr>
-        <div class="d-flex flex-row-reverse">
-            <a class="float-right" href="{% url 'store:index'%}">더보기</a>
+        <div class="d-flex flex-row-reverse mb-5">
+            <a class="float-right" href="{% url 'store:index' %}">전체 보기</a>
         </div>
         {% for store in store_list %}
-            <div class="card d-inline-block mr-3" style="width: 250px;">
+            <div class="card d-inline-block mr-3" style="width: 21rem; overflow: hidden;">
                 <img class="card-img-top" src="{% if store.store_image %}{{ store.store_image.url }}{% endif %}" alt="Card image cap">
                 <div class="card-body">
 <!--                    <h5 class="card-title text-center">{{ store.name }}</h5>-->
                     <h5 class="card-title text-center">{{ store.category }}</h5>
                     <p class="card-text" style="height: 50px;">{{store.description}}</p>
-                    <a href="{% url 'store:categories' store.category %}" class="btn btn-primary">가게 보기</a>
+                    <a href="{% url 'store:category' store.category %}" class="btn btn-primary">더보기</a>
                 </div>
             </div>
         {% endfor %}
     </div>
 </div>
+{% endblock %}
+
+{% block extra-script %}
+<script>
+    $(document).ready(function(){
+        var names = $(".card-title");
+        console.log(names[0].innerHTML);
+        console.log(names[1].innerHTML);
+        console.log(names[2].innerHTML);
+        names[0].innerHTML = '음식집';
+        names[1].innerHTML = '술집';
+        names[2].innerHTML = '카페';
+    });
+</script>
 {% endblock %}

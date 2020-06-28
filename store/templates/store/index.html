@@ -1,26 +1,35 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block extra-style %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
 
 {% block content %}
+<h1 class="my-4">가게 소개</h1>
 <div class="row">
+  {% for store in store_list %}
+  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-12">
+    <div class="thumbnail clearfix">
+      <a href="{{ store.get_absolute_url }}"><img src="{% if store.store_image %}{{ store.store_image.url }}{% else %}http://placehold.it/750x300{% endif %}" alt=""></a>
+      <div class="caption clearfix">
+        <p class="eat_deal none">EAT딜</p>
+        <h3><a class="text-dark" href="{{ store.get_absolute_url }}">{{ forloop.counter}}. {{ store.name }}</a></h3>
+        <span class="point">4.6</span>
+        <address>{{ store.location }}</address>
+        <span class="user_icon glyphicon glyphicon-asterisk"></span>
+        <div class="contets clearfix">
+        <span class="user_review">{{ store.description }}</span>
 
-      <!-- Blog Entries Column -->
-      <div class="col-md-8 mx-auto">
-
-        <h1 class="my-4">가게 소개
-        </h1>
-        {% for store in store_list %}
-        <!-- Blog Post -->
-        <div class="card mb-5">
-          <img class="card-img-top" src="{% if store.store_image %}{{ store.store_image.url }}{% else %}http://placehold.it/750x300{% endif %}" alt="Card image cap">
-          <div class="card-body">
-            <h2 class="card-title">{{ store.name }}</h2>
-            <p class="card-text">{{ store.description }}</p>
-            <a href="{{ store.get_absolute_url }}" class="btn btn-primary">Read More &rarr;</a>
-          </div>
-          <div class="card-footer text-muted">
-            Posted on {{ store.created_dt|date:"Y-m-d" }}
-          </div>
         </div>
-        {% endfor %}
+        <p class="contents_more"><a href="{{ store.get_absolute_url }}">{{ store.name}} 더보기</a></p>
+        <a class="user_go">
+            <span class="glyphicon glyphicon-heart-empty"></span>
+            <span>가고싶다</span>
+        </a>
       </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}
