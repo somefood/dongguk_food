@@ -21,7 +21,7 @@ class BoardIndex(ListView):
 
 class BoardCreateV(LoginRequiredMixin, CreateView):
     model = UserBoard
-    fields = ('title', 'content')
+    fields = ('title', 'content', 'tags')
     success_url = reverse_lazy('board:index')
     template_name = 'board/board_form.html'
 
@@ -32,7 +32,7 @@ class BoardCreateV(LoginRequiredMixin, CreateView):
 
 class BoardUpdateV(OwnerOnlyMixin, UpdateView):
     model = UserBoard
-    fields = ('title', 'content')
+    fields = ('title', 'content', 'tags')
     template_name = 'board/board_form.html'
 
 

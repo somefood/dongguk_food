@@ -42,7 +42,7 @@ class StoreDetailView(DetailView):
 
 class StoreCreateView(AdminOnlyMixin, CreateView):
     model = Store
-    fields = ['category', 'name', 'location', 'phone_number', 'description', 'store_image']
+    fields = ['category', 'name', 'location', 'phone_number', 'description', 'store_image', 'tags', 'running_time']
     initial = {'slug': 'auto-filling-do-not-input'}
     success_url = reverse_lazy('store:index')
 
@@ -68,7 +68,7 @@ class StoreCreateView(AdminOnlyMixin, CreateView):
 
 class StoreEditView(AdminOnlyMixin, UpdateView):
     model = Store
-    fields = ['name', 'location', 'phone_number', 'description', 'store_image']
+    fields = ['category', 'name', 'location', 'phone_number', 'description', 'store_image', 'tags', 'running_time']
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

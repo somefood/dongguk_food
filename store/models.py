@@ -20,6 +20,7 @@ class Store(models.Model):
     likes = models.IntegerField(verbose_name='좋아요', default=0)
     tags = TaggableManager(blank=True)
     category = models.CharField(max_length=10, choices=CATEGORIES)
+    running_time = models.CharField(max_length=30, blank=True, verbose_name='영업시간')
 
     class Meta:
         verbose_name = '가게'

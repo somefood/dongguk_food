@@ -13,6 +13,11 @@
         {{ form.content|add_label_class:"" }}
         {{ form.content|add_class:"form-control"|attr:"id:post_content" }}
     </div>
+    <div class="form-group">
+        {% load taggit_templatetags2_tags %}
+        {{ form.tags|add_label_class:"col-form-label col-sm-3 font-weight-bold" }}
+        {{ form.tags|add_class:"form-control" }}
+    </div>
     <button type="submit" class="btn btn-primary"> Save</button>
 </form>
 {% endblock %}

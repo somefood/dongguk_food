@@ -41,8 +41,17 @@
             {{ form.phone_number|add_class:"form-control" }}
     </div>
     <div class="form-group">
+            {{ form.running_time|add_label_class:"col-form-label col-sm-3 font-weight-bold" }}
+            {{ form.running_time|add_class:"form-control" }}
+    </div>
+    <div class="form-group">
             {{ form.description|add_label_class:"col-form-label col-sm-3 font-weight-bold" }}
             {{ form.description|add_class:"form-control" }}
+    </div>
+    <div class="form-group">
+            {% load taggit_templatetags2_tags %}
+            {{ form.tags|add_label_class:"col-form-label col-sm-3 font-weight-bold" }}
+            {{ form.tags|add_class:"form-control" }}
     </div>
     <div class="form-group">
             {{ form.store_image|add_label_class:"col-form-label col-sm-3 font-weight-bold" }}

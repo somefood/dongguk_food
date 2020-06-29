@@ -32,7 +32,7 @@
         <table class="table">
             <tbody>
             <tr>
-                <th>주소</th>
+                <th style="width: 20%;">주소</th>
                 <td>{{store.location}}</td>
             </tr>
             <tr>
@@ -41,7 +41,7 @@
             </tr>
             <tr>
                 <th>영업시간</th>
-                <td>(추가)</td>
+                <td>{{store.running_time}}</td>
             </tr>
             <tr>
                 <th>메뉴</th>
@@ -95,8 +95,20 @@
 <button class="btn btn-primary" onclick="location.href='{% url 'store:delete' store.pk %}'">삭제</button>
 <button class="btn btn-primary" onclick="showPopup();">삭제</button>
 {% endif %}
-<div class="row store-footer">
+
+<div class="row mt-3 store-footer">
     <div class="col-md-7">
+        <div>
+            <b>TAGS</b> <i class="fas fa-tag"></i>
+            {% load taggit_templatetags2_tags %}
+            {% get_tags_for_object object as "tags" %}
+            {% for tag in tags %}
+            <a href="{% url 'helpers:tagged_object_list' tag.name %}">{{tag.name}}</a>
+            {% endfor %}
+            &emsp;
+            <a href="{% url 'helpers:tag_cloud' %}"><span class="btn btn-info btn-sm">TagCloud</span></a>
+        </div>
+        <br>
         <div id="disqus_thread"></div>
     </div>
 </div>
