@@ -1,12 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>검색결과: {{ search_word }}</h2>
-{% for store in store_list %}
-<a href="{{ store.get_absolute_url }}">{{ store.name }}</a>
-{% endfor %}
-
-{% for board in board_list %}
-<a href="{{ board.get_absolute_url }}">{{ board.title }}</a>
-{% endfor %}
+<h2 class="mb-5">검색결과: {{ search_word }}</h2>
+{% if error %}
+    <div class="alert alert-danger">
+        <div class="font-weight-bold">{{ error }}</div>
+    </div>
+{% endif %}
+<table class="table">
+    <tbody>
+        {% for store in store_list %}
+        <tr>
+            <th><a href="{{ store.get_absolute_url }}">{{ store.name }}</a></th>
+        </tr>
+        {% endfor %}
+        {% for board in board_list %}
+        <tr>
+            <th><a href="{{ board.get_absolute_url }}">{{ board.title }}</a></th>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

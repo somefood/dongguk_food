@@ -7,15 +7,18 @@
 
 {% block content %}
 <h1 class="my-4">가게 소개</h1>
+{% if user.is_staff %}
+<button class="btn btn-primary" onclick="location.href='{% url 'store:store_add' %}'">추가</button>
+{% endif %}
 <div class="row">
   {% for store in store_list %}
   <div class="col-xs-4 col-sm-4 col-md-4 col-lg-12">
     <div class="thumbnail clearfix">
-      <a href="{{ store.get_absolute_url }}"><img src="{% if store.store_image %}{{ store.store_image.url }}{% else %}http://placehold.it/750x300{% endif %}" alt=""></a>
+      <a href="{{ store.get_absolute_url }}"><img src="{% if store.store_image %}{{ store.store_image.url }}{% else %}{% static 'img/alt_image.png' %}{% endif %}" alt=""></a>
       <div class="caption clearfix">
         <p class="eat_deal none">EAT딜</p>
         <h3><a class="text-dark" href="{{ store.get_absolute_url }}">{{ forloop.counter}}. {{ store.name }}</a></h3>
-        <span class="point">4.6</span>
+        <span class="point">{{ store.likes }}</span>
         <address>{{ store.location }}</address>
         <span class="user_icon glyphicon glyphicon-asterisk"></span>
         <div class="contets clearfix">
@@ -30,6 +33,7 @@
       </div>
     </div>
   </div>
+  <hr>
   {% endfor %}
 </div>
 {% endblock %}

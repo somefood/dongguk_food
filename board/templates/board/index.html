@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
 
-
+{% block extra-style %}
+<style>
+    .board-footer {
+        text-align: center;
+    }
+</style>
+{% endblock %}
 {% block content %}
 <div class="row mt-lg-5">
     <div class="col">
-        <button type="button" class='btn btn-primary float-right' onclick="location.href='{% url 'board:post_new' %}'">
+        <button type="button" class='btn btn-primary float-right' onclick="location.href='{% url 'board:post_add' %}'">
             게시글 작성
         </button>
     </div>
@@ -29,4 +35,15 @@
     {% endfor %}
   </tbody>
 </table>
+<div class="row">
+    <div class="col board-footer">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number}}"><i class="fas fa-arrow-circle-left"></i></a>
+        {% endif %}
+        Page {{page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}"><i class="fas fa-arrow-circle-right"></i></a>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

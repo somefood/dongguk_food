@@ -1,6 +1,7 @@
 from django.db import models
 from django.shortcuts import reverse
 from taggit.managers import TaggableManager
+from django.utils.text import slugify
 
 class Store(models.Model):
     CATEGORIES = (
@@ -8,7 +9,7 @@ class Store(models.Model):
         ('bar', '술집'),
         ('cafe', '카페'),
     )
-    name = models.CharField(max_length=50, verbose_name="가게명")
+    name = models.CharField(max_length=50, verbose_name="가게명", unique=True)
     slug = models.SlugField('SLUG', unique=True, allow_unicode=True, help_text='one word for alias')
     location = models.CharField(max_length=100, blank=True, verbose_name="위치")
     phone_number = models.CharField(max_length=30, blank=True, verbose_name="연락처")
@@ -23,10 +24,14 @@ class Store(models.Model):
     class Meta:
         verbose_name = '가게'
         verbose_name_plural = '가게'
-        ordering = ['likes', ]
+        ordering = ['-likes', ]
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name, allow_unicode=True)
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('store:detail', args=[self.slug])

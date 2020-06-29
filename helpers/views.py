@@ -12,15 +12,9 @@ from django.views.generic import ListView, DeleteView, TemplateView
 
 def search_word(request):
     if request.method == "POST":
-        print('hi1')
         form = SearchForm(request.POST)
-        print('hi2')
         if form.is_valid():
-            print('hi3')
-            print(request.POST)
-            print('hi4')
-            q = request.POST.get('q', '검색명을 입력해주세요.')
-            print(q)
+            q = request.POST.get('q', '')
             if q:
                 store_list = Store.objects.filter(Q(name__icontains=q) | Q(description__icontains=q)).distinct()
                 board_list = UserBoard.objects.filter(Q(title__icontains=q) | Q(content__icontains=q)).distinct()
@@ -28,8 +22,9 @@ def search_word(request):
                                                                       'board_list': board_list,
                                                                       'search_word': q})
             else:
-                return render(request, 'helpers/search_result.html', {'search_word: q'})
-            # return render(request, 'helpers/search_result', {})
+                return render(request, 'helpers/search_result.html', {'search_word': q})
+        else:
+            return render(request, 'helpers/search_result.html', {'error': '검색결과가 없습니다.'})
 
 
 # class SearchFormView(FormView):

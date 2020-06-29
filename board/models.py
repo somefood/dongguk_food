@@ -2,6 +2,21 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.shortcuts import reverse
 from taggit.managers import TaggableManager
+from django.utils.text import slugify
+
+
+def generate_unique_slug(klass, field):
+    """
+    return unique slug if origin slug is exist.
+    """
+    origin_slug = slugify(field, allow_unicode=True)
+    unique_slug = origin_slug
+    numb = 1
+    while klass.objects.filter(slug=unique_slug).exists():
+        unique_slug = '%s-%d' % (origin_slug, numb)
+        numb += 1
+    return unique_slug
+
 
 class UserBoard(models.Model):
     title = models.CharField(max_length=50, blank=True, verbose_name='제목')
@@ -14,13 +29,18 @@ class UserBoard(models.Model):
     tags = TaggableManager(blank=True)
 
     def __str__(self):
-        return '유저:{}, 제목:{}'.format(self.writer, self.title)
+        return '{}-{}'.format(self.writer, self.title)
 
     def get_absolute_url(self):
         return reverse('board:detail', args=[self.slug])
 
-    def board_save(self):
-        self.save()
+    def save(self, **kwargs):
+        if self.slug:
+            if slugify(self.title, allow_unicode=True) != self.slug:
+                self.slug = generate_unique_slug(UserBoard, self.title)
+        else:
+            self.slug = generate_unique_slug(UserBoard, self.title)
+        super().save(**kwargs)
 
     class Meta:
         ordering = ['-created_dt']

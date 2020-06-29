@@ -14,11 +14,7 @@ from django.conf import settings
 class BoardIndex(ListView):
     template_name = 'board/index.html'
     context_object_name = 'board_list'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        print(context)
-        return context
+    paginate_by = 10
 
     def get_queryset(self):
         return UserBoard.objects.all()
@@ -38,6 +34,7 @@ class BoardUpdateV(OwnerOnlyMixin, UpdateView):
     model = UserBoard
     fields = ('title', 'content')
     template_name = 'board/board_form.html'
+
 
 class BoardDeleteV(OwnerOnlyMixin, DeleteView):
     model = UserBoard

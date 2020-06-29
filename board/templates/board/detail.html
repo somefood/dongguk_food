@@ -1,34 +1,49 @@
 {% extends 'base.html' %}
+{% block extra-style %}
+<style>
+    .board-body{
+        min-height: 150px;
+    }
+</style>
+{% endblock %}
 {% block content %}
 
 <div class="d-flex flex-row-reverse">
-    <button class="btn btn-primary mb-3 p-2" onclick="location.href='{% url 'board:post_delete' userboard.pk %}'">삭제</button>
-    <button class="btn btn-primary mb-3 p-2" onclick="location.href='{% url 'board:post_edit' userboard.pk %}'">수정</button>
+
 </div>
-<div class="border border-primary rounded">
-    <div class="row">
-        <div class="col col-md-5"><h1>{{ userboard.title }}</h1></div>
+<div class="row board-header">
+    <div class="col-md-11">
+        <h1>{{ userboard.title }}</h1>
+        <h5>{{ userboard.writer }}</h5>
+        {{ userboard.created_dt|date:"Y.m.d h:i"}}
     </div>
-    <div class="row">
-        <div class="col"><h1>{{ userboard.writer }}</h1></div>
-    </div>
-    <div class="row mt-5">
+</div>
+<hr>
+<div class="row board-body">
+    <div class="col-md-11">
         <div class="col">{{ userboard.content|safe}}</div>
     </div>
-    <br>
-    <div>
-        <b>TAGS</b> <i class="fas fa-tag"></i>
-        {% load taggit_templatetags2_tags %}
-        {% get_tags_for_object object as "tags" %}
-        {% for tag in tags %}
-        <a href="{% url 'helpers:tagged_object_list' tag.name %}">{{tag.name}}</a>
-        {% endfor %}
-        &emsp;
-        <a href="{% url 'helpers:tag_cloud' %}"><span class="btn btn-info btn-sm">TagCloud</span></a>
-    </div>
-    <br>
-    <div id="disqus_thread"></div>
 </div>
+<hr>
+<button class="btn btn-primary mb-3 p-2" onclick="location.href='{% url 'board:post_edit' userboard.pk %}'">수정</button>
+<button class="btn btn-primary mb-3 p-2" onclick="location.href='{% url 'board:post_delete' userboard.pk %}'">삭제</button>
+<div class="row body-footer">
+    <div class="col-md-11">
+        <div>
+            <b>TAGS</b> <i class="fas fa-tag"></i>
+            {% load taggit_templatetags2_tags %}
+            {% get_tags_for_object object as "tags" %}
+            {% for tag in tags %}
+            <a href="{% url 'helpers:tagged_object_list' tag.name %}">{{tag.name}}</a>
+            {% endfor %}
+            &emsp;
+            <a href="{% url 'helpers:tag_cloud' %}"><span class="btn btn-info btn-sm">TagCloud</span></a>
+        </div>
+        <br>
+        <div id="disqus_thread"></div>
+    </div>
+</div>
+<hr>
 {% endblock %}
 
 {% block extra-script %}

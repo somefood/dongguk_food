@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<form action="" method="post">
+{% extends "base.html" %}
+
+{% block content %}
+<form action="." method="post">
     {% csrf_token %}
-    <p>Are you sure you want to delete "{ obejct }"?</p>
-    <input type="submit" value="Confirm">
+    <p>"{{ object }}"게시글을 삭제하겠습니까?</p>
+    <input type="submit" value="삭제" class="btn btn-danger">
 </form>
-</body>
-</html>
+<button class="btn btn-danger" onclick="history.back()">되돌아가기</button>
+{% endblock %}

@@ -1,14 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+{% if form.errors %}
+<div class="alert alert-danger">
+    <div class="font-weight-bold">아래의 에러 사항이 있습니다.</div>
+    {{ form.errors }}
+</div>
+{% endif %}
+{% if formset.errors %}
+<div class="alert alert-danger">
+    <div class="font-weight-bold">아래의 에러 사항이 있습니다.</div>
+    {% for formerrors in formset.errors %}
+        {{ formerrors }}
+    {% endfor%}
+</div>
+{% endif %}
+
+<h1>가게</h1>
+{% if form.is_multipart or formset.is_multipart %}
+<form action="" method="post" enctype="multipart/form-data">
+{% else %}
 <form action="" method="post">
+{% endif %}
     {% csrf_token %}
-    {{ form.as_p}}
-    <input type="submit" value="submit">
+    <div class="form-group">
+            {{ form.category|add_label_class:"col-form-label col-sm-3 font-weight-bold" }}
+            {{ form.category|add_class:"form-control" }}
+    </div>
+    <div class="form-group">
+            {{ form.name|add_label_class:"col-form-label col-sm-3 font-weight-bold" }}
+            {{ form.name|add_class:"form-control" }}
+        </div>
+    <div class="form-group">
+            {{ form.location|add_label_class:"col-form-label col-sm-3 font-weight-bold" }}
+            {{ form.location|add_class:"form-control" }}
+    </div>
+    <div class="form-group">
+            {{ form.phone_number|add_label_class:"col-form-label col-sm-3 font-weight-bold" }}
+            {{ form.phone_number|add_class:"form-control" }}
+    </div>
+    <div class="form-group">
+            {{ form.description|add_label_class:"col-form-label col-sm-3 font-weight-bold" }}
+            {{ form.description|add_class:"form-control" }}
+    </div>
+    <div class="form-group">
+            {{ form.store_image|add_label_class:"col-form-label col-sm-3 font-weight-bold" }}
+            {{ form.store_image|add_class:"form-control-file" }}
+    </div>
+    <hr class="mt-5">
+    <h1>메뉴</h1>
+    {{ formset.management_form }}
+    {% for form in formset %}
+        {{ form.id }}
+        {# form.store #}
+        <div class="form-group">
+            {{ form.name|add_label_class:"col-form-label col-sm-3 font-weight-bold" }}
+            {{ form.name|add_class:"form-control" }}
+        </div>
+        <div class="form-group">
+            {{ form.description|add_label_class:"col-form-label col-sm-3 font-weight-bold" }}
+            {{ form.description|add_class:"form-control" }}
+        </div>
+        <div class="form-group">
+            {{ form.food_image|add_label_class:"col-form-label col-sm-3 font-weight-bold" }}
+            {{ form.food_image|add_class:"form-control-file" }}
+        </div>
+    {% endfor %}
+    <input class="btn btn-primary" type="submit" value="수정">
 </form>
-</body>
-</html>
+{% endblock %}
