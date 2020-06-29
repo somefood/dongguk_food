@@ -68,7 +68,7 @@
             <div class="carousel-inner">
                 {% for menu in store.menu_set.all %}
                 <div class="carousel-item">
-                    <img src="{% if menu.food_image %}{{ store.store_image.url }}{% else %}{% static 'img/alt_image.png' %}{% endif %}" class="d-block w-100 carousel-image" alt="">
+                    <img src="{% if menu.food_image %}{{ menu.food_image.url }}{% else %}{% static 'img/alt_image.png' %}{% endif %}" class="d-block w-100 carousel-image" alt="">
                     <div class="carousel-caption d-none d-md-block">
                         <section>
                             <h5>{{ menu.name }}</h5>
