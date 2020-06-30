@@ -3,14 +3,10 @@ from django.contrib.auth.models import User
 from .models import Profile
 from django import forms
 
-from django.forms.models import inlineformset_factory
-
-NewUserFormset = inlineformset_factory(User, Profile,
-                                       fields=['nickname', 'phone_number'],
-                                       extra=1)
 
 class SignupForm(ModelForm): #회원가입을 제공하는 class이다.
-    password_check = forms.CharField(max_length=200, widget=forms.PasswordInput(attrs={'placeholder': '비밀번호를 한 번 더 입력해주세요.', 'class': 'form-control'}))
+    password_check = forms.CharField(max_length=200, widget=forms.PasswordInput(attrs={
+        'placeholder': '비밀번호를 한 번 더 입력해주세요.', 'class': 'form-control', 'id': 'loginPW-check'}))
     # 아쉽게도 User 모델에서는 password_check 필드를 제공해주지 않는다.
     # 따라서 따로 password_check 필드를 직접 정의해줄 필요가 있다.
     # 입력 양식은 type은 기본이 text이다. 따라서 다르게 지정해주고 싶을 경우 widget을 이용한다.
@@ -24,8 +20,8 @@ class SignupForm(ModelForm): #회원가입을 제공하는 class이다.
     class Meta:
         model = User
         widgets = {
-            'username': forms.TextInput(attrs={'placeholder': '아이디를 입력해주세요.', 'class': 'form-control'}),
-            'password': forms.PasswordInput(attrs={'placeholder': '비밀번호를 입력해주세요.', 'class': 'form-control'}),
+            'username': forms.TextInput(attrs={'placeholder': '아이디를 입력해주세요.','id': 'loginID', 'class': 'form-control'}),
+            'password': forms.PasswordInput(attrs={'placeholder': '비밀번호를 입력해주세요.', 'id': 'loginPW', 'class': 'form-control'}),
             # 'password_check': forms.PasswordInput(attrs={'placeholder': '비밀번호를 입력해주세요.', 'class': 'signName'}),
         }
         fields = ['username', 'password', 'password_check', 'email']
@@ -46,6 +42,6 @@ class ProfileForm(ModelForm):
         model = Profile
         fields = ['nickname', 'phone_number',]
         widgets = {
-            'nickname': forms.TextInput(attrs={'placeholder': '닉네임을 입력해주세요.', 'class': 'form-control',}),
-            'phone_number': forms.TextInput(attrs={'placeholder': '전화번호를 입력해주세요.', 'class': 'form-control'}),
+            'nickname': forms.TextInput(attrs={'placeholder': '닉네임을 입력해주세요.', 'class': 'form-control', 'id': 'nickName'}),
+            'phone_number': forms.TextInput(attrs={'placeholder': '전화번호를 입력해주세요.', 'class': 'form-control', 'id': 'phoneNumber'}),
         }

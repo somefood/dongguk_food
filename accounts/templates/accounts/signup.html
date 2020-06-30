@@ -13,17 +13,17 @@
 {% endif %}
 <form action="" method="POST">
 	{% csrf_token %}
-	<!--{{ f.as_table }}-->
 	<div class="form-group">
 		<h1><img src="{% static 'img/logo.png' %}" class="mainLogo"></h1>
 		<label for="id">ID</label>
 		{{ f.username }}
 	</div>
+	<div id="check-user"></div>
 	<div class="form-group">
 		<label for="nickname">닉네임</label>
 		{{ ef.nickname }}
 	</div>
-	<button class="btn btn-outline-primary">중복 확인</button>
+	<div id="check-nickname"></div>
 	<div class="form-group">
 		<label for="password">비밀번호</label>
 		{{ f.password }}
@@ -43,13 +43,13 @@
  {% endblock %}
 
 {% block extra-script %}
-<script>
+<script type="text/javascript">
 	$(function(){
 		$('#alert-success').hide();
 		$('#alert-danger').hide();
-		$("#id_password_check").keyup(function(){
-			var pwd1=$('#id_password').val();
-			var pwd2=$('#id_password_check').val();
+		$("#loginPW-check").keyup(function(){
+			var pwd1=$('#loginPW').val();
+			var pwd2=$('#loginPW-check').val();
 			if(pwd1 != "" || pwd2 != ""){
 				if(pwd1 == pwd2){
 					$("#alert-success").show();
@@ -60,6 +60,54 @@
 				}
 			}
 		});
+	});
+	// ID 조회하는 기능
+	$("#loginID").keyup(function(){
+		var userName = $(this).val();
+		if(userName) {
+			$.ajax({
+				type: "POST",
+				url: "{% url 'accounts:check_user' %}",
+				data: {"user_name": userName, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+				dataType: "json",
+				success: function (data) {
+					if (data.msg) {
+						$('#check-user').removeClass('alert alert-danger').addClass('alert alert-success').text('사용가능합니다.');
+					} else {
+						$('#check-user').removeClass('alert alert-success').addClass('alert alert-danger').text('사용불가합니다.');
+					}
+				},
+				error: function (request, status, error) {
+
+				},
+			})
+		} else {
+			$('#check-user').removeClass('alert alert-success alert-danger').text(' ');
+		}
+	});
+	// 닉네임 조회하는 기능
+	$("#nickName").keyup(function(){
+		var nickName = $(this).val();
+		if(nickName) {
+			$.ajax({
+				type: "GET",
+				url: "{% url 'accounts:check_nickname' %}",
+				data: {"user_nickname": nickName },
+				dataType: "json",
+				success: function (data) {
+					if (data.msg) {
+						$('#check-nickname').removeClass('alert alert-danger').addClass('alert alert-success').text('사용가능합니다.');
+					} else {
+						$('#check-nickname').removeClass('alert alert-success').addClass('alert alert-danger').text('사용불가합니다.');
+					}
+				},
+				error: function (request, status, error) {
+
+				},
+			})
+		} else {
+			$('#check-nickname').removeClass('alert alert-success alert-danger').text(' ');
+		}
 	});
 </script>
 {% endblock %}

@@ -1,9 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import SigninForm, SignupForm, ProfileForm
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth.models import User
-from django.urls import reverse_lazy, reverse
 from .models import Profile
+from django.urls import reverse_lazy, reverse
+
+import json
+from django.http import HttpResponse
 
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -14,8 +17,25 @@ from django.contrib.auth import login, authenticate
 
 from django.contrib.auth import logout # 로그아웃 처리하기 위해 선언
 
-from django.contrib.auth.forms import UserCreationForm
-from django.views import generic
+
+def check_user(request):
+    if not User.objects.filter(username=request.POST.get('user_name')).exists():
+        print('possible')
+        context = {'msg': True}
+    else:
+        print('impossible')
+        context = {'msg': False}
+    return HttpResponse(json.dumps(context), content_type="application/json")
+
+
+def check_nickname(request):
+    if not Profile.objects.filter(nickname=request.GET.get('user_nickname')).exists():
+        print('possible')
+        context = {'msg': True}
+    else:
+        print('impossible')
+        context = {'msg': False}
+    return HttpResponse(json.dumps(context), content_type="application/json")
 
 def signin(request): #로그인 기능
     if request.user.is_authenticated:
