@@ -49,6 +49,7 @@ INSTALLED_APPS += [
     'taggit',
     'taggit_templatetags2',
     'sorl.thumbnail',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [

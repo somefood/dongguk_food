@@ -14,7 +14,7 @@
 <form action="" method="POST">
 	{% csrf_token %}
 	<div class="form-group">
-		<h1><img src="{% static 'img/logo.png' %}" class="mainLogo"></h1>
+		<h1><img src="{% static 'img/logo.png' %}" style="width:100%;"></h1>
 		<label for="id">ID</label>
 		{{ f.username }}
 	</div>

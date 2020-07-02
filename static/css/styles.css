@@ -1,3 +1,41 @@
 .fa-heart {
     color: red;
 }
+.board-table thead tr th {
+    text-align: center;
+}
+.board-table .author, .voteNum, .time{
+    text-align: center;
+    white-space: normal;
+}
+
+@media (max-width: 768px) {
+    #pc{
+        display: none;
+    }
+    #mobile{
+        display: block;
+    }
+}
+@media (min-width: 769px) {
+    #pc{
+        display: block;
+    }
+    #mobile{
+        display: none;
+    }
+}
+
+.board-item {
+    height: 70px;
+    position: relative;
+}
+.board-item-info {
+    position: absolute;
+    left: 10
+}
+.board-item-writer {
+    position: absolute;
+    right: 10px;
+
+}

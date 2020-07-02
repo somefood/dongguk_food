@@ -1,12 +1,44 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p>내가 쓴 글</p>
-<ul class="list-group">
-{% for list in mylists %}
-    <li class="list-group-item">
-        <a href="{{ list.get_absolute_url }}">{{ list.title }}</a>
-    </li>
-{% endfor %}
-</ul>
+<div class="h1">내가 쓴 글</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>제목</th>
+            <th>작성날짜</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in mylists %}
+        <tr>
+            <td><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></td>
+            <td>{{ item.created_dt}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="h1">좋아요 누른 글</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>제목</th>
+            <th>작성날짜</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in user.like_stores.all %}
+        <tr>
+            <td><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></td>
+            <td>{{ item.created_dt}}</td>
+        </tr>
+        {% endfor %}
+        {% for item in user.like_boards.all %}
+        <tr>
+            <td><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></td>
+            <td>{{ item.created_dt}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

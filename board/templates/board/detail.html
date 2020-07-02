@@ -14,21 +14,20 @@
 
 </div>
 <div class="row board-header">
-    <div class="col-sm-10">
-        <h1>{{ userboard.title }}</h1>
-        <h5>{{ userboard.writer }}</h5>
-        {{ userboard.created_dt|date:"Y.m.d h:i"}}
-    </div>
-    <div class="col-sm-2">
-        <button post-id="{{ userboard.pk }}" class="btn userboard-like">
-            {% if user in userboard.like_users.all %}
-                <i id="like-heart-{{userboard.pk}}" class="fas fa-heart fa-3x"></i></button>
-            {% else %}
-                <i id="like-heart-{{userboard.pk}}" class="far fa-heart fa-3x"></i></button>
-            {% endif %}
-        <br>
-        <span id="count-{{ userboard.pk }}" style="text-align: center;">{{ userboard.like_users.count }}개</span>
-        <span id="like-user-{{ userboard.pk }}"></span>
+    <div class="col-sm-12">
+        <div class="float-right text-center">
+            <button post-id="{{ userboard.pk }}" class="btn userboard-like">
+                {% if user in userboard.like_users.all %}
+                    <i id="like-heart-{{userboard.pk}}" class="fas fa-heart fa-3x"></i></button>
+                {% else %}
+                    <i id="like-heart-{{userboard.pk}}" class="far fa-heart fa-3x"></i></button>
+                {% endif %}
+            <br>
+            <span id="count-{{ userboard.pk }}">{{ userboard.like_users.count }}개</span>
+            <span id="like-user-{{ userboard.pk }}"></span>
+        </div>
+        <div class="h1">{{ userboard.title }}</div>
+        <span class="h5">{{ userboard.writer }}</span> {{ userboard.created_dt|date:"Y.m.d h:i"}}
     </div>
 </div>
 <hr>

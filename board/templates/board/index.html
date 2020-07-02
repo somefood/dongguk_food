@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
 
 {% block extra-style %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
 <style>
     .board-footer {
         text-align: center;
@@ -9,34 +12,46 @@
 {% endblock %}
 {% block content %}
 <div class="row mt-lg-5">
+    <div class="h1"><a class="text-warning" href="{% url 'board:index' %}">게시판</a></div>
     <div class="col">
         <button type="button" class='btn btn-primary float-right' onclick="location.href='{% url 'board:post_add' %}'">
             게시글 작성
         </button>
     </div>
 </div>
-<table class="table">
+<table id="pc" class="table board-table">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">제목</th>
-      <th scope="col">닉네임</th>
-      <th scope="col">날짜</th>
-      <th scope="col">추천</th>
+      <th style="width:60%;">제목</th>
+      <th style="width:15%;">글쓴이</th>
+      <th style="width:5%;">추천</th>
+      <th style="width:20%;">날짜</th>
     </tr>
   </thead>
   <tbody>
     {% for item in board_list %}
     <tr>
-      <th scope="row">{{ forloop.counter }}</th>
-      <td><a href="{% url 'board:detail' item.slug %}">{{ item.title }}</a></td>
-      <td>{% if item.writer.profile.nickname %}{{ item.writer.profile.nickname }}{% else %}{{ item.writer }}{% endif %}</td>
-      <td>{{ item.created_dt }}</td>
-      <td>{{ item.like_count }}</td>
+      <td><a class="text-dark" href="{% url 'board:detail' item.slug %}">{{ item.title }}</a></td>
+      <td class="author">{% if item.writer.profile.nickname %}{{ item.writer.profile.nickname }}{% else %}{{ item.writer }}{% endif %}</td>
+      <td class="text-primary voteNum">{{ item.like_count }}</td>
+      <td class="time">{{ item.created_dt|naturalday }}</td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
+
+<ul id="mobile" class="list-group">
+    {% for item in board_list %}
+    <li class="list-group-item board-item">
+        <a href="{{item.get_absolute_url}}" class="text-dark font-weight-bold">{{item.title}}</a>
+        <div class="board-item-info">
+            <span class="text-primary"><i class="fa fa-thumbs-up" aria-hidden="true"></i> {{item.like_count}}</span>
+            <span>{{item.created_dt|naturalday}}</span>
+        </div>
+        <div class="board-item-writer">{% if item.writer.profile.nickname %}{{ item.writer.profile.nickname }}{% else %}{{ item.writer }}{% endif %}</div>
+    </li>
+    {% endfor %}
+</ul>
 <div class="row">
     <div class="col board-footer">
         {% if page_obj.has_previous %}
