@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import reverse
 from taggit.managers import TaggableManager
 from django.utils.text import slugify
-
+from django.conf import settings
 
 def generate_unique_slug(klass, field):
     """
@@ -25,7 +25,8 @@ class UserBoard(models.Model):
     content = models.TextField(verbose_name='내용')
     created_dt = models.DateTimeField(auto_now_add=True)
     modified_dt = models.DateTimeField(auto_now=True)
-    likes = models.IntegerField(verbose_name='좋아요', default=0)
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_boards')
+    like_count = models.PositiveIntegerField(default=0)
     tags = TaggableManager(blank=True)
 
     def __str__(self):

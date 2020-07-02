@@ -1,42 +1,26 @@
-/*!
-    * Start Bootstrap - Resume v6.0.1 (https://startbootstrap.com/template-overviews/resume)
-    * Copyright 2013-2020 Start Bootstrap
-    * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-resume/blob/master/LICENSE)
-    */
-    (function ($) {
-    "use strict"; // Start of use strict
+$(document).ready(function () {
+    $('.carousel-item:first-child').addClass('active');
+});
 
-    // Smooth scrolling using jQuery easing
-    $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function () {
-        if (
-            location.pathname.replace(/^\//, "") ==
-                this.pathname.replace(/^\//, "") &&
-            location.hostname == this.hostname
-        ) {
-            var target = $(this.hash);
-            target = target.length
-                ? target
-                : $("[name=" + this.hash.slice(1) + "]");
-            if (target.length) {
-                $("html, body").animate(
-                    {
-                        scrollTop: target.offset().top,
-                    },
-                    1000,
-                    "easeInOutExpo"
-                );
-                return false;
+$("[class*=like]").click(function () {
+    var pk = $(this).attr('post-id')
+    $.ajax({
+        type: "GET",
+        url: MyGlobal.url,
+        data: {'pk': pk},
+        dataType: "json",
+        success: function (response) {
+            $("#count-" + pk).html(response.like_count + "개");
+            var users = $("#like-user-" + pk).text();
+            if (response.message) {
+                $('#like-heart-'+pk).removeClass('far fa-heart').addClass('fas fa-heart');
+            } else {
+                $('#like-heart-'+pk).removeClass('fas fa-heart').addClass('far fa-heart');
             }
+        },
+        error: function (request, status, error) {
+            alert("로그인이 필요합니다.")
+            window.location.replace("/accounts/login/")
         }
-    });
-
-    // Closes responsive menu when a scroll trigger link is clicked
-    $(".js-scroll-trigger").click(function () {
-        $(".navbar-collapse").collapse("hide");
-    });
-
-    // Activate scrollspy to add active class to navbar items on scroll
-    $("body").scrollspy({
-        target: "#sideNav",
-    });
-})(jQuery); // End of use strict
+    })
+});

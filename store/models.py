@@ -2,6 +2,7 @@ from django.db import models
 from django.shortcuts import reverse
 from taggit.managers import TaggableManager
 from django.utils.text import slugify
+from django.conf import settings
 
 class Store(models.Model):
     CATEGORIES = (
@@ -17,7 +18,8 @@ class Store(models.Model):
     store_image = models.ImageField(blank=True, upload_to="store/store_pic")
     created_dt = models.DateTimeField(auto_now_add=True)
     modified_dt = models.DateTimeField(auto_now=True)
-    likes = models.IntegerField(verbose_name='좋아요', default=0)
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_stores')
+    like_count = models.PositiveIntegerField(default=0)
     tags = TaggableManager(blank=True)
     category = models.CharField(max_length=10, choices=CATEGORIES)
     running_time = models.CharField(max_length=30, blank=True, verbose_name='영업시간')
@@ -25,7 +27,7 @@ class Store(models.Model):
     class Meta:
         verbose_name = '가게'
         verbose_name_plural = '가게'
-        ordering = ['-likes', ]
+        ordering = ['-like_count', 'name']
 
     def __str__(self):
         return self.name

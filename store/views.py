@@ -1,12 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from .models import Store
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .forms import MenuInlineFormSet
 from mysite.views import AdminOnlyMixin
 from django.conf import settings
+import json
 
 class StoreIndexView(ListView):
     template_name = 'store/index.html'
@@ -23,9 +25,29 @@ class CategoryView(ListView):
     def get_queryset(self):
         return Store.objects.filter(category=self.kwargs['category'])
 
-def store_like(request, pk):
+@login_required
+def like(request):
+    pk = request.GET.get('pk', None)
     store = get_object_or_404(Store, pk=pk)
-    store.likes += 1
+
+    if request.user in store.like_users.all():
+        store.like_users.remove(request.user)
+        store.like_count -= 1
+        store.save()
+        message = False
+    else:
+        store.like_users.add(request.user)
+        store.like_count += 1
+        store.save()
+        message = True
+    context = {
+        'like_count': store.like_users.count(),
+        'message': message,
+        'nickname': request.user.profile.nickname
+    }
+    return HttpResponse(json.dumps(context), content_type="application/json")
+    # return redirect(store.get_absolute_url())
+
 
 class StoreDetailView(DetailView):
     model = Store

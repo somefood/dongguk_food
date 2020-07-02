@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block extra-style %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
 <style>
     .board-body{
         min-height: 150px;
@@ -12,10 +14,21 @@
 
 </div>
 <div class="row board-header">
-    <div class="col-md-11">
+    <div class="col-sm-10">
         <h1>{{ userboard.title }}</h1>
         <h5>{{ userboard.writer }}</h5>
         {{ userboard.created_dt|date:"Y.m.d h:i"}}
+    </div>
+    <div class="col-sm-2">
+        <button post-id="{{ userboard.pk }}" class="btn userboard-like">
+            {% if user in userboard.like_users.all %}
+                <i id="like-heart-{{userboard.pk}}" class="fas fa-heart fa-3x"></i></button>
+            {% else %}
+                <i id="like-heart-{{userboard.pk}}" class="far fa-heart fa-3x"></i></button>
+            {% endif %}
+        <br>
+        <span id="count-{{ userboard.pk }}" style="text-align: center;">{{ userboard.like_users.count }}개</span>
+        <span id="like-user-{{ userboard.pk }}"></span>
     </div>
 </div>
 <hr>
@@ -47,6 +60,12 @@
 {% endblock %}
 
 {% block extra-script %}
+<script>
+    var MyGlobal = {
+        url: "{% url 'board:like' %}",
+    }
+</script>
+<script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>
 <script>
 
 /**

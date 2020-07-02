@@ -10,6 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from mysite.views import OwnerOnlyMixin
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.conf import settings
+import json
 
 class BoardIndex(ListView):
     template_name = 'board/index.html'
@@ -41,26 +42,6 @@ class BoardDeleteV(OwnerOnlyMixin, DeleteView):
     success_url = reverse_lazy('board:index')
     template_name = 'board/board_confirm_delete.html'
 
-@login_required
-def post_edit(request, pk):
-    post = get_object_or_404(UserBoard, pk=pk)
-    if request.method == "POST":
-        form = BoardForm(request.POST, instance=post)
-        if form.is_valid():
-            post = form.save()
-            post.save()
-            return HttpResponseRedirect(reverse('board:detail', kwargs={'pk':pk}))
-    else:
-        form = BoardForm(instance=post)
-    return render(request, 'board/board_form.html', {"form": form})
-
-# def test(request, pk):
-#     return HttpResponse('hi {}'.format(pk))
-
-def post_delete(request, pk):
-    post = get_object_or_404(UserBoard, pk=pk)
-    post.delete()
-    return redirect('board:index')
 
 class BoardDetail(DetailView):
     model = UserBoard
@@ -73,3 +54,26 @@ class BoardDetail(DetailView):
         context['disqus_url'] = f"{settings.DISQUS_MY_DOMAIN}{self.object.get_absolute_url()}"
         context['disqus_title'] = f"{self.object.slug}"
         return context
+
+
+@login_required
+def like(request):
+    pk = request.GET.get('pk', None)
+    board = get_object_or_404(UserBoard, pk=pk)
+
+    if request.user in board.like_users.all():
+        board.like_users.remove(request.user)
+        board.like_count -= 1
+        board.save()
+        message = False
+    else:
+        board.like_users.add(request.user)
+        board.like_count += 1
+        board.save()
+        message = True
+    context = {
+        'like_count': board.like_users.count(),
+        'message': message,
+        'nickname': request.user.profile.nickname
+    }
+    return HttpResponse(json.dumps(context), content_type="application/json")

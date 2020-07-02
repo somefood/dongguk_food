@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 {% block extra-style %}
+<link rel="stylesheet" href="{% static 'css/styles.css'%}">
 <style>
     .store-body {
-        height: 1000px;
+        height: 1200px;
     }
     .store-body-description {
-        height: 250px;
+        height: 300px;
     }
     .carousel-image {
         filter: brightness(50%);
@@ -20,19 +21,46 @@
         <h1 class="mt-3">{{ store.name }}</h1>
     </div>
     <div class="col-sm-7">
-        <button id="store-like" class="btn btn-outline-primary">좋아요</button>
+        <div>
+            <button post-id="{{ store.pk }}" class="btn store-like">
+                {% if user in store.like_users.all %}
+                    <i id="like-heart-{{store.pk}}" class="fas fa-heart fa-3x"></i></button>
+                {% else %}
+                    <i id="like-heart-{{store.pk}}" class="far fa-heart fa-3x"></i></button>
+                {% endif %}
+            <br>
+            <span id="count-{{ store.pk }}" style="text-align: center;">{{ store.like_users.count }}개</span>
+            <span id="like-user-{{ store.pk }}"></span>
+        </div>
+        {% comment %}
+        <a href="{% url 'store:like' store.pk %}">
+            {% if user in store.like_users.all %}
+            <a href="{% url 'store:like' store.pk %}"><i class="fas fa-heart"></i></a>
+            {% else %}
+            <a href="{% url 'store:like' store.pk %}"><i class="far fa-heart"></i></a>
+            {% endif %}
+            <p class="card-text">
+                {{ store.like_users.count }} 명이 좋아합니다.
+            </p>
+        </a>
+        {% endcomment %}
     </div>
 </div>
 <hr>
 <div class="row store-body">
-    <div class="col-sm-11 store-body-description">
-        {{ store.description }}
+    <div class="col-sm-7 store-body-description">
+        <img src="{% if store.store_image %}{{ store.store_image.url }}{% else %}{% static 'img/alt_image.png' %}{% endif %}" alt=""
+        style="width: 100%; height: 300px;">
     </div>
-    <div class="col-md-7">
+    <div class="col-sm-7">
         <table class="table">
             <tbody>
             <tr>
-                <th style="width: 20%;">주소</th>
+                <th style="width: 20%;">설명</th>
+                <td>{{ store.description }}</td>
+            </tr>
+            <tr>
+                <th>주소</th>
                 <td>{{store.location}}</td>
             </tr>
             <tr>
@@ -115,35 +143,12 @@
 {% endblock %}
 {% block extra-script %}
 <script>
-    $(document).ready(function(){
-       $('.carousel-item:first-child').addClass('active');
-    });
-
-    $("#store-like").click(function(){
-        var pk = $(this).attr('name')
-        $.ajax({
-            type: "POST",
-            url: "{% url 'store:store_like' %}",
-            data: {'pk': pk, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
-            dataType: "json",
-
-            success: function(response){
-                alert(response.message);
-                $("#count-"+pk).html(response.like_cont+"개");
-                var users = $("#like-user-"+pk).text();
-                if(users.indexOf(response.nickname != -1){
-                    $("#like-user-"+pk).text(users.replace(response.nickame, ""));
-                } else{
-                    $("like-user-"+pk).text(response.nickname+users);
-                }
-            },
-            error: function (request, status, error) {
-                alert("로그인이 필요합니다.")
-                window.location.replace("/accounts/login/")
-            }
-        })
-    });
-
+    var MyGlobal = {
+        url: "{% url 'store:like' %}",
+    }
+</script>
+<script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>
+<script>
     var disqus_config = function () {
     this.page.identifier = '{{ disqus_id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     this.page.url = '{{ disqus_url }}';  // Replace PAGE_URL with your page's canonical URL variable

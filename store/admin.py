@@ -7,7 +7,8 @@ class MenuInine(admin.TabularInline):
 
 @admin.register(Store)
 class StoreAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug', 'location', 'phone_number', 'description', 'store_image', 'likes', 'tag_list')
+    # list_display = ('name', 'slug', 'location', 'phone_number', 'description', 'store_image', 'likes', 'tag_list')
+    list_display = ('name', 'slug', 'location', 'phone_number', 'description', 'store_image', 'tag_list')
     search_fields = ('name', )
     prepopulated_fields = {'slug': ('name',)}
     inlines = [

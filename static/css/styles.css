@@ -1,20 +1,3 @@
-  .none{display: none;}
-  .clearfix:after{content: ''; display: block; clear: both;}
-  .thumbnail{width: 100%;padding: 20px;}
-  .thumbnail img{width:27%; float: left; display: inline-block; margin-right:20px}
-  .thumbnail .caption{width:68%;float: left; padding: 0; position: relative;}
-  h3{margin-top: 0; display: inline-block;}
-  .eat_deal{border:1px solid black; width: 50px; border-radius:20px; text-align: center; font-size: 0.9rem; background-color: green; font-weight:600; color: #fff;}
-  .caption .point{display: inline-block; font-size:22px; font-weight:600; color: orange; margin-left: 10px;}
-  .more a{color: orange;}
-  address, .contents_more a{color: #d3d3d3;}
-  .contets{width: 100%}
-  .user_icon{display: inline-block;height:100px;float: left;width: 10%; font-size:30px}
-  .user_review{display: inline-block; float: left; height: 100px;width: 88%;}
-  .user_id{margin-right:10px;}
-  .contents_more{text-align: right;}
-  .user_go{position: absolute;right:0;top:0; color: #333;}
-  .glyphicon-heart-empty{display: block;font-size: 35px; }
-  .user_go span:nth-of-type(2){font-size:0.9rem}
-  a{text-decoration: none;
+.fa-heart {
+    color: red;
 }
