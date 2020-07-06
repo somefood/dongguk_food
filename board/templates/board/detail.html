@@ -18,9 +18,9 @@
         <div class="float-right text-center">
             <button post-id="{{ userboard.pk }}" class="btn userboard-like">
                 {% if user in userboard.like_users.all %}
-                    <i id="like-heart-{{userboard.pk}}" class="fas fa-heart fa-3x"></i></button>
+                    <i id="like-heart-{{userboard.pk}}" class="fas fa-heart fa-2x"></i></button>
                 {% else %}
-                    <i id="like-heart-{{userboard.pk}}" class="far fa-heart fa-3x"></i></button>
+                    <i id="like-heart-{{userboard.pk}}" class="far fa-heart fa-2x"></i></button>
                 {% endif %}
             <br>
             <span id="count-{{ userboard.pk }}">{{ userboard.like_users.count }}개</span>

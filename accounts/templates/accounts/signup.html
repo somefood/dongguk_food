@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load widget_tweaks %}
 
 {% block title %} 회원가입 {% endblock %}
 {% block main_logo %}{% endblock %}
@@ -8,37 +9,48 @@
 <script src="{% static 'js/sign.js' %}"></script>
 {% endblock %}
 {% block content %}
+<a href="{% url 'home' %}"><img src="{% static 'img/logo.png' %}" class="mainLogo mb-5"></a>
+
+{% if form.errors %}
+    {% for field in form %}
+        {% for ferror in field.errors %}
+            <div class="alert alert-danger">{{ ferror }}</div>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+
 {% if error %}
-	<h3 style="color:red">{{error}}</h3>
+	<div class="alert alert-danger">{{error}}</div>
 {% endif %}
 <form action="" method="POST">
 	{% csrf_token %}
 	<div class="form-group">
-		<h1><img src="{% static 'img/logo.png' %}" style="width:100%;"></h1>
 		<label for="id">ID</label>
-		{{ f.username }}
+		{{ form.username|add_class:"form-control"}}
 	</div>
 	<div id="check-user"></div>
 	<div class="form-group">
 		<label for="nickname">닉네임</label>
-		{{ ef.nickname }}
+		{{ form.nickname|add_class:"form-control" }}
 	</div>
 	<div id="check-nickname"></div>
 	<div class="form-group">
+		<label for="phonenumber">전화번호</label>
+		{{ form.phone_number|add_class:"form-control" }}
+	</div>
+	<div class="form-group">
 		<label for="password">비밀번호</label>
-		{{ f.password }}
+		{{ form.password1|add_class:"form-control" }}
 	</div>
 	<div>
 		<label for="re-password">재확인</label>
-		{{ f.password_check }}
+		{{ form.password2|add_class:"form-control" }}
 	</div>
 	<div class="alert alert-success" id="alert-success">비밀번호가 일치합니다.</div>
 	<div class="alert alert-danger" id="alert-danger">비밀번호가 일치하지 않습니다.</div>
-	<div class="form-group">
-		<label for="phonenumber">전화번호</label>
-		{{ ef.phone_number }}
+	<div class="d-flex justify-content-center mt-3">
+		<button type="submit" class="btn btn-outline-primary">회원가입</button>
 	</div>
-		<button type="submit" class="btn btn-outline-primary">회원가입하기</button>
 </form>
  {% endblock %}
 
@@ -47,9 +59,9 @@
 	$(function(){
 		$('#alert-success').hide();
 		$('#alert-danger').hide();
-		$("#loginPW-check").keyup(function(){
-			var pwd1=$('#loginPW').val();
-			var pwd2=$('#loginPW-check').val();
+		$("#id_password2").keyup(function(){
+			var pwd1=$('#id_password1').val();
+			var pwd2=$('#id_password2').val();
 			if(pwd1 != "" || pwd2 != ""){
 				if(pwd1 == pwd2){
 					$("#alert-success").show();
@@ -62,7 +74,7 @@
 		});
 	});
 	// ID 조회하는 기능
-	$("#loginID").keyup(function(){
+	$("#id_username").keyup(function(){
 		var userName = $(this).val();
 		if(userName) {
 			$.ajax({
@@ -86,7 +98,7 @@
 		}
 	});
 	// 닉네임 조회하는 기능
-	$("#nickName").keyup(function(){
+	$("#id_nickname").keyup(function(){
 		var nickName = $(this).val();
 		if(nickName) {
 			$.ajax({

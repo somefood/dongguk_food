@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.shortcuts import reverse
 from taggit.managers import TaggableManager
 from django.utils.text import slugify
@@ -21,7 +21,7 @@ def generate_unique_slug(klass, field):
 class UserBoard(models.Model):
     title = models.CharField(max_length=50, blank=True, verbose_name='제목')
     slug = models.SlugField('SLUG', unique=True, allow_unicode=True, help_text='one word for title alias.')
-    writer = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='작성자')
+    writer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='작성자')
     content = models.TextField(verbose_name='내용')
     created_dt = models.DateTimeField(auto_now_add=True)
     modified_dt = models.DateTimeField(auto_now=True)

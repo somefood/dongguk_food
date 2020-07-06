@@ -16,6 +16,9 @@
     #mobile{
         display: block;
     }
+    .mainLogo {
+        width: 100%;
+    }
 }
 @media (min-width: 769px) {
     #pc{
@@ -23,6 +26,9 @@
     }
     #mobile{
         display: none;
+    }
+    .mainLogo {
+        width: 50%;
     }
 }
 
@@ -38,4 +44,15 @@
     position: absolute;
     right: 10px;
 
+}
+
+/* store css*/
+.store-body {
+    height: 1200px;
+}
+.store-body-description {
+    height: 300px;
+}
+.carousel-image {
+    filter: brightness(50%);
 }

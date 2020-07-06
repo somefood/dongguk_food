@@ -11,12 +11,10 @@
 </style>
 {% endblock %}
 {% block content %}
-<div class="row mt-lg-5">
-    <div class="h1"><a class="text-warning" href="{% url 'board:index' %}">게시판</a></div>
-    <div class="col">
-        <button type="button" class='btn btn-primary float-right' onclick="location.href='{% url 'board:post_add' %}'">
-            게시글 작성
-        </button>
+<div class="row">
+    <div class="col-sm-11">
+        <div class="h1"><a class="text-dark" href="{% url 'board:index' %}">게시판</a></div>
+        <button type="button" class='btn btn-primary float-right mb-1' onclick="location.href='{% url 'board:post_add' %}'">게시글 작성</button>
     </div>
 </div>
 <table id="pc" class="table board-table">
@@ -58,6 +56,15 @@
         <a href="?page={{ page_obj.previous_page_number}}"><i class="fas fa-arrow-circle-left"></i></a>
         {% endif %}
         Page {{page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        <nav aria-label="Page navigation">
+            {{ board_list.page_range }}
+            {{ paginator.page_range }}
+            <ul class="pagination">
+                {% for page_item in paginator.page_range %}
+                    <li class="page-item"><a class="page-link" href="">{{ forloop.counter }}</a></li>
+                {% endfor %}
+            </ul>
+        </nav>
         {% if page_obj.has_next %}
         <a href="?page={{ page_obj.next_page_number }}"><i class="fas fa-arrow-circle-right"></i></a>
         {% endif %}

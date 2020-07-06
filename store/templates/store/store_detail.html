@@ -1,29 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
-{% block extra-style %}
-<link rel="stylesheet" href="{% static 'css/styles.css'%}">
-<style>
-    .store-body {
-        height: 1200px;
-    }
-    .store-body-description {
-        height: 300px;
-    }
-    .carousel-image {
-        filter: brightness(50%);
-    }
-
-</style>
-{% endblock %}
 {% block content %}
 <div class="row store-header">
     <div class="col-sm-10">
         <div class="float-right text-center">
             <button post-id="{{ store.pk }}" class="btn store-like">
                 {% if user in store.like_users.all %}
-                    <i id="like-heart-{{store.pk}}" class="fas fa-heart fa-3x"></i></button>
+                    <i id="like-heart-{{store.pk}}" class="fas fa-heart fa-2x"></i></button>
                 {% else %}
-                    <i id="like-heart-{{store.pk}}" class="far fa-heart fa-3x"></i></button>
+                    <i id="like-heart-{{store.pk}}" class="far fa-heart fa-2x"></i></button>
                 {% endif %}
             <br>
             <span id="count-{{ store.pk }}" style="text-align: center;">{{ store.like_users.count }}개</span>

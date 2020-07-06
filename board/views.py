@@ -74,6 +74,6 @@ def like(request):
     context = {
         'like_count': board.like_users.count(),
         'message': message,
-        'nickname': request.user.profile.nickname
+        'nickname': request.user.nickname
     }
     return HttpResponse(json.dumps(context), content_type="application/json")

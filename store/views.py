@@ -43,7 +43,7 @@ def like(request):
     context = {
         'like_count': store.like_users.count(),
         'message': message,
-        'nickname': request.user.profile.nickname
+        'nickname': request.user.nickname
     }
     return HttpResponse(json.dumps(context), content_type="application/json")
     # return redirect(store.get_absolute_url())
@@ -110,6 +110,7 @@ class StoreEditView(AdminOnlyMixin, UpdateView):
             return redirect(self.get_success_url())
         else:
             return self.render_to_response(self.get_context_data(form=form))
+
 
 class StoreDeleteView(AdminOnlyMixin, DeleteView):
     model = Store

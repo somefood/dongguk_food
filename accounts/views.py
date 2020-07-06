@@ -1,25 +1,25 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import SigninForm, SignupForm, ProfileForm
+# from .forms import SigninForm, SignupForm, ProfileForm
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth.models import User
-from .models import Profile
 from django.urls import reverse_lazy, reverse
 
 import json
 from django.http import HttpResponse
 
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from django.contrib.auth import login, authenticate
-# login과 authenticate 기능을 사용하기 위해 선언
-# login은 로그인을 처리해주며, authenticate는 아이디와 비밀번호가 모두 일치하는 User 객체를 추출
+from django.contrib.auth import get_user_model
+from django.contrib.auth import views as auth_views
+from .forms import CustomUserCreationForm
 
 from django.contrib.auth import logout # 로그아웃 처리하기 위해 선언
 
 
 def check_user(request):
-    if not User.objects.filter(username=request.POST.get('user_name')).exists():
+    cUser = get_user_model()
+    if not cUser.objects.filter(username=request.POST.get('user_name')).exists():
         print('possible')
         context = {'msg': True}
     else:
@@ -29,7 +29,8 @@ def check_user(request):
 
 
 def check_nickname(request):
-    if not Profile.objects.filter(nickname=request.GET.get('user_nickname')).exists():
+    cUser = get_user_model()
+    if not cUser.objects.filter(nickname=request.GET.get('user_nickname')).exists():
         print('possible')
         context = {'msg': True}
     else:
@@ -37,24 +38,24 @@ def check_nickname(request):
         context = {'msg': False}
     return HttpResponse(json.dumps(context), content_type="application/json")
 
-def signin(request): #로그인 기능
-    if request.user.is_authenticated:
-        return redirect(reverse('home'))
-    if request.method == "GET":
-        return render(request, 'accounts/signin.html', {'f': SigninForm})
-    elif request.method == "POST":
-        form = SigninForm(request.POST)
-        id = request.POST['username']
-        pw = request.POST['password']
-        u = authenticate(username=id, password=pw)
-	    # authenticate를 통해 DB의 username과 password를 클라이언트가 요청한 값과 비교한다.
-	    # 만약 같으면 해당 객체를 반화하고 아니라면 none을 반환한다.
 
-        if u: # u에 특정 값이 있다면,
-            login(request, user=u) # u 객체로 로그인해라
-            return HttpResponseRedirect(reverse('home'))
-        else:
-            return render(request, 'accounts/signin.html',{'f':form, 'error':'아이디나 비밀번호가 일치하지 않습니다.'})
+class UserLoginView(auth_views.LoginView):
+    template_name = 'accounts/signin.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect(reverse('home'))
+        return super().dispatch(request, *args, **kwargs)
+
+
+class UserSignUpView(CreateView):
+    template_name = 'accounts/signup.html'
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy('accounts:signup_done')
+
+
+class UserSignUpDoneView(TemplateView):
+    template_name = 'accounts/signup_done.html'
 
 
 class MyPageV(LoginRequiredMixin, TemplateView):
@@ -72,6 +73,8 @@ def signout(request):
 
 
 def signup(request):  # 역시 GET/POST 방식을 사용하여 구현한다.
+    if request.user.is_authenticated:
+        return redirect(reverse('home'))
     if request.method == "GET":
         return render(request, 'accounts/signup.html', {'f': SignupForm(),
                                                              'ef': ProfileForm(),
@@ -93,7 +96,7 @@ def signup(request):  # 역시 GET/POST 방식을 사용하여 구현한다.
                 new_user.profile.nickname = profile_form.cleaned_data['nickname']
                 new_user.profile.phone_number = profile_form.cleaned_data['phone_number']
                 new_user.save()
-                # return render(request, 'accounts/sign_finish.html', {'user_name':profile_form.cleaned_data['nickname']})
+                # return render(request, 'accounts/signup_done.html', {'user_name':profile_form.cleaned_data['nickname']})
                 return redirect('home')
                 # return HttpResponseRedirect(reverse('home'))
             else:

@@ -1,10 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
-{% block extra-style %}
-<link rel="stylesheet" href="{% static 'css/styles.css' %}">
-{% endblock %}
 {% block content %}
-<h1 class="my-4">가게 소개</h1>
+<h1 class="h1"><a class="text-dark" href="{% url 'store:index' %}">가게 소개</a></h1>
 <hr>
 {% if user.is_staff %}
 <button class="btn btn-primary" onclick="location.href='{% url 'store:store_add' %}'">추가</button>
@@ -21,9 +18,9 @@
       <div class="card-body" style="height: 250px; position: relative;">
           <span style="position: absolute; right: 20px;"><button post-id="{{ store.pk }}" class="btn store-like">
             {% if user in store.like_users.all %}
-              <i id="like-heart-{{ store.pk }}" class="fas fa-heart fa-3x"></i></button>
+              <i id="like-heart-{{ store.pk }}" class="fas fa-heart fa-2x"></i></button>
             {% else %}
-              <i id="like-heart-{{ store.pk }}" class="far fa-heart fa-3x"></i></button>
+              <i id="like-heart-{{ store.pk }}" class="far fa-heart fa-2x"></i></button>
             {% endif %}</button>
             <p id="count-{{ store.pk }}" style="text-align: center">{{ store.like_users.count }}개</p>
           </span>
