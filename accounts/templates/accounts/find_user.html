@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<a href="{% url 'home' %}"><img src="/static/img/logo.png" class="mainLogo mb-5"></a>
+{{ form.errors }}
+<div class="row">
+    <div class="col">
+        <form action="" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                {{ field.label }}
+                {{ field }}
+            </div>
+            {% endfor %}
+            <input type="submit" value="찾기" class="btn btn-primary">
+        </form>
+    </div>
+</div>
+{% endblock %}

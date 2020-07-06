@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<a href="{% url 'home' %}"><img src="/static/img/logo.png" class="mainLogo mb-5"></a>
+<div class="row">
+    <div class="col">
+        <div>
+            <div>
+                {% if error %}
+                <div class="h1">Not Found..</div>
+                    <div class="alert alert-danger">{{ error }}</div>
+                    <a href="{% url 'accounts:find_user' %}" class="font-weight-bold">아이디 찾기</a>
+                {% else %}
+                <div class="h1">Found it!</div>
+                    <div class="alert alert-success">{{ username }}</div>
+                    <a href="{% url 'accounts:find_user' %}" class="font-weight-bold">비밀번호 찾기</a>
+                {% endif %}
+                <span>/ </span><a href="{% url 'accounts:login' %}" class="font-weight-bold">로그인 하기</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
