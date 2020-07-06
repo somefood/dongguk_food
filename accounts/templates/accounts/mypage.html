@@ -1,44 +1,60 @@
 {% extends "base.html" %}
+{% load humanize %}
 
 {% block content %}
-<div class="h1">내가 쓴 글</div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>제목</th>
-            <th>작성날짜</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in mylists %}
-        <tr>
-            <td><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></td>
-            <td>{{ item.created_dt}}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-<div class="h1">좋아요 누른 글</div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>제목</th>
-            <th>작성날짜</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in user.like_stores.all %}
-        <tr>
-            <td><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></td>
-            <td>{{ item.created_dt}}</td>
-        </tr>
-        {% endfor %}
-        {% for item in user.like_boards.all %}
-        <tr>
-            <td><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></td>
-            <td>{{ item.created_dt}}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#iLiked">좋아요 누른 글</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#iWrote">내가 쓴 글</a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="iLiked">
+        <table class="table board-table">
+            <thead>
+              <tr>
+                <th style="width: 60%;">제목</th>
+                <th style="width: 40%;">작성날짜</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for item in user.like_stores.all %}
+                <tr>
+                    <td><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></td>
+                    <td>{{ item.created_dt|naturalday}}</td>
+                </tr>
+                {% endfor %}
+                {% for item in user.like_boards.all %}
+                <tr>
+                    <td><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></td>
+                    <td>{{ item.created_dt|naturalday }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade" id="iWrote">
+        <table class="table board-table">
+            <thead>
+              <tr>
+                <th style="width: 60%;">제목</th>
+                <th style="width: 40%;">작성날짜</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in mylists %}
+                <tr>
+                  <td><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></td>
+                  <td>{{ item.created_dt|naturalday }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+        <div class="float-right">
+            <a href="{% url 'board:post_add' %}" class="btn btn-primary">글쓰기</a>
+        </div>
+    </div>
+</div>
 {% endblock %}

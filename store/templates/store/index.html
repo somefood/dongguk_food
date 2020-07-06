@@ -34,6 +34,41 @@
   <hr style="width:100%; margin-bottom: 30px;">
   {% endfor %}
 </div>
+<div class="row mt-5">
+    <div class="col board-footer">
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}"><span>Prev</span></a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#"><span>Prev</span></a>
+                        </li>
+                    {% endif %}
+
+                    {% for page in page_range %}
+                        <li class="page-item {% if page == page_obj.number %}active{% endif %}">
+                            <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                        </li>
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}"><span>Next</span></a>
+                        </li>
+                    {% else %}
+                        <li {% if not page_obj.has_next %}class="page-item disabled"{% endif %}>
+                            <a class="page-link" href="#"><span>Next</span></a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
 {% endblock %}
 {% block extra-script %}
 <script>

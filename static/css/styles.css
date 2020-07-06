@@ -1,6 +1,8 @@
 .fa-heart {
     color: red;
 }
+
+/* board css */
 .board-table thead tr th {
     text-align: center;
 }
@@ -43,7 +45,6 @@
 .board-item-writer {
     position: absolute;
     right: 10px;
-
 }
 
 /* store css*/

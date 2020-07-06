@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect, get_object_or_404
-# from .forms import SigninForm, SignupForm, ProfileForm
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy, reverse
@@ -7,12 +6,12 @@ from django.urls import reverse_lazy, reverse
 import json
 from django.http import HttpResponse
 
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import get_user_model
 from django.contrib.auth import views as auth_views
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, FindUserForm
 
 from django.contrib.auth import logout # 로그아웃 처리하기 위해 선언
 
@@ -39,6 +38,24 @@ def check_nickname(request):
     return HttpResponse(json.dumps(context), content_type="application/json")
 
 
+class FindUser(FormView):
+    form_class = FindUserForm
+    template_name = 'accounts/find_user.html'
+
+    def form_valid(self, form):
+        nickname = form.cleaned_data['nickname']
+        phone_number = form.cleaned_data['phone_number']
+        cUser = get_user_model()
+        context = {}
+        try:
+            user = cUser.objects.get(nickname=nickname, phone_number=phone_number)
+        except ObjectDoesNotExist:
+            context['error'] = '일치하는 아이디가 없습니다.'
+        else:
+            context['username'] = user.username
+        return render(self.request, 'accounts/find_user_done.html', context=context)
+
+
 class UserLoginView(auth_views.LoginView):
     template_name = 'accounts/signin.html'
 
@@ -63,50 +80,12 @@ class MyPageV(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        u = User.objects.get(username=self.request.user)
+        cUser = get_user_model()
+        u = cUser.objects.get(username=self.request.user)
         context['mylists'] = u.userboard_set.all()
         return context
+
 
 def signout(request):
     logout(request)
     return HttpResponseRedirect(reverse('home'))
-
-
-def signup(request):  # 역시 GET/POST 방식을 사용하여 구현한다.
-    if request.user.is_authenticated:
-        return redirect(reverse('home'))
-    if request.method == "GET":
-        return render(request, 'accounts/signup.html', {'f': SignupForm(),
-                                                             'ef': ProfileForm(),
-                                                             })
-    elif request.method == "POST":
-        form = SignupForm(request.POST)
-        profile_form = ProfileForm(request.POST)
-        if form.is_valid() and profile_form.is_valid():
-            if form.cleaned_data['password'] == form.cleaned_data['password_check']:
-            # cleaned_data는 사용자가 입력한 데이터를 뜻한다.
-            # 즉 사용자가 입력한 password와 password_check가 맞는지 확인하기위해 작성해주었다.
-                new_user = User.objects.create_user(form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password'])
-                # User.object.create_user는 사용자가 입력한 name, email, password를 가지고 아이디를 만든다.
-                # 바로 .save를 안해주는 이유는 User.object.create를 먼저 해주어야 비밀번호가 암호화되어 저장된다.
-                # new_user.last_name = form.cleaned_data['last_name']
-                # new_user.first_name = form.cleaned_data['first_name']
-                # 나머지 입력하지 못한 last_name과, first_name은 따로 지정해준다.
-                # new_user.save(commit=False)
-                new_user.profile.nickname = profile_form.cleaned_data['nickname']
-                new_user.profile.phone_number = profile_form.cleaned_data['phone_number']
-                new_user.save()
-                # return render(request, 'accounts/signup_done.html', {'user_name':profile_form.cleaned_data['nickname']})
-                return redirect('home')
-                # return HttpResponseRedirect(reverse('home'))
-            else:
-                return render(request, 'accounts/signup.html', {'f': form,
-                                                                'ef': profile_form,
-                                                                'error': '비밀번호와 비밀번호 확인이 다릅니다.'})  # password와 password_check가 다를 것을 대비하여 error를 지정해준다.
-        else:  # form.is_valid()가 아닐 경우, 즉 유효한 값이 들어오지 않았을 경우는
-            return render(request, 'accounts/signup.html', {'f': form,
-                                                            'ef': profile_form,
-                                                            })
-            # return render(request, 'accounts/signup.html', {'f': form})
-            # 원래는 error 메시지를 지정해줘야 하지만 따로 지정해주지 않는다.
-            # 그 이유는 User 모델 클래스에서 자동으로 error 메시지를 넘겨줌

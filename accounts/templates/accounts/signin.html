@@ -32,7 +32,7 @@
 <hr>
 <div class="row text-center">
 	<a class="col" href="{% url 'accounts:signup' %}">회원가입</a>
-	<a class="col">아이디 찾기</a>
-	<a class="col">비밀번호 찾기</a>
+	<a class="col" href="{% url 'accounts:find_user' %}">아이디 찾기</a>
+	<a class="col" href="{% url 'password_reset' %}">비밀번호 찾기</a>
 </div>
 {% endblock %}

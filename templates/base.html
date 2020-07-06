@@ -56,10 +56,11 @@
       <li class="nav-item dropdown mx-1 btn">
           {% if user.is_active %}
           <a class="nav-link dropdown-toggle text-white" href="#" data-toggle="dropdown">
-              <i class="fas fa-user"></i>&ensp;{% firstof user.get_short_name user.get_username %}&ensp;
+              <i class="fas fa-user"></i>&ensp;{% firstof user.nickname user.get_username %}님
           </a>
           <div class="dropdown-menu">
               <a class="dropdown-item" href="{% url 'accounts:mypage' %}">마이페이지</a>
+              <a class="dropdown-item" href="{% url 'password_change' %}">패스워드 변경</a>
               <a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a>
             {% comment %}
               <a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a>
@@ -71,6 +72,8 @@
           </a>
           <div class="dropdown-menu">
               <a class="dropdown-item" href="{% url 'accounts:login' %}">로그인</a>
+              <a class="dropdown-item" href="{% url 'accounts:find_user' %}">아이디 찾기</a>
+              <a class="dropdown-item" href="{% url 'password_reset' %}">패스워드 찾기</a>
               <a class="dropdown-item" href="{% url 'accounts:signup' %}">회원가입</a>
           </div>
           {% endif %}
