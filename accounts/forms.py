@@ -13,7 +13,8 @@ class CustomUserCreationForm(UserCreationForm):
 class FindUserForm(forms.Form):
     nickname = forms.CharField(max_length=30, label='닉네임', widget=forms.TextInput(attrs=
                                                                                   {'placeholder': '닉네임을 입력해주세요.',
-                                                                                   'class': 'form-control'}))
+                                                                                   'class': 'form-control',
+                                                                                   'autofocus': 'autofocus'}))
     phone_number = forms.CharField(max_length=30, label='전화번호', widget=forms.TextInput(attrs=
                                                                                        {'placeholder': '전화번호를 입력해주세요.',
                                                                                         'class': 'form-control'}))

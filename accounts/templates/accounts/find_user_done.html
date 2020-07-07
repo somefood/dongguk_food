@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
-<a href="{% url 'home' %}"><img src="/static/img/logo.png" class="mainLogo mb-5"></a>
+<a href="{% url 'home' %}"><img src="{% static 'img/logo.png' %}" alt="" class="mainLogo mb-5"></a>
 <div class="row">
     <div class="col">
         <div>
@@ -13,7 +13,7 @@
                 {% else %}
                 <div class="h1">Found it!</div>
                     <div class="alert alert-success">{{ username }}</div>
-                    <a href="{% url 'accounts:find_user' %}" class="font-weight-bold">비밀번호 찾기</a>
+                    <a href="{% url 'password_reset' %}" class="font-weight-bold">비밀번호 찾기</a>
                 {% endif %}
                 <span>/ </span><a href="{% url 'accounts:login' %}" class="font-weight-bold">로그인 하기</a></p>
             </div>

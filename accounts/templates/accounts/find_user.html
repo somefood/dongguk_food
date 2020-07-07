@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
-<a href="{% url 'home' %}"><img src="/static/img/logo.png" class="mainLogo mb-5"></a>
+<a href="{% url 'home' %}"><img src="{% static 'img/logo.png' %}" alt="" class="mainLogo mb-5"></a>
 {{ form.errors }}
 <div class="row">
     <div class="col">

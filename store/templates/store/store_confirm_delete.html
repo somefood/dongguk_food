@@ -3,8 +3,8 @@
 {% block content %}
 <form action="." method="post">
     {% csrf_token %}
-    <p>"{{ object }}"게시글을 삭제하겠습니까?</p>
-    <input type="submit" value="삭제" class="btn btn-danger">
+    <div class="alert alert-danger">"{{ object }}"게시글을 삭제하겠습니까?</div>
+    <input type="submit" value="삭제하기" class="btn btn-danger">
 </form>
 <button class="btn btn-danger" onclick="history.back()">되돌아가기</button>
 {% endblock %}
