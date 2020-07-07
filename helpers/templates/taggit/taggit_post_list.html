@@ -1,13 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Posts for tag - {{ tagname }}</h1>
-<br>
-{% for store in store_list %}
-<a href="{{ store.get_absolute_url }}">{{ store.name }}</a>
-{% endfor %}
-
-{% for board in board_list %}
-<a href="{{ board.get_absolute_url }}">{{ board.title }}</a>
-{% endfor %}
+<div class="h1 mb-5">Posts for tag - {{ tagname }}</div>
+<div class="row">
+    <div class="h3">가게글</div>
+    <div class="col">
+        <ul class="list-group">
+        {% for store in store_list %}
+            <li class="list-group-item"><a href="{{ store.get_absolute_url }}">{{ store.name }}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="h3">게시판</div>
+    <div class="col">
+        <ul class="list-group">
+        {% for board in board_list %}
+            <li class="list-group-item"><a href="{{ board.get_absolute_url }}">{{ board.title }}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
 {% endblock %}

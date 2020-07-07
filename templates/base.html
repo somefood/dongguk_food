@@ -28,21 +28,23 @@
       <li class="nav-item mx-1 btn">
           <a class="nav-link text-white" href="{% url 'about' %}">About</a>
       </li>
-      <li class="nav-item mx-1 btn">
-          <a class="nav-link text-white" href="{% url 'store:index' %}">가게 보기</a>
+      <li class="nav-item dropdown mx-1 btn">
+        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          가게보기
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="{% url 'store:index' %}">전체보기</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'store:category' 'restaurant' %}">음식집</a>
+          <a class="dropdown-item" href="{% url 'store:category' 'bar' %}">술 집</a>
+          <a class="dropdown-item" href="{% url 'store:category' 'cafe' %}">카 페</a>
+        </div>
       </li>
       <li class="nav-item mx-1 btn">
           <a class="nav-link text-white" href="{% url 'board:index' %}">게시판</a>
       </li>
-      <li class="nav-item dropdown mx-1 btn">
-        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Util
-        </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="{% url 'admin:index' %}">Admin</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{% url 'helpers:tag_cloud'%}">Tags</a>
-        </div>
+        <li class="nav-item mx-1 btn">
+          <a class="nav-link text-white" href="{% url 'helpers:tag_cloud'%}">태그</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0" action="/helpers/search/" method="post">
