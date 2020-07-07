@@ -27,7 +27,7 @@
             <span id="like-user-{{ userboard.pk }}"></span>
         </div>
         <div class="h1">{{ userboard.title }}</div>
-        <span class="h5">{{ userboard.writer }}</span> {{ userboard.created_dt|date:"Y.m.d h:i"}}
+        <span class="h5">{% if userboard.writer.nickname %}{{ userboard.writer.nickname }}{% else %}{{ userboard.writer}}{% endif %}</span> {{ userboard.created_dt|date:"Y.m.d h:i"}}
     </div>
 </div>
 <hr>
