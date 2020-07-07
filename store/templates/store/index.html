@@ -4,6 +4,10 @@
 <div class="row">
     <div class="col-sm-11">
         <div class="h1"><a class="text-dark" href="{% url 'store:index' %}">가게 소개</a></div>
+        <button class="btn btn-outline-primary" onclick="location.href='{% url 'store:index' %}'">전체보기</button>
+        <button class="btn btn-outline-primary" onclick="location.href='{% url 'store:category' 'restaurant' %}'">음식집</button>
+        <button class="btn btn-outline-primary" onclick="location.href='{% url 'store:category' 'bar' %}'">술집</button>
+        <button class="btn btn-outline-primary" onclick="location.href='{% url 'store:category' 'cafe' %}'">카페</button>
         {% if user.is_staff %}
         <button type="button" class='btn btn-primary float-right mb-1' onclick="location.href='{% url 'store:store_add' %}'">가게글 작성</button>
         {% endif %}
@@ -28,7 +32,7 @@
             {% endif %}</button>
             <p id="count-{{ store.pk }}" style="text-align: center">{{ store.like_users.count }}개</p>
           </span>
-        <a class="h2 text-dark" href="{{ store.get_absolute_url }}">{{ forloop.counter}}. {{ store.name }}</a>
+        <a class="h2 text-dark" href="{{ store.get_absolute_url }}">{{ forloop.counter0|add:page_obj.start_index }}. {{ store.name }}</a>
         <address>{{ store.location }}</address>
         <p class="card-text" style="position: static;">{{ store.description }}</p>
         <a href="{{ store.get_absolute_url }}" class="btn btn-primary" style="position: absolute; right:20px; bottom:20px;">더보기</a>
