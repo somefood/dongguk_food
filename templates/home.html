@@ -21,20 +21,30 @@
         {% for store in store_list %}
             <div class="col-sm-4 mb-3">
                 <div class="card">
-                    <img class="card-img-top" src="{% if store.store_image %}{{ store.store_image.url }}{% else %}{% static 'img/alt_image.png'%}{% endif %}" alt=""
+                    <img class="card-img-top" src="{% if store.menu_set.first.food_image %}{{ store.menu_set.first.food_image.url }}{% else %}{% static 'img/alt_image.png' %}{% endif %}" alt=""
                     style="width:100%; height: 255px;">
                     <div class="card-body text-center">
     <!--                    <h5 class="card-title text-center">{{ store.name }}</h5>-->
                         <h5 class="card-title text-center">
-                            {% if store.category == "restaurant" %}
-                                음식집
-                            {% elif store.category == "bar" %}
-                                술집
-                            {% else %}
-                                카페
-                            {% endif %}
+                        {% if store.category == "restaurant" %}
+                            음식집
                         </h5>
-                        <p class="card-text" style="height: 50px;"></p>
+                        <p class="card-text" style="height: 50px;">
+                            맛있는 음식들을 소개해드립니다!
+                        </p>
+                        {% elif store.category == "bar" %}
+                            술집
+                        </h5>
+                        <p class="card-text" style="height: 50px;">
+                            분위기 좋은 술집들을 소개해드립니다!
+                        </p>
+                        {% else %}
+                            카페
+                        </h5>
+                        <p class="card-text" style="height: 50px;">
+                            달콤하고 맛있는 디저트들을 소개해드립니다!
+                        </p>
+                        {% endif %}
                         <a href="{% url 'store:category' store.category %}" class="btn btn-primary">더보기</a>
                     </div>
                 </div>
