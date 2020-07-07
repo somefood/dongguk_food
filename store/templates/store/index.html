@@ -20,7 +20,7 @@
   <div class="col-sm-8 mb-5">
     <div class="card" style="border-style: none">
       <div class="card-body" style="height: 250px; position: relative;">
-          <span style="position: absolute; right: 20px;"><button post-id="{{ store.pk }}" class="btn store-like">
+          <span style="float: right;"><button post-id="{{ store.pk }}" class="btn store-like">
             {% if user in store.like_users.all %}
               <i id="like-heart-{{ store.pk }}" class="fas fa-heart fa-2x"></i></button>
             {% else %}

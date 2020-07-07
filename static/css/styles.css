@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+
+body {
+    font-family: 'Nanum Gothic', sans-serif;
+}
+p {
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
 .fa-heart {
     color: red;
 }
@@ -15,17 +24,11 @@
     #pc{
         display: none;
     }
-    #mobile{
-        display: block;
-    }
     .mainLogo {
         width: 100%;
     }
 }
 @media (min-width: 769px) {
-    #pc{
-        display: block;
-    }
     #mobile{
         display: none;
     }
