@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load sorl_thumbnail %}
 {% block content %}
 <div class="row store-header">
     <div class="col-sm-10">
@@ -20,8 +21,15 @@
 <hr>
 <div class="row store-body">
     <div class="col-sm-7 store-body-description">
-        <img src="{% if store.store_image %}{{ store.store_image.url }}{% else %}{% static 'img/alt_image.png' %}{% endif %}" alt=""
-        style="width: 100%; height: 300px;">
+<!--        <img src="{% if store.store_image %}{{ store.store_image.url }}{% else %}{% static 'img/alt_image.png' %}{% endif %}" alt=""-->
+<!--        style="width: 100%; height: 300px;">-->
+        {% if store.store_image %}
+            {% thumbnail store.store_image "300x300" crop="center" as im %}
+                <img src="{{ im.url }}" alt="">
+            {% endthumbnail %}
+        {% else %}
+                <img src="{% static 'img/alt_image.png' %}" alt="">
+        {% endif %}
     </div>
     <div class="col-sm-7">
         <table class="table">
@@ -53,7 +61,7 @@
             </tbody>
         </table>
     </div>
-    <div class="col-md-7">
+    <div class="col-sm-7">
         <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 {% for menu in store.menu_set.all %}
@@ -67,7 +75,13 @@
             <div class="carousel-inner">
                 {% for menu in store.menu_set.all %}
                 <div class="carousel-item">
-                    <img src="{% if menu.food_image %}{{ menu.food_image.url }}{% else %}{% static 'img/alt_image.png' %}{% endif %}" class="d-block w-100 carousel-image" alt="">
+                    {% if menu.food_image %}
+                        {% thumbnail menu.food_image "450x450" crop="center" as im %}
+                        <img src="{{ im.url }}" class="d-block w-100 carousel-image" alt="">
+                        {% endthumbnail %}
+                    {% else %}
+                        <img src="{% static 'img/alt_image.png' %}" class="d-block w-100 carousel-image" alt="">
+                    {% endif %}
                     <div class="carousel-caption d-none d-md-block">
                         <section>
                             <h5>{{ menu.name }}</h5>

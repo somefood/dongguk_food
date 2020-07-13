@@ -54,33 +54,33 @@
             <input type="submit" value="검색" placeholder="입력" class="btn btn-primary my-2 my-sm-0">
         </span>
     </form>
-  <ul class="navbar-nav ml-5 mr-5">
-      <li class="nav-item dropdown mx-1 btn">
-          {% if user.is_active %}
-          <a class="nav-link dropdown-toggle text-white" href="#" data-toggle="dropdown">
-              <i class="fas fa-user"></i>&ensp;{% firstof user.nickname user.get_username %}님
-          </a>
-          <div class="dropdown-menu">
-              <a class="dropdown-item" href="{% url 'accounts:mypage' %}">마이페이지</a>
-              <a class="dropdown-item" href="{% url 'password_change' %}">패스워드 변경</a>
-              <a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a>
-            {% comment %}
-              <a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a>
-            {% endcomment %}
-          </div>
-          {% else %}
-          <a class="nav-link dropdown-toggle text-white" href="#" data-toggle="dropdown">
-              <i class="fas fa-user"></i>&ensp;로그인 해주세요&ensp;
-          </a>
-          <div class="dropdown-menu">
-              <a class="dropdown-item" href="{% url 'accounts:login' %}">로그인</a>
-              <a class="dropdown-item" href="{% url 'accounts:find_user' %}">아이디 찾기</a>
-              <a class="dropdown-item" href="{% url 'password_reset' %}">패스워드 찾기</a>
-              <a class="dropdown-item" href="{% url 'accounts:signup' %}">회원가입</a>
-          </div>
-          {% endif %}
-      </li>
-  </ul>
+      <ul class="navbar-nav ml-5 mr-5">
+          <li class="nav-item dropdown mx-1 btn">
+              {% if user.is_active %}
+              <a class="nav-link dropdown-toggle text-white" href="#" data-toggle="dropdown">
+                  <i class="fas fa-user"></i>&ensp;{% firstof user.nickname user.get_username %}님
+              </a>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item" href="{% url 'accounts:mypage' %}">마이페이지</a>
+                  <a class="dropdown-item" href="{% url 'password_change' %}">패스워드 변경</a>
+                  <a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a>
+                {% comment %}
+                  <a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a>
+                {% endcomment %}
+              </div>
+              {% else %}
+              <a class="nav-link dropdown-toggle text-white" href="#" data-toggle="dropdown">
+                  <i class="fas fa-user"></i>&ensp;로그인 해주세요&ensp;
+              </a>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item" href="{% url 'accounts:login' %}">로그인</a>
+                  <a class="dropdown-item" href="{% url 'accounts:find_user' %}">아이디 찾기</a>
+                  <a class="dropdown-item" href="{% url 'password_reset' %}">패스워드 찾기</a>
+                  <a class="dropdown-item" href="{% url 'accounts:signup' %}">회원가입</a>
+              </div>
+              {% endif %}
+          </li>
+      </ul>
   </div>
 </nav>
 

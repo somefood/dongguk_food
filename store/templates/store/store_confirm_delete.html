@@ -4,7 +4,7 @@
 <form action="." method="post">
     {% csrf_token %}
     <div class="alert alert-danger">"{{ object }}"게시글을 삭제하겠습니까?</div>
-    <input type="submit" value="삭제하기" class="btn btn-danger">
+    <button type="submit" class="btn btn-danger">삭제하기</button>
+    <button type="reset" class="btn btn-danger" onclick="history.back()">취소하기</button>
 </form>
-<button class="btn btn-danger" onclick="history.back()">되돌아가기</button>
 {% endblock %}
