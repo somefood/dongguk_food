@@ -25,7 +25,7 @@
                 <div class="card">
                     {% if store.menu_set.first.food_image %}
                         {% thumbnail store.menu_set.first.food_image "348x255" crop="center" as im %}
-                        <img class="card-img-top" src="{{ im.url }}" alt="">
+                        <img class="card-img-top" src="{{ im.url }}" alt="" style="width: 100%; height: 255px;">
                         {% endthumbnail %}
                     {% else %}
                         <img class="card-img-top" src="{% static 'img/alt_image.png' %}" style="width:100%; height: 255px;">>
