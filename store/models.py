@@ -4,6 +4,7 @@ from taggit.managers import TaggableManager
 from django.utils.text import slugify
 from django.conf import settings
 
+
 class Store(models.Model):
     CATEGORIES = (
         ('restaurant', '음식집'),
@@ -38,6 +39,7 @@ class Store(models.Model):
 
     def get_absolute_url(self):
         return reverse('store:detail', args=[self.slug])
+
 
 class Menu(models.Model):
     store = models.ForeignKey(Store, on_delete=models.CASCADE, verbose_name="가게명")

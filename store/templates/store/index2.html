@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for store in store_list %}
+    <ul>
+        {% for menu in store.menu_set.all %}
+            <li>{{menu}}</li>
+            {% if forloop.first %}
+                <img class="card-img-top" src="{{ im.url }}" alt="">
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endfor %}
+{% endblock %}

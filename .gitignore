@@ -1,5 +1,8 @@
 # Created by https://www.gitignore.io/api/django,python
 # Edit at https://www.gitignore.io/?templates=django,python
+.idea/
+mysql.sql
+tasks.py
 
 ### Django ###
 *.log

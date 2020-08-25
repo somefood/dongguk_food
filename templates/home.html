@@ -11,8 +11,30 @@
 }
 </style>
 {% endblock %}
+{% block main_header %}trans-mode{% endblock %}
+{% block header %}
+    <header class="main-header" style="background-image: url('https://mp-seoul-image-production-s3.mangoplate.com/0776fea76b4a824ff583128cb51dd45c.jpg');">
+        <div>
+            <p class="title">동국대생들의 맛집 창고</p>
+            <h1 class="title">동국 푸드</h1>
+
+            <fieldset class="main-search">
+                <legend>전체 검색</legend>
+
+                <label class="search-word" for="main-search">
+                    <span class="icon">검색 :</span>
+                    <input id="main-search" class="HomeSearchInput" name="main-search" type="text" maxlength="50" placeholder="지역, 식당 또는 음식" autocomplete="off" onclick="trackEvent('CLICK_SEARCH_MAIN')">
+                    <span class="clear_btn">CLEAR</span>
+                </label>
+
+                <input class="btn-search" type="submit" value="검색" onclick="trackEvent('CLICK_KEYWORD_SEARCH');">
+            </fieldset>
+        </div>
+    </header>
+{% endblock %}
+{% block container_class %}homepage{% endblock %}
 {% block content %}
-<div class="row mt-5">
+<div class="row">
     <div class="col-sm">
     <h2>맛집 리스트</h2>
         <hr>
@@ -60,4 +82,20 @@
         </div>
     </div>
 </div>
+{% endblock %}
+{% block extra-script %}
+<script>
+    $(document).ready(function () {
+        //스크롤 발생 이벤트 처리
+        $(window).scroll(function () {
+            const scrollT = $(this).scrollTop();
+            const scrollH = $('.main-header').outerHeight(); //스크롤바의 상단위치
+            if (scrollT < scrollH) { // 스크롤바가 아래 쪽에 위치할 때
+                $('#nav-top').addClass('trans-mode');
+            } else {
+                $('#nav-top').removeClass('trans-mode');
+            }
+        });
+    });
+</script>
 {% endblock %}

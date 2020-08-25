@@ -9,50 +9,87 @@
 </style>
 {% endblock %}
 {% block content %}
-
-<div class="d-flex flex-row-reverse">
-
-</div>
-<div class="row board-header">
-    <div class="col-sm-12">
-        <div class="float-right text-center">
-            <button post-id="{{ userboard.pk }}" class="btn userboard-like">
-                {% if user in userboard.like_users.all %}
-                    <i id="like-heart-{{userboard.pk}}" class="fas fa-heart fa-2x"></i></button>
-                {% else %}
-                    <i id="like-heart-{{userboard.pk}}" class="far fa-heart fa-2x"></i></button>
-                {% endif %}
-            <br>
-            <span id="count-{{ userboard.pk }}">{{ userboard.like_users.count }}개</span>
-            <span id="like-user-{{ userboard.pk }}"></span>
-        </div>
-        <div class="h1">{{ userboard.title }}</div>
-        <span class="h5">{% if userboard.writer.nickname %}{{ userboard.writer.nickname }}{% else %}{{ userboard.writer}}{% endif %}</span> {{ userboard.created_dt|date:"Y.m.d h:i"}}
-    </div>
-</div>
-<hr>
-<div class="row board-body">
-    <div class="col-md-11">
-        <div class="col">{{ userboard.content|safe}}</div>
-    </div>
-</div>
-<hr>
 <button class="btn btn-primary mb-3 p-2" onclick="location.href='{% url 'board:post_edit' userboard.pk %}'">수정</button>
 <button class="btn btn-primary mb-3 p-2" onclick="location.href='{% url 'board:post_delete' userboard.pk %}'">삭제</button>
-<div class="row body-footer">
-    <div class="col-md-11">
-        <div>
-            <b>TAGS</b> <i class="fas fa-tag"></i>
-            {% load taggit_templatetags2_tags %}
-            {% get_tags_for_object object as "tags" %}
-            {% for tag in tags %}
-            <a href="{% url 'helpers:tagged_object_list' tag.name %}">{{tag.name}}</a>
-            {% endfor %}
-            &emsp;
-            <a href="{% url 'helpers:tag_cloud' %}"><span class="btn btn-info btn-sm">TagCloud</span></a>
+<div class="board">
+    <div class="row board-header">
+        <div class="col-sm-12">
+            <div class="float-right text-center">
+                <button post-id="{{ userboard.pk }}" class="btn userboard-like">
+                    {% if user in userboard.like_users.all %}
+                        <i id="like-heart-{{userboard.pk}}" class="fas fa-heart fa-2x"></i></button>
+                    {% else %}
+                        <i id="like-heart-{{userboard.pk}}" class="far fa-heart fa-2x"></i></button>
+                    {% endif %}
+                <br>
+                <span id="count-{{ userboard.pk }}">{{ userboard.like_users.count }}개</span>
+                <span id="like-user-{{ userboard.pk }}"></span>
+            </div>
+            <div class="h3">{{ userboard.title }}</div>
         </div>
-        <br>
-        <div id="disqus_thread"></div>
+        <div class="col-sm-12">
+            <div class="writer-info">
+                <div class="profile-area">
+                    <div class="profile-info">
+                        <div class="nick-box">
+                            {% if userboard.writer.nickname %}{{ userboard.writer.nickname }}{% else %}{{ userboard.writer}}{% endif %}
+                        </div>
+                        <div class="board-info">
+                            {{ userboard.created_dt|date:"Y.m.d h:i"}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row board-body">
+        <div class="col-md-11">
+            <div class="col">{{ userboard.content|safe}}</div>
+        </div>
+    </div>
+    <div class="row body-footer">
+        <div class="col-md-11 mb-3">
+            <div>
+                <b>TAGS</b> <i class="fas fa-tag"></i>
+                {% load taggit_templatetags2_tags %}
+                {% get_tags_for_object object as "tags" %}
+                {% for tag in tags %}
+                <a href="{% url 'helpers:tagged_object_list' tag.name %}">{{tag.name}}</a>
+                {% endfor %}
+                &emsp;
+                <a href="{% url 'helpers:tag_cloud' %}"><span class="btn btn-info btn-sm">TagCloud</span></a>
+            </div>
+        </div>
+        <div class="col-md-11">
+            <div>
+                {% if form.errors %}
+                    <div class="alert alert-danger">{{ form.errors }}</div>
+                {% endif %}
+                <form action="" method="post" id="multiForm">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ form.text }}
+                    </div>
+                    <input id="writeComment" type="submit" value="작성" class="btn btn-primary">
+                </form>
+                <div class="comment-list">
+                    {% for comment in comments %}
+                    <div class="comment-area">
+                        <div class="comment-box">
+                            <div class="comment-nick-box"><a class="comment-nickname" href="#">{{ comment.writer }}</a></div>
+                            <div class="comment-text-box">
+                                <p class="comment-text-view">
+                                    <span class="text-comment">{{ comment.text }}</span>
+                                </p>
+                            </div>
+                            <div class="comment-info-box">{{ comment.created }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div id="disqus_thread"></div>
+        </div>
     </div>
 </div>
 <hr>
@@ -66,6 +103,25 @@
 </script>
 <script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>
 <script>
+$('#multiForm').on('submit', function(e){
+    e.preventDefault();
+    var formData = $(this).serialize();
+    {#var text = $("<div></div>").text(formData.split('&')[1].split('=')[1]);#}
+
+    $.ajax({
+        type: "POST",
+        url: "{{ userboard.get_absolute_url }}",
+        cache: false,
+        data: formData,
+        success: function (response) {
+            $(".comment-list").append(response);
+        },
+        error: function(response){
+            alert('bye');
+        }
+    })
+})
+
 
 /**
 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.

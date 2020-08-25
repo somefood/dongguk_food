@@ -13,9 +13,10 @@
     {% endblock %}
 
 </head>
-<body style="padding-top:90px;">
-<nav class="navbar navbar-expand-xl navbar-dark fixed-top" style="background-color: #EE6F1B;">
-  <span class="navbar-brand mx-5 mb-0 font-weight-bold font-italic"><a class="text-white" href="{% url 'home' %}">Dongguk Food</a></span>
+<body>
+{% block header %}{% endblock %}
+<nav id="nav-top" class="navbar navbar-expand-xl navbar-light fixed-top {% block main_header %}{% endblock %}">
+  <span class="navbar-brand mx-5 mb-0 font-weight-bold"><a class="header-title" href="{% url 'home' %}">Dongguk Food</a></span>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -23,13 +24,13 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item mx-1 btn">
-        <a class="nav-link text-white" href="{% url 'home' %}">Home</a>
+        <a class="nav-link header-text" href="{% url 'home' %}">Home</a>
       </li>
       <li class="nav-item mx-1 btn">
-          <a class="nav-link text-white" href="{% url 'about' %}">About</a>
+          <a class="nav-link header-text" href="{% url 'about' %}">About</a>
       </li>
       <li class="nav-item dropdown mx-1 btn">
-        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle header-text" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           가게보기
         </a>
         <div class="dropdown-menu">
@@ -41,10 +42,10 @@
         </div>
       </li>
       <li class="nav-item mx-1 btn">
-          <a class="nav-link text-white" href="{% url 'board:index' %}">게시판</a>
+          <a class="nav-link header-text" href="{% url 'board:index' %}">게시판</a>
       </li>
         <li class="nav-item mx-1 btn">
-          <a class="nav-link text-white" href="{% url 'helpers:tag_cloud'%}">태그</a>
+          <a class="nav-link header-text" href="{% url 'helpers:tag_cloud'%}">태그</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0" action="/helpers/search/" method="post">
@@ -57,7 +58,7 @@
       <ul class="navbar-nav ml-5 mr-5">
           <li class="nav-item dropdown mx-1 btn">
               {% if user.is_active %}
-              <a class="nav-link dropdown-toggle text-white" href="#" data-toggle="dropdown">
+              <a class="nav-link dropdown-toggle header-text" href="#" data-toggle="dropdown">
                   <i class="fas fa-user"></i>&ensp;{% firstof user.nickname user.get_username %}님
               </a>
               <div class="dropdown-menu">
@@ -69,7 +70,7 @@
                 {% endcomment %}
               </div>
               {% else %}
-              <a class="nav-link dropdown-toggle text-white" href="#" data-toggle="dropdown">
+              <a class="nav-link dropdown-toggle header-text" href="#" data-toggle="dropdown">
                   <i class="fas fa-user"></i>&ensp;로그인 해주세요&ensp;
               </a>
               <div class="dropdown-menu">
@@ -84,11 +85,18 @@
   </div>
 </nav>
 
-<div class="container">
+<div class="container {% block container_class%}{% endblock %}">
     {% block content %}{% endblock %}
 </div>
 
-{% block footer %}{% endblock %}
+<footer class="footer">
+    <div class="inner">
+        <div class="dg_logo">
+            <a href="/" class="btn-dg"></a>
+            <p class="subtitle"></p>
+        </div>
+    </div>
+</footer>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

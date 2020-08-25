@@ -4,6 +4,8 @@ from django.shortcuts import reverse
 from taggit.managers import TaggableManager
 from django.utils.text import slugify
 from django.conf import settings
+from django.contrib.auth import get_user_model
+
 
 def generate_unique_slug(klass, field):
     """
@@ -47,3 +49,14 @@ class UserBoard(models.Model):
         ordering = ['-created_dt']
         verbose_name = '게시판'
         verbose_name_plural = '게시판'
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(UserBoard, on_delete=models.CASCADE)
+    writer = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, blank=True, related_name='comments')
+    text = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.writer}"

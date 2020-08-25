@@ -1,16 +1,19 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.urls import reverse_lazy
 from .models import UserBoard
-from .forms import BoardForm
+from .forms import CommentForm
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.models import User
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from mysite.views import OwnerOnlyMixin
 from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import FormMixin
 from django.conf import settings
+from django.http import JsonResponse
 import json
+
 
 class BoardIndex(ListView):
     template_name = 'board/index.html'
@@ -61,17 +64,38 @@ class BoardDeleteV(OwnerOnlyMixin, DeleteView):
     template_name = 'board/board_confirm_delete.html'
 
 
-class BoardDetail(DetailView):
+class BoardDetail(FormMixin, DetailView):
     model = UserBoard
+    form_class = CommentForm
     template_name = 'board/detail.html'
+
+    def get_success_url(self):
+        return reverse('board:detail', args=[self.object.slug])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['disqus_short'] = f"{settings.DISQUS_SHORTNAME}"
-        context['disqus_id'] = f"post-{self.object.id}-{self.object.slug}"
-        context['disqus_url'] = f"{settings.DISQUS_MY_DOMAIN}{self.object.get_absolute_url()}"
-        context['disqus_title'] = f"{self.object.slug}"
+        context['form'] = CommentForm()
+        context['comments'] = self.object.comment_set.all()
         return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if not request.user.is_authenticated:
+            return self.render_to_response(self.get_context_data(form=form))
+
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        comment = form.save(commit=False)
+        comment.post = get_object_or_404(UserBoard, pk=self.object.pk)
+        comment.writer = self.request.user
+        comment.save()
+        return render(self.request, '_comment.html', {'comment': comment})
+        # return JsonResponse({"success": True, "content": str(comment.text), "writer": str(comment.writer), "date": str(comment.created)}, status=200)
 
 
 @login_required

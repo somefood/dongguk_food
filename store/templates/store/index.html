@@ -21,13 +21,17 @@
   <div class="col-sm-4">
     <div class="card" style="border-style: none">
       <a href="{{ store.get_absolute_url }}">
-        {% if store.menu_set.first.food_image %}
-          {% thumbnail store.menu_set.first.food_image "370x250" crop="center" as im %}
-            <img class="card-img-top" src="{{ im.url }}" alt="">
-          {% endthumbnail %}
-        {% else %}
-            <img class="card-img-top" src="{% static 'img/alt_image.png' %}" style="width:100%; height: 255px;">>
-        {% endif %}
+        {% for menu in store.menu_set.all %}
+            {% if forloop.first %}
+              {% thumbnail menu.food_image "370x250" crop="center" as im %}
+                {% if im.url %}
+                    <img class="card-img-top" src="{{ im.url }}" alt="">
+                {% else %}
+                    <img class="card-img-top" src="{% static 'img/alt_image.png' %}" style="width:100%; height: 255px;">>
+                {% endif %}
+              {% endthumbnail %}
+            {% endif %}
+        {% endfor %}
       </a>
     </div>
   </div>

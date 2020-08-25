@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Store, Menu
 
-class MenuInine(admin.TabularInline):
+class MenuInline(admin.TabularInline):
     model = Menu
 
 
@@ -12,7 +12,7 @@ class StoreAdmin(admin.ModelAdmin):
     search_fields = ('name', )
     prepopulated_fields = {'slug': ('name',)}
     inlines = [
-        MenuInine,
+        MenuInline,
     ]
 
     def get_queryset(self, request):

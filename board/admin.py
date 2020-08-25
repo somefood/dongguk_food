@@ -1,15 +1,19 @@
 from django.contrib import admin
-from .models import UserBoard
+from .models import UserBoard, Comment
 
 
-# admin.site.register(UserBoard)
+class CommentInline(admin.TabularInline):
+    model = Comment
+
 
 @admin.register(UserBoard)
 class UserBoardAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'content', 'modified_dt', 'tag_list')
     list_filter = ('modified_dt',)
     search_fields = ('title', 'content')
-    # prepopulated_fields = {'slug': ('title',)}
+    inlines = [
+        CommentInline,
+    ]
 
     def get_queryset(self, request):
         return super().get_queryset(request).prefetch_related('tags')

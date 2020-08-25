@@ -10,13 +10,14 @@ from mysite.views import AdminOnlyMixin
 from django.conf import settings
 import json
 
+
 class StoreIndexView(ListView):
     template_name = 'store/index.html'
     context_object_name = "store_list"
     paginate_by = 10
 
     def get_queryset(self):
-        return Store.objects.all()
+        return Store.objects.prefetch_related('menu_set').prefetch_related('like_users').all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -60,6 +61,7 @@ class CategoryView(ListView):
         page_range = paginator.page_range[start_index:end_index]
         context['page_range'] = page_range
         return context
+
 
 @login_required
 def like(request):
