@@ -341,6 +341,14 @@ footer.footer > .inner {
     font-size: 12px;
     color: #979797;
 }
+/* footer */
+footer.footer .language-copyrights {
+    position: relative;
+}
+footer.footer .language-copyrights small{
+    display: block;
+    color: #9b9b9b;
+}
 
 @media screen and (min-width: 769px){
     .main-header .title {
@@ -402,9 +410,16 @@ footer.footer > .inner {
     }
     footer.footer > .inner {
         margin: 0 auto;
-        padding-top: 65px;
+        padding-top: 25px;
         min-height: 200px;
         max-width: 1200px;
+    }
+    footer.footer .language-copyrights {
+        padding: 36px 0 42px 0;
+    }
+    footer.footer .language-copyrights small{
+        font-size: 0.875rem;
+        line-height: 22px;
     }
 }
 .fa-heart {
