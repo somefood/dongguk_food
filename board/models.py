@@ -55,8 +55,8 @@ class Comment(models.Model):
     post = models.ForeignKey(UserBoard, on_delete=models.CASCADE)
     writer = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, blank=True, related_name='comments')
     text = models.TextField()
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    created_dt = models.DateTimeField(auto_now_add=True)
+    modified_dt = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.writer}"

@@ -172,6 +172,12 @@ a:hover {
 	margin-right: auto;
 	margin-left: auto;
 }
+input[type="submit"] {
+    border: 0px;
+}
+*:focus{
+    outline: none;
+}
 /* homepage css */
 #nav-top {
     border-bottom: 1px solid #DBDBDB;

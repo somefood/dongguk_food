@@ -23,11 +23,11 @@
 
                 <label class="search-word" for="main-search">
                     <span class="icon">검색 :</span>
-                    <input id="main-search" class="HomeSearchInput" name="main-search" type="text" maxlength="50" placeholder="지역, 식당 또는 음식" autocomplete="off" onclick="trackEvent('CLICK_SEARCH_MAIN')">
+                    <input id="main-search" class="HomeSearchInput" name="main-search" type="text" maxlength="50" placeholder="지역, 식당 또는 음식" autocomplete="off">
                     <span class="clear_btn">CLEAR</span>
                 </label>
 
-                <input class="btn-search" type="submit" value="검색" onclick="trackEvent('CLICK_KEYWORD_SEARCH');">
+                <input class="btn-search" type="submit" value="검색" onclick="trackEvent();">
             </fieldset>
         </div>
     </header>
@@ -82,9 +82,39 @@
         </div>
     </div>
 </div>
+    <div id="resultarea">
+
+    </div>
 {% endblock %}
 {% block extra-script %}
 <script>
+    function submitForm(value){
+        if (!value.length) {
+            alert('내용을 입력해주세요!');
+        } else {
+            var form = document.createElement('form');
+            var objs1;
+            var objs2;
+            objs1 = document.createElement('input');
+            objs1.setAttribute('type', 'hidden');
+            objs1.setAttribute('name', 'csrfmiddlewaretoken');
+            objs1.setAttribute('value', '{{ csrf_token }}');
+            objs2 = document.createElement('input');
+            objs2.setAttribute('type', 'input');
+            objs2.setAttribute('name', 'q');
+            objs2.setAttribute('value', value);
+            form.appendChild(objs1);
+            form.appendChild(objs2);
+            form.setAttribute('method', 'post');
+            form.setAttribute('action', "/helpers/search/");
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+    function trackEvent(){
+        var value = $('#main-search').val();
+        submitForm(value)
+    }
     $(document).ready(function () {
         //스크롤 발생 이벤트 처리
         $(window).scroll(function () {
@@ -94,6 +124,12 @@
                 $('#nav-top').addClass('trans-mode');
             } else {
                 $('#nav-top').removeClass('trans-mode');
+            }
+        });
+        $('#main-search').keydown(function(e){
+            if(e.keyCode == 13){
+                var value = e.target.value
+                submitForm(value);
             }
         });
     });

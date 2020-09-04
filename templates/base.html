@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{% block title%}Dongguk Food{% endblock %}</title>
+    <title>{% block title %}Dongguk Food{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     {% block extra-style %}
@@ -16,76 +16,69 @@
 <body>
 {% block header %}{% endblock %}
 <nav id="nav-top" class="navbar navbar-expand-xl navbar-light fixed-top {% block main_header %}{% endblock %}">
-  <span class="navbar-brand mx-5 mb-0 font-weight-bold"><a class="header-title" href="{% url 'home' %}">Dongguk Food</a></span>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <span class="navbar-brand mx-5 mb-0 font-weight-bold"><a class="header-title" href="{% url 'home' %}">Dongguk Food</a></span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item mx-1 btn">
-        <a class="nav-link header-text" href="{% url 'home' %}">Home</a>
-      </li>
-      <li class="nav-item mx-1 btn">
-          <a class="nav-link header-text" href="{% url 'about' %}">About</a>
-      </li>
-      <li class="nav-item dropdown mx-1 btn">
-        <a class="nav-link dropdown-toggle header-text" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          가게보기
-        </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="{% url 'store:index' %}">전체보기</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{% url 'store:category' 'restaurant' %}">음식집</a>
-          <a class="dropdown-item" href="{% url 'store:category' 'bar' %}">술 집</a>
-          <a class="dropdown-item" href="{% url 'store:category' 'cafe' %}">카 페</a>
-        </div>
-      </li>
-      <li class="nav-item mx-1 btn">
-          <a class="nav-link header-text" href="{% url 'board:index' %}">게시판</a>
-      </li>
-        <li class="nav-item mx-1 btn">
-          <a class="nav-link header-text" href="{% url 'helpers:tag_cloud'%}">태그</a>
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0" action="/helpers/search/" method="post">
-        {% csrf_token %}
-        <span style="margin: 0 auto;">
-            <input class="form-control" type="text" name="q" value="" placeholder="검색">
-            <input type="submit" value="검색" placeholder="입력" class="btn btn-primary my-2 my-sm-0">
-        </span>
-    </form>
-      <ul class="navbar-nav ml-5 mr-5">
-          <li class="nav-item dropdown mx-1 btn">
-              {% if user.is_active %}
-              <a class="nav-link dropdown-toggle header-text" href="#" data-toggle="dropdown">
-                  <i class="fas fa-user"></i>&ensp;{% firstof user.nickname user.get_username %}님
-              </a>
-              <div class="dropdown-menu">
-                  <a class="dropdown-item" href="{% url 'accounts:mypage' %}">마이페이지</a>
-                  <a class="dropdown-item" href="{% url 'password_change' %}">패스워드 변경</a>
-                  <a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a>
-                {% comment %}
-                  <a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a>
-                {% endcomment %}
-              </div>
-              {% else %}
-              <a class="nav-link dropdown-toggle header-text" href="#" data-toggle="dropdown">
-                  <i class="fas fa-user"></i>&ensp;로그인 해주세요&ensp;
-              </a>
-              <div class="dropdown-menu">
-                  <a class="dropdown-item" href="{% url 'accounts:login' %}">로그인</a>
-                  <a class="dropdown-item" href="{% url 'accounts:find_user' %}">아이디 찾기</a>
-                  <a class="dropdown-item" href="{% url 'password_reset' %}">패스워드 찾기</a>
-                  <a class="dropdown-item" href="{% url 'accounts:signup' %}">회원가입</a>
-              </div>
-              {% endif %}
-          </li>
-      </ul>
-  </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item mx-1 btn">
+                <a class="nav-link header-text" href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="nav-item mx-1 btn">
+                <a class="nav-link header-text" href="{% url 'about' %}">About</a>
+            </li>
+            <li class="nav-item dropdown mx-1 btn">
+                <a class="nav-link dropdown-toggle header-text" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    가게보기
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'store:index' %}">전체보기</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'store:category' 'restaurant' %}">음식집</a>
+                    <a class="dropdown-item" href="{% url 'store:category' 'bar' %}">술 집</a>
+                    <a class="dropdown-item" href="{% url 'store:category' 'cafe' %}">카 페</a>
+                </div>
+            </li>
+            <li class="nav-item mx-1 btn">
+                <a class="nav-link header-text" href="{% url 'board:index' %}">게시판</a>
+            </li>
+            <li class="nav-item mx-1 btn">
+                <a class="nav-link header-text" href="{% url 'helpers:tag_cloud' %}">태그</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-5 mr-5">
+            <li class="nav-item dropdown mx-1 btn">
+                {% if user.is_active %}
+                    <a class="nav-link dropdown-toggle header-text" href="#" data-toggle="dropdown">
+                        <i class="fas fa-user"></i>&ensp;{% firstof user.nickname user.get_username %}님
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'accounts:mypage' %}">마이페이지</a>
+                        <a class="dropdown-item" href="{% url 'password_change' %}">패스워드 변경</a>
+                        <a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a>
+                        {% comment %}
+                            <a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a>
+                        {% endcomment %}
+                    </div>
+                {% else %}
+                    <a class="nav-link dropdown-toggle header-text" href="#" data-toggle="dropdown">
+                        <i class="fas fa-user"></i>&ensp;로그인 해주세요&ensp;
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'accounts:login' %}">로그인</a>
+                        <a class="dropdown-item" href="{% url 'accounts:find_user' %}">아이디 찾기</a>
+                        <a class="dropdown-item" href="{% url 'password_reset' %}">패스워드 찾기</a>
+                        <a class="dropdown-item" href="{% url 'accounts:signup' %}">회원가입</a>
+                    </div>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
 </nav>
 
-<div class="container {% block container_class%}{% endblock %}">
+<div class="container {% block container_class %}{% endblock %}">
     {% block content %}{% endblock %}
 </div>
 
@@ -102,6 +95,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/c998a172fe.js"></script>
-{% block extra-script%}{% endblock %}
+{% block extra-script %}{% endblock %}
 </body>
 </html>

@@ -4,8 +4,8 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import Store
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .forms import MenuInlineFormSet
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormMixin
+from .forms import MenuInlineFormSet, CommentForm
 from mysite.views import AdminOnlyMixin
 from django.conf import settings
 import json
@@ -87,17 +87,34 @@ def like(request):
     # return redirect(store.get_absolute_url())
 
 
-class StoreDetailView(DetailView):
+class StoreDetailView(FormMixin, DetailView):
     model = Store
     template_name = 'store/store_detail.html'
+    form_class = CommentForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['disqus_short'] = f"{settings.DISQUS_SHORTNAME}"
-        context['disqus_id'] = f"post-{self.object.id}-{self.object.slug}"
-        context['disqus_url'] = f"{settings.DISQUS_MY_DOMAIN}{self.object.get_absolute_url()}"
-        context['disqus_title'] = f"{self.object.slug}"
+        context['form'] = CommentForm()
+        context['comments'] = self.object.comment_set.all()
         return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if not request.user.is_authenticated:
+            return self.render_to_response(self.get_context_data(form=form))
+
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        comment = form.save(commit=False)
+        comment.store = get_object_or_404(Store, pk=self.object.pk)
+        comment.writer = self.request.user
+        comment.save()
+        return render(self.request, '_comment.html', {'comment': comment})
 
 
 class StoreCreateView(AdminOnlyMixin, CreateView):

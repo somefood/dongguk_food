@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Store, Menu
+from .models import Store, Menu, Comment
+
 
 class MenuInline(admin.TabularInline):
     model = Menu
@@ -20,3 +21,8 @@ class StoreAdmin(admin.ModelAdmin):
 
     def tag_list(self, obj):
         return ', '.join(o.name for o in obj.tags.all())
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    pass
