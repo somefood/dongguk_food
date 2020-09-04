@@ -290,7 +290,7 @@ footer.footer > .inner {
     position: relative;
 }
 
-/* board */
+/* store, board 레이아웃*/
 .board {
     padding: 29px 29px 0;
     border: 1px solid #ebecef;
@@ -346,6 +346,11 @@ footer.footer > .inner {
     margin-top: 7px;
     font-size: 12px;
     color: #979797;
+}
+.comment-box .comment_tool{
+    position: absolute;
+    top: 12px;
+    right: 0;
 }
 /* footer */
 footer.footer .language-copyrights {

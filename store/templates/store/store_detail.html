@@ -2,180 +2,188 @@
 {% load static %}
 {% load sorl_thumbnail %}
 {% block content %}
-{% if user.is_staff %}
-<button class="btn btn-primary" onclick="location.href='{% url 'store:store_edit' store.pk %}'">수정</button>
-<button class="btn btn-primary" onclick="location.href='{% url 'store:store_delete' store.pk %}'">삭제</button>
-{% endif %}
-<div class="row store-header">
-    <div class="col-sm-10">
-        <div class="float-right text-center">
-            <button post-id="{{ store.pk }}" class="btn store-like">
-                {% if user in store.like_users.all %}
-                    <i id="like-heart-{{store.pk}}" class="fas fa-heart fa-2x"></i></button>
-                {% else %}
-                    <i id="like-heart-{{store.pk}}" class="far fa-heart fa-2x"></i></button>
-                {% endif %}
-            <br>
-            <span id="count-{{ store.pk }}" style="text-align: center;">{{ store.like_users.count }}개</span>
-            <span id="like-user-{{ store.pk }}"></span>
-        </div>
-        <h1 class="mt-3">{{ store.name }}</h1>
-    </div>
-</div>
-<hr>
-<div class="row store-body">
-    <div class="col-sm-7 store-body-description">
-<!--        <img src="{% if store.store_image %}{{ store.store_image.url }}{% else %}{% static 'img/alt_image.png' %}{% endif %}" alt=""-->
-<!--        style="width: 100%; height: 300px;">-->
-        {% if store.store_image %}
-            {% thumbnail store.store_image "300x300" crop="center" as im %}
-                <img src="{{ im.url }}" alt="">
-            {% endthumbnail %}
-        {% else %}
-                <img src="{% static 'img/alt_image.png' %}" alt="">
-        {% endif %}
-    </div>
-    <div class="col-sm-7">
-        <table class="table">
-            <tbody>
-            <tr>
-                <th style="width: 20%;">설명</th>
-                <td>{{ store.description }}</td>
-            </tr>
-            <tr>
-                <th>주소</th>
-                <td>{{store.location}}</td>
-            </tr>
-            <tr>
-                <th>연락처</th>
-                <td>{{store.phone_number}}</td>
-            </tr>
-            <tr>
-                <th>영업시간</th>
-                <td>{{store.running_time}}</td>
-            </tr>
-            <tr>
-                <th>메뉴</th>
-                <td>
-                {% for menu in store.menu_set.all %}
-                {{menu.name}}<br>
-                {% endfor %}
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-sm-5">
-        <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                {% for menu in store.menu_set.all %}
-                    {% ifequal forloop.counter0 0 %}
-                        <li data-target="#carouselExampleCaptions" data-slide-to="{{ forloop.counter0 }}" class="active"></li>
-                    {% else %}
-                        <li data-target="#carouselExampleCaptions" data-slide-to="{{ forloop.counter0 }}"></li>
-                    {% endifequal %}
-                {% endfor %}
-            </ol>
-            <div class="carousel-inner">
-                {% for menu in store.menu_set.all %}
-                <div class="carousel-item">
-                    {% if menu.food_image %}
-                        {% thumbnail menu.food_image "450x450" crop="center" as im %}
-                        <img src="{{ im.url }}" class="d-block carousel-image" alt="">
-                        {% endthumbnail %}
-                    {% else %}
-                        <img src="{% static 'img/alt_image.png' %}" class="d-block w-100 carousel-image" alt="">
-                    {% endif %}
-                    <div class="carousel-caption d-none d-md-block">
-                        <section>
-                            <h5>{{ menu.name }}</h5>
-                            <p>{{ menu.description }}</p>
-                        </section>
-                    </div>
+    {% if user.is_staff %}
+        <button class="btn btn-primary" onclick="location.href='{% url 'store:store_edit' store.pk %}'">수정</button>
+        <button class="btn btn-primary" onclick="location.href='{% url 'store:store_delete' store.pk %}'">삭제</button>
+    {% endif %}
+    <div class="board">
+        <div class="row board-header">
+            <div class="col-sm-12">
+                <div class="float-right text-center">
+                    <button post-id="{{ store.pk }}" class="btn store-like">
+                        {% if user in store.like_users.all %}
+                            <i id="like-heart-{{ store.pk }}" class="fas fa-heart fa-2x"></i></button>
+                        {% else %}
+                            <i id="like-heart-{{ store.pk }}" class="far fa-heart fa-2x"></i></button>
+                        {% endif %}
+                    <br>
+                    <span id="count-{{ store.pk }}">{{ store.like_users.count }}개</span>
+                    <span id="like-user-{{ store.pk }}"></span>
                 </div>
-                {% endfor %}
+                <div class="h3">{{ store.name }}</div>
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </div>
-</div>
-
-<div class="row mt-3 store-footer">
-    <div class="col-md-7">
-        <div>
-            <b>TAGS</b> <i class="fas fa-tag"></i>
-            {% load taggit_templatetags2_tags %}
-            {% get_tags_for_object object as "tags" %}
-            {% for tag in tags %}
-            <a href="{% url 'helpers:tagged_object_list' tag.name %}">{{tag.name}}</a>
-            {% endfor %}
-            &emsp;
-            <a href="{% url 'helpers:tag_cloud' %}"><span class="btn btn-info btn-sm">TagCloud</span></a>
-        </div>
-        <div class="col-md-11">
-            <div>
-                {% if form.errors %}
-                    <div class="alert alert-danger">{{ form.errors }}</div>
-                {% endif %}
-                <form action="" method="post" id="multiForm">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        {{ form.text }}
-                    </div>
-                    <input id="writeComment" type="submit" value="작성" class="btn btn-primary">
-                </form>
-                <div class="comment-list">
-                    {% for comment in comments %}
-                    <div class="comment-area">
-                        <div class="comment-box">
-                            <div class="comment-nick-box"><a class="comment-nickname" href="#">{{ comment.writer }}</a></div>
-                            <div class="comment-text-box">
-                                <p class="comment-text-view">
-                                    <span class="text-comment">{{ comment.text }}</span>
-                                </p>
+            <div class="col-sm-12">
+                <div class="writer-info">
+                    <div class="profile-area">
+                        <div class="profile-info">
+                            <div class="nick-box">
+                                {% if store.writer.nickname %}{{ store.writer.nickname }}{% else %}{{ store.writer }}{% endif %}
                             </div>
-                            <div class="comment-info-box">{{ comment.created_dt }}</div>
+                            <div class="board-info">
+                                {{ store.created_dt|date:"Y.m.d h:i"}}
+                            </div>
                         </div>
                     </div>
-                    {% endfor %}
                 </div>
             </div>
         </div>
+        <div class="row board-body">
+            <div class="col-sm-6">
+                    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            {% for menu in store.menu_set.all %}
+                                <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+                                <li data-target="#carouselExampleCaptions" data-slide-to="{{ forloop.counter }}"></li>
+                            {% endfor %}
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                {% if store.store_image %}
+                                    {% thumbnail store.store_image "300x300" crop="center" as im %}
+                                        <img src="{{ im.url }}" class="d-block carousel-image w-100" alt="">
+                                    {% endthumbnail %}
+                                {% else %}
+                                    <img src="{% static 'img/alt_image.png' %}" class="w-100" alt="">
+                                {% endif %}
+                            </div>
+                            {% for menu in store.menu_set.all %}
+                                <div class="carousel-item">
+                                    {% if menu.food_image %}
+                                        {% thumbnail menu.food_image "300x300" crop="center" as im %}
+                                            <img src="{{ im.url }}" class="d-block carousel-image w-100" alt="">
+                                        {% endthumbnail %}
+                                    {% else %}
+                                        <img src="{% static 'img/alt_image.png' %}" class="d-block w-100 carousel-image" alt="">
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+            <div class="col-sm-6">
+                <table class="table">
+                        <tbody>
+                        <tr>
+                            <th style="width: 20%;">설명</th>
+                            <td>{{ store.description }}</td>
+                        </tr>
+                        <tr>
+                            <th>주소</th>
+                            <td>{{ store.location }}</td>
+                        </tr>
+                        <tr>
+                            <th>연락처</th>
+                            <td>{{ store.phone_number }}</td>
+                        </tr>
+                        <tr>
+                            <th>영업시간</th>
+                            <td>{{ store.running_time }}</td>
+                        </tr>
+                        <tr>
+                            <th>메뉴</th>
+                            <td>
+                                {% for menu in store.menu_set.all %}
+                                    {{ menu.name }}<br>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+        <div class="row mt-3 body-footer">
+                <div class="col-md-11 mb-3">
+                    <div>
+                        <b>TAGS</b> <i class="fas fa-tag"></i>
+                        {% load taggit_templatetags2_tags %}
+                        {% get_tags_for_object object as "tags" %}
+                        {% for tag in tags %}
+                            <a href="{% url 'helpers:tagged_object_list' tag.name %}">{{ tag.name }}</a>
+                        {% endfor %}
+                        &emsp;
+                        <a href="{% url 'helpers:tag_cloud' %}"><span class="btn btn-info btn-sm">TagCloud</span></a>
+                    </div>
+                </div>
+                <div class="col-md-11">
+                    <div>
+                        {% if form.errors %}
+                            <div class="alert alert-danger">{{ form.errors }}</div>
+                        {% endif %}
+                        <form action="" method="post" id="multiForm">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ form.text }}
+                            </div>
+                            <input id="writeComment" type="submit" value="작성" class="btn btn-primary">
+                        </form>
+                        <div class="comment-list">
+                            {% for comment in comments %}
+                                <div class="comment-area">
+                                    <div class="comment-box">
+                                        <div class="comment-nick-box"><a class="comment-nickname" href="#">{{ comment.writer }}</a></div>
+                                        <div class="comment-text-box">
+                                            <p class="comment-text-view">
+                                                <span class="text-comment">{{ comment.text }}</span>
+                                            </p>
+                                        </div>
+                                        <div class="comment-info-box">{{ comment.created_dt }}</div>
+                                        <div class="comment_tool">asdf</div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
-</div>
 {% endblock %}
 {% block extra-script %}
-<script>
-    var MyGlobal = {
-        url: "{% url 'store:like' %}",
-    }
-</script>
-<script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>
-<script>
-$('#multiForm').on('submit', function(e){
-    e.preventDefault();
-    var formData = $(this).serialize();
-    {#var text = $("<div></div>").text(formData.split('&')[1].split('=')[1]);#}
-
-    $.ajax({
-        type: "POST",
-        url: "{{ userboard.get_absolute_url }}",
-        cache: false,
-        data: formData,
-        success: function (response) {
-            $(".comment-list").append(response);
-        },
-        error: function(response){
-            alert('bye');
+    <script>
+        var MyGlobal = {
+            url: "{% url 'store:like' %}",
         }
-    })
-})
-</script>
+    </script>
+    <script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>
+    <script>
+        $('#multiForm').on('submit', function (e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            {#var text = $("<div></div>").text(formData.split('&')[1].split('=')[1]);#}
+
+            $.ajax({
+                type: "POST",
+                url: "{% url 'store:comment_create' store.slug %}",
+                cache: false,
+                data: formData,
+                success: function (response) {
+                    if(!response.authenticated) {
+                        window.location.href="/accounts/login?next={{ store.get_absolute_url }}";
+                    } else {
+                        $(".comment-list").append(response.html)
+                    }
+                },
+                error: function (response) {
+                    alert('bye');
+                }
+            })
+        })
+    </script>
 {% endblock %}

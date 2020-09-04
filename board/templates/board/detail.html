@@ -44,10 +44,10 @@
     </div>
     <div class="row board-body">
         <div class="col-md-11">
-            <div class="col">{{ userboard.content|safe}}</div>
+            {{ userboard.content|safe}}
         </div>
     </div>
-    <div class="row body-footer">
+    <div class="row mt-3 body-footer">
         <div class="col-md-11 mb-3">
             <div>
                 <b>TAGS</b> <i class="fas fa-tag"></i>
@@ -105,17 +105,20 @@
 $('#multiForm').on('submit', function(e){
     e.preventDefault();
     var formData = $(this).serialize();
-    {#var text = $("<div></div>").text(formData.split('&')[1].split('=')[1]);#}
 
     $.ajax({
         type: "POST",
-        url: "{{ userboard.get_absolute_url }}",
+        url: "{% url 'board:comment_create' userboard.slug %}",
         cache: false,
         data: formData,
         success: function (response) {
-            $(".comment-list").append(response);
+            if(!response.authenticated) {
+                window.location.href="/accounts/login?next={{ userboard.get_absolute_url }}";
+            } else {
+                $(".comment-list").append(response.html)
+            }
         },
-        error: function(response){
+        error: function (response) {
             alert('bye');
         }
     })

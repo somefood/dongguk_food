@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from .models import Store
 from django.views.generic import ListView, DetailView
@@ -85,6 +87,19 @@ def like(request):
     }
     return HttpResponse(json.dumps(context), content_type="application/json")
     # return redirect(store.get_absolute_url())
+
+
+def comment_create(request, slug):
+    if not request.user.is_authenticated:
+        return JsonResponse({'authenticated': False})
+    store = get_object_or_404(Store, slug=slug)
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        form.instance.writer = request.user
+        form.instance.store = store
+        comment = form.save()
+    html = render_to_string('_comment.html', {'comment': comment})
+    return JsonResponse({'html': html, 'authenticated': True})
 
 
 class StoreDetailView(FormMixin, DetailView):

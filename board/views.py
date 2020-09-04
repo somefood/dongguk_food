@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from .models import UserBoard
 from .forms import CommentForm
@@ -62,6 +63,19 @@ class BoardDeleteV(OwnerOnlyMixin, DeleteView):
     model = UserBoard
     success_url = reverse_lazy('board:index')
     template_name = 'board/board_confirm_delete.html'
+
+
+def comment_create(request, slug):
+    if not request.user.is_authenticated:
+        return JsonResponse({'authenticated': False})
+    post = get_object_or_404(UserBoard, slug=slug)
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        form.instance.writer = request.user
+        form.instance.post = post
+        comment = form.save()
+    html = render_to_string('_comment.html', {'comment': comment})
+    return JsonResponse({'html': html, 'authenticated': True})
 
 
 class BoardDetail(FormMixin, DetailView):
