@@ -3,58 +3,56 @@
 {% load sorl_thumbnail %}
 
 {% block content %}
-<div class="row">
-    <div class="col-sm-11">
-        <div class="h1"><a class="text-dark" href="{% url 'store:index' %}">가게 소개</a></div>
-        <button class="btn btn-outline-primary" onclick="location.href='{% url 'store:index' %}'">전체보기</button>
-        <button class="btn btn-outline-primary" onclick="location.href='{% url 'store:category' 'restaurant' %}'">음식집</button>
-        <button class="btn btn-outline-primary" onclick="location.href='{% url 'store:category' 'bar' %}'">술집</button>
-        <button class="btn btn-outline-primary" onclick="location.href='{% url 'store:category' 'cafe' %}'">카페</button>
-        {% if user.is_staff %}
-        <button type="button" class='btn btn-primary float-right mb-1' onclick="location.href='{% url 'store:store_add' %}'">가게글 작성</button>
-        {% endif %}
-    </div>
-</div>
-<hr>
-<div class="row no-gutters">
-  {% for store in store_list %}
-  <div class="col-sm-4">
-    <div class="card" style="border-style: none">
-      <a href="{{ store.get_absolute_url }}">
-        {% for menu in store.menu_set.all %}
-            {% if forloop.first %}
-              {% thumbnail menu.food_image "370x250" crop="center" as im %}
-                {% if im.url %}
-                    <img class="card-img-top" src="{{ im.url }}" alt="">
-                {% else %}
-                    <img class="card-img-top" src="{% static 'img/alt_image.png' %}" style="width:100%; height: 255px;">>
-                {% endif %}
-              {% endthumbnail %}
+<div class="inner">
+    <div class="row">
+        <div class="col-sm-11">
+            <a href="{% url 'store:index' %}"><h2 class="title">가게 소개</h2></a>
+            <button class="btn btn-outline-primary" onclick="location.href='{% url 'store:index' %}'">전체보기</button>
+            <button class="btn btn-outline-primary" onclick="location.href='{% url 'store:category' 'restaurant' %}'">음식집</button>
+            <button class="btn btn-outline-primary" onclick="location.href='{% url 'store:category' 'bar' %}'">술집</button>
+            <button class="btn btn-outline-primary" onclick="location.href='{% url 'store:category' 'cafe' %}'">카페</button>
+            {% if user.is_staff %}
+            <button type="button" class='btn btn-primary float-right mb-1' onclick="location.href='{% url 'store:store_add' %}'">가게글 작성</button>
             {% endif %}
-        {% endfor %}
-      </a>
+        </div>
     </div>
-  </div>
-  <div class="col-sm-8 mb-5">
-    <div class="card" style="border-style: none">
-      <div class="card-body" style="height: 250px; position: relative;">
-          <span style="float: right;"><button post-id="{{ store.pk }}" class="btn store-like">
-            {% if user in store.like_users.all %}
-              <i id="like-heart-{{ store.pk }}" class="fas fa-heart fa-2x"></i></button>
-            {% else %}
-              <i id="like-heart-{{ store.pk }}" class="far fa-heart fa-2x"></i></button>
-            {% endif %}</button>
-            <p id="count-{{ store.pk }}" style="text-align: center">{{ store.like_users.count }}개</p>
-          </span>
-        <a class="h2 text-dark" href="{{ store.get_absolute_url }}">{{ forloop.counter0|add:page_obj.start_index }}. {{ store.name }}</a>
-        <address>{{ store.location }}</address>
-        <p class="card-text" style="position: static;">{{ store.description }}</p>
-        <a href="{{ store.get_absolute_url }}" class="btn btn-primary" style="position: absolute; right:20px; bottom:20px;">더보기</a>
+    <div class="row">
+      {% for store in store_list %}
+      <div class="col-md-12">
+      <div class="card">
+          <a href="{{ store.get_absolute_url }}">
+            {% for menu in store.menu_set.all %}
+                {% if forloop.first %}
+                    <div class="thumb">
+                  {% thumbnail menu.food_image "370x250" crop="center" as im %}
+                    {% if im.url %}
+                        <img class="center-croping" src="{{ im.url }}" alt="">
+                    {% else %}
+                        <img class="center-croping" src="{% static 'img/alt_image.png' %}" style="width:100%; height: 255px;">>
+                    {% endif %}
+                  {% endthumbnail %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+          </a>
+          <div class="card-body">
+              <span style="float: right;"><button post-id="{{ store.pk }}" class="btn store-like">
+                {% if user in store.like_users.all %}
+                  <i id="like-heart-{{ store.pk }}" class="fas fa-heart fa-2x"></i></button>
+                {% else %}
+                  <i id="like-heart-{{ store.pk }}" class="far fa-heart fa-2x"></i></button>
+                {% endif %}</button>
+                <p id="count-{{ store.pk }}" style="text-align: center">{{ store.like_users.count }}개</p>
+              </span>
+            <a class="h2 text-dark" href="{{ store.get_absolute_url }}">{{ forloop.counter0|add:page_obj.start_index }}. {{ store.name }}</a>
+            <address>{{ store.location }}</address>
+            <p class="card-text" style="position: static;">{{ store.description }}</p>
+            <a href="{{ store.get_absolute_url }}" class="text-muted" style="position: absolute; right:20px; bottom:40px;">{{ store.name }} 더보기 ></a>
+          </div>
+        </div>
       </div>
+      {% endfor %}
     </div>
-  </div>
-  <hr style="width:100%; margin-bottom: 30px;">
-  {% endfor %}
 </div>
 <div class="row mt-5">
     <div class="col board-footer">

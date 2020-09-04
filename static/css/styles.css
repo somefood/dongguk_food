@@ -178,6 +178,12 @@ input[type="submit"] {
 *:focus{
     outline: none;
 }
+h2.title {
+    font-size: 1.438rem;
+
+    color: #ff792a;
+    line-height: 1.35em;
+}
 /* homepage css */
 #nav-top {
     border-bottom: 1px solid #DBDBDB;
@@ -350,6 +356,29 @@ footer.footer .language-copyrights small{
     color: #9b9b9b;
 }
 
+/* index */
+.center-croping {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.container .inner .card{
+    position: relative;
+    border-radius: 0;
+    padding: 28px 0 28px;
+    border: none;
+    border-bottom: 1px solid #dbdbdb;
+}
+.container .inner .card-body{
+    height: 238px;
+}
+.container .inner .card-body address {
+    margin-top: 6px;
+    display: block;
+    color: #9b9b9b;
+    line-height: 1.3em;
+}
+
 @media screen and (min-width: 769px){
     .main-header .title {
         width: 720px;
@@ -420,6 +449,23 @@ footer.footer .language-copyrights small{
     footer.footer .language-copyrights small{
         font-size: 0.875rem;
         line-height: 22px;
+    }
+    .container .inner {
+        position: relative;
+        width: 860px;
+        margin: 0 auto;
+        padding: 0 30px;
+    }
+    .container .inner .card{
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
+    .container .inner .card-body{
+        padding: 0 1.25rem 0;
+    }
+    .thumb {
+        width: 238px;
+        height: 238px;
     }
 }
 .fa-heart {
