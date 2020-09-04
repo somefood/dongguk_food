@@ -109,6 +109,7 @@
             form.setAttribute('action', "/helpers/search/");
             document.body.appendChild(form);
             form.submit();
+            form.remove();
         }
     }
     function trackEvent(){
@@ -127,7 +128,7 @@
             }
         });
         $('#main-search').keydown(function(e){
-            if(e.keyCode == 13){
+            if(e.keyCode === 13){
                 var value = e.target.value
                 submitForm(value);
             }
