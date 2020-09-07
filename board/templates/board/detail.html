@@ -84,6 +84,7 @@
 <script>
     var MyGlobal = {
         url: "{% url 'board:like' %}",
+        detailUrl: "{{ userboard.get_absolute_url }}",
         commentListUrl: "{% url 'board:comment' userboard.slug %}",
         commentCreateUrl: "{% url 'board:comment_create' userboard.slug %}"
     }

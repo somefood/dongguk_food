@@ -155,7 +155,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 TAGGIT_CASE_INSENSITIVE = True
 TAGGIT_LIMIT = 50
 
-LOGIIN_URL = '/accounts/static/'
+LOGIN_URL = '/accounts/login/'
 
 # 로그인 성공 시, 리다이렉트 url
 LOGIN_REDIRECT_URL = 'home'

@@ -30,7 +30,7 @@ $('#multiForm').on('submit', function (e) {
         success: function (response) {
             if (!response.authenticated) {
                 alert('로그인 해주세요.')
-                window.location.href = "/accounts/login?next={{ store.get_absolute_url }}";
+                window.location.href = `/accounts/login?next=${MyGlobal.detailUrl}`;
             } else {
                 $('#multiForm')[0].reset();
                 getPage(response.last_page);

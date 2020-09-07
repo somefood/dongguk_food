@@ -144,6 +144,7 @@
     <script>
         var MyGlobal = {
             url: "{% url 'store:like' %}",
+            detailUrl: "{{ store.get_absolute_url }}",
             commentListUrl: "{% url 'store:comment' store.slug %}",
             commentCreateUrl: "{% url 'store:comment_create' store.slug %}"
         }
