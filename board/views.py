@@ -1,7 +1,8 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
-from .models import UserBoard
+from .models import UserBoard, Comment
 from .forms import CommentForm
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.models import User
@@ -65,6 +66,37 @@ class BoardDeleteV(OwnerOnlyMixin, DeleteView):
     template_name = 'board/board_confirm_delete.html'
 
 
+class CommentListView(ListView):
+    model = Comment
+    paginate_by = 5
+    template_name = '_comment_list.html'
+    context_object_name = 'comment_list'
+
+    def get_queryset(self):
+        store = get_object_or_404(UserBoard, slug=self.kwargs['slug'])
+        return store.comment_set.all()
+
+    def get_context_data(self, *args, **kwargs):
+        store = get_object_or_404(UserBoard, slug=self.kwargs['slug'])
+        context = super().get_context_data(*args, **kwargs)
+        paginator = context['paginator']
+        page_numbers_range = 5  # Display only 5 page numbers
+        max_index = len(paginator.page_range)
+
+        page = self.request.GET.get('page')
+        current_page = int(page) if page else 1
+        start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+        end_index = start_index + page_numbers_range
+        if end_index >= max_index:
+            end_index = max_index
+
+        page_range = paginator.page_range[start_index:end_index]
+        context['page_range'] = page_range
+        context['store'] = store
+        return context
+
+
+@login_required
 def comment_create(request, slug):
     if not request.user.is_authenticated:
         return JsonResponse({'authenticated': False})
@@ -73,9 +105,19 @@ def comment_create(request, slug):
     if form.is_valid():
         form.instance.writer = request.user
         form.instance.post = post
-        comment = form.save()
-    html = render_to_string('_comment.html', {'comment': comment})
-    return JsonResponse({'html': html, 'authenticated': True})
+        form.save()
+    paginator = Paginator(post.comment_set.all(), 5)
+    last_page = paginator.num_pages
+    return JsonResponse({'last_page': last_page, 'authenticated': True})
+
+
+@login_required
+def comment_delete(request, slug, pk):
+    store = get_object_or_404(UserBoard, slug=slug)
+    comment = store.comment_set.get(pk=pk)
+    if comment.writer == request.user:
+        comment.delete()
+    return redirect(store)
 
 
 class BoardDetail(FormMixin, DetailView):
@@ -91,25 +133,6 @@ class BoardDetail(FormMixin, DetailView):
         context['form'] = CommentForm()
         context['comments'] = self.object.comment_set.all()
         return context
-
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        form = self.get_form()
-        if not request.user.is_authenticated:
-            return self.render_to_response(self.get_context_data(form=form))
-
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
-
-    def form_valid(self, form):
-        comment = form.save(commit=False)
-        comment.post = get_object_or_404(UserBoard, pk=self.object.pk)
-        comment.writer = self.request.user
-        comment.save()
-        return render(self.request, '_comment.html', {'comment': comment})
-        # return JsonResponse({"success": True, "content": str(comment.text), "writer": str(comment.writer), "date": str(comment.created)}, status=200)
 
 
 @login_required

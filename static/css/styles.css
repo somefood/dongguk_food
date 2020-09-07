@@ -167,7 +167,7 @@ a:hover {
     margin-top: 40px !important;
 }
 .container {
-    min-height: 800px;
+    min-height: 624px;
 	margin-top: 80px;
 	margin-right: auto;
 	margin-left: auto;
@@ -243,6 +243,10 @@ h2.title {
 .main-header .main-search {
     position: relative;
     background-color: #ffffff;
+    margin: 34px 15px 0 15px;
+    height: 48px;
+    border: 1px solid #ff792a;
+    border-radius: 50px;
 }
 .main-header .main-search .icon {
     display: block;
@@ -325,7 +329,7 @@ footer.footer > .inner {
 }
 .comment-list .comment-box {
     padding: 12px 23px 10px 0;
-    display: inline-block;
+    position: relative;
 }
 .comment-list .comment-box .comment-nick-box {
     margin-bottom: 4px;

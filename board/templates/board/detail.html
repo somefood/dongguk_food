@@ -72,21 +72,7 @@
                     </div>
                     <input id="writeComment" type="submit" value="작성" class="btn btn-primary">
                 </form>
-                <div class="comment-list">
-                    {% for comment in comments %}
-                    <div class="comment-area">
-                        <div class="comment-box">
-                            <div class="comment-nick-box"><a class="comment-nickname" href="#">{{ comment.writer }}</a></div>
-                            <div class="comment-text-box">
-                                <p class="comment-text-view">
-                                    <span class="text-comment">{{ comment.text }}</span>
-                                </p>
-                            </div>
-                            <div class="comment-info-box">{{ comment.created_dt }}</div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
+                <div class="comment-wrapper"></div>
             </div>
         </div>
     </div>
@@ -98,30 +84,10 @@
 <script>
     var MyGlobal = {
         url: "{% url 'board:like' %}",
+        commentListUrl: "{% url 'board:comment' userboard.slug %}",
+        commentCreateUrl: "{% url 'board:comment_create' userboard.slug %}"
     }
 </script>
 <script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>
-<script>
-$('#multiForm').on('submit', function(e){
-    e.preventDefault();
-    var formData = $(this).serialize();
-
-    $.ajax({
-        type: "POST",
-        url: "{% url 'board:comment_create' userboard.slug %}",
-        cache: false,
-        data: formData,
-        success: function (response) {
-            if(!response.authenticated) {
-                window.location.href="/accounts/login?next={{ userboard.get_absolute_url }}";
-            } else {
-                $(".comment-list").append(response.html)
-            }
-        },
-        error: function (response) {
-            alert('bye');
-        }
-    })
-})
-</script>
+<script type="text/javascript" src="{% static 'js/detail_page.js' %}"></script>
 {% endblock %}

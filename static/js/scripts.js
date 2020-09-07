@@ -3,7 +3,7 @@ $(document).ready(function () {
 });
 
 $("[class*=like]").click(function () {
-    var pk = $(this).attr('post-id')
+    var pk = $(this).attr('post-id');
     $.ajax({
         type: "GET",
         url: MyGlobal.url,
@@ -19,7 +19,7 @@ $("[class*=like]").click(function () {
             }
         },
         error: function (request, status, error) {
-            alert("로그인이 필요합니다.")
+            alert("로그인이 필요합니다!")
             window.location.replace("/accounts/login/")
         }
     })
