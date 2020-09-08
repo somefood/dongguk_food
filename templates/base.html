@@ -48,6 +48,13 @@
                 <a class="nav-link header-text" href="{% url 'helpers:tag_cloud' %}">태그</a>
             </li>
         </ul>
+        {% block form_area %}
+            <form class="form-inline my-2 my-lg-0" style="justify-content: center" action="/helpers/search/" method="post">
+                {% csrf_token %}
+                <input class="form-control" type="text" name="q" value="" placeholder="검색" style="width: 70%" />
+                <input type="submit" value="검색" placeholder="입력" class="btn btn-primary my-2 my-sm-0" />
+            </form>
+        {% endblock %}
         <ul class="navbar-nav ml-5 mr-5">
             <li class="nav-item dropdown mx-1 btn">
                 {% if user.is_active %}

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load humanize %}
 
 {% block content %}
 <h2 class="mb-5">검색결과: {{ search_word }}</h2>
@@ -7,18 +8,50 @@
         <div class="font-weight-bold">{{ error }}</div>
     </div>
 {% endif %}
-<table class="table">
-    <tbody>
-        {% for store in store_list %}
-        <tr>
-            <th><a href="{{ store.get_absolute_url }}">{{ store.name }}</a></th>
-        </tr>
-        {% endfor %}
-        {% for board in board_list %}
-        <tr>
-            <th><a href="{{ board.get_absolute_url }}">{{ board.title }}</a></th>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+    <ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#store">가게</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#board">게시판</a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="store">
+        <table class="table board-table">
+            <thead>
+              <tr>
+                <th style="width: 60%;">제목</th>
+                <th style="width: 40%;">작성날짜</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for store in store_list %}
+                <tr>
+                    <td><a href="{{ store.get_absolute_url }}">{{ store.name }}</a></td>
+                    <td style="text-align: center;">{{ store.created_dt|naturalday}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade" id="board">
+        <table class="table board-table">
+            <thead>
+              <tr>
+                <th style="width: 60%;">제목</th>
+                <th style="width: 40%;">작성날짜</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for board in board_list %}
+                <tr>
+                  <td><a href="{{ board.get_absolute_url }}">{{ board.title }}</a></td>
+                  <td style="text-align: center;">{{ board.created_dt|naturalday }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

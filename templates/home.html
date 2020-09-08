@@ -32,13 +32,13 @@
     </header>
 {% endblock %}
 {% block container_class %}homepage{% endblock %}
+{% block form_area %}{% endblock %}
 {% block content %}
 <div class="row">
     <div class="col-sm">
     <h2 class="title">맛집 리스트</h2>
-        <hr>
         <div class="d-flex flex-row-reverse mb-5">
-            <a class="float-right" href="{% url 'store:index' %}">전체 보기</a>
+            <a class="float-right text-muted" href="{% url 'store:index' %}">전체 보기</a>
         </div>
         <div class="row">
         {% for store in store_list %}
@@ -87,6 +87,27 @@
 {% endblock %}
 {% block extra-script %}
 <script>
+    var isMobile = {
+		Android: function() {
+			return navigator.userAgent.match(/Android/i);
+		},
+			BlackBerry: function() {
+			  return navigator.userAgent.match(/BlackBerry/i);
+		},
+			iOS: function() {
+			  return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+		},
+			Opera: function() {
+			  return navigator.userAgent.match(/Opera Mini/i);
+		},
+			Windows: function() {
+	      return navigator.userAgent.match(/IEMobile/i);
+		},
+			any: function() {
+			return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+		}
+	};
+
     function submitForm(value){
         if (!value.length) {
             alert('내용을 입력해주세요!');
@@ -117,15 +138,19 @@
     }
     $(document).ready(function () {
         //스크롤 발생 이벤트 처리
-        $(window).scroll(function () {
-            const scrollT = $(this).scrollTop();
-            const scrollH = $('.main-header').outerHeight(); //스크롤바의 상단위치
-            if (scrollT < scrollH) { // 스크롤바가 아래 쪽에 위치할 때
-                $('#nav-top').addClass('trans-mode');
-            } else {
-                $('#nav-top').removeClass('trans-mode');
-            }
-        });
+        if (!isMobile.any()) {
+            $(window).scroll(function () {
+                const scrollT = $(this).scrollTop();
+                const scrollH = $('.main-header').outerHeight() * 0.8; //스크롤바의 상단위치
+                if (scrollT < scrollH) { // 스크롤바가 아래 쪽에 위치할 때
+                    $('#nav-top').addClass('trans-mode');
+                } else {
+                    $('#nav-top').removeClass('trans-mode');
+                }
+            });
+        } else {
+            $('#nav-top').removeClass('trans-mode');
+        }
         $('#main-search').keydown(function(e){
             if(e.keyCode === 13){
                 var value = e.target.value
