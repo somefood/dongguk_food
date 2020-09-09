@@ -356,6 +356,42 @@ footer.footer > .inner {
     top: 12px;
     right: 0;
 }
+.CommentWriter {
+    margin: 12px 0 29px;
+    padding: 16px 10px 10px 18px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    box-sizing: border-box;
+    background: #ffffff;
+}
+.CommentWriter .comment_inbox {
+    position: relative;
+    margin-bottom: 10px;
+}
+.CommentWriter .comment_inbox .comment_inbox_text {
+    display: block;
+    width: 100%;
+    min-height: 17px;
+    padding-right: 1px;
+    border: 0;
+    font-size: 13px;
+    resize: none;
+    box-sizing: border-box;
+    background: transparent;
+    color: #000000;
+    outline: 0;
+}
+.CommentWriter .comment_attach {
+    position: relative;
+}
+.CommentWriter .comment_attach::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+.CommentWriter .register_box {
+    float: right;
+}
 /* footer */
 footer.footer .language-copyrights {
     position: relative;

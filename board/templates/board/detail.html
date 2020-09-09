@@ -86,7 +86,8 @@
         url: "{% url 'board:like' %}",
         detailUrl: "{{ userboard.get_absolute_url }}",
         commentListUrl: "{% url 'board:comment' userboard.slug %}",
-        commentCreateUrl: "{% url 'board:comment_create' userboard.slug %}"
+        commentCreateUrl: "{% url 'board:comment_create' userboard.slug %}",
+        csrfmiddlewaretoken: '{{ csrf_token }}'
     }
 </script>
 <script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>

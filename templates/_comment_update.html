@@ -1,0 +1,14 @@
+{% load humanize %}
+<div class="comment-box">
+    <div class="comment-nick-box"><a class="comment-nickname" href="#">{{ comment.writer }}</a></div>
+    <div class="comment-text-box">
+        <p class="comment-text-view">
+            <span class="text-comment">{{ comment.text }}</span>
+        </p>
+    </div>
+    <div class="comment-info-box">{{ comment.created_dt }}</div>
+    <div class="comment_tool">
+        <a href="javascript:void(0)" class="update-comment">수정</a>
+        <a href="javascript:void(0)" class="delete-comment" onclick="deleteComment(this)">삭제</a>
+    </div>
+</div>

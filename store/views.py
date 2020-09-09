@@ -135,12 +135,25 @@ def comment_create(request, slug):
 
 
 @login_required
+def comment_update(request, slug, pk):
+    store = get_object_or_404(Store, slug=slug)
+    comment = store.comment_set.get(pk=pk)
+    if comment.writer == request.user:
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            comment = form.save()
+            html = render_to_string('_comment_update.html', {'store':store, 'comment': comment} )
+            return JsonResponse({'is_updated': True, 'html': html})
+
+
+
+@login_required
 def comment_delete(request, slug, pk):
     store = get_object_or_404(Store, slug=slug)
     comment = store.comment_set.get(pk=pk)
     if comment.writer == request.user:
         comment.delete()
-    return redirect(store)
+    return JsonResponse({'is_deleted': True})
 
 
 class StoreDetailView(FormMixin, DetailView):

@@ -31,7 +31,7 @@
           <tbody>
             {% for item in board_list %}
             <tr>
-              <td><a class="text-dark text-truncate" href="{% url 'board:detail' item.slug %}">{{ item.title }}</a></td>
+              <td><a class="text-dark text-truncate" href="{% url 'board:detail' item.slug %}">{{ item.title }}</a>({{ item.comment_set.count }})</td>
               <td class="author">{% if item.writer.nickname %}{{ item.writer.nickname }}{% else %}{{ item.writer }}{% endif %}</td>
               <td class="text-primary voteNum">{{ item.like_count }}</td>
               <td class="time">{{ item.created_dt|naturalday }}</td>

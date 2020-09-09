@@ -146,7 +146,8 @@
             url: "{% url 'store:like' %}",
             detailUrl: "{{ store.get_absolute_url }}",
             commentListUrl: "{% url 'store:comment' store.slug %}",
-            commentCreateUrl: "{% url 'store:comment_create' store.slug %}"
+            commentCreateUrl: "{% url 'store:comment_create' store.slug %}",
+            csrfmiddlewaretoken: '{{ csrf_token }}'
         }
     </script>
     <script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>
