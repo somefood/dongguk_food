@@ -2,7 +2,7 @@
     {% for comment in comment_list %}
         <div class="comment-area" id="{{ comment.pk }}">
             <div class="comment-box">
-                <div class="comment-nick-box"><a class="comment-nickname" href="#">{{ comment.writer }}</a></div>
+                <div class="comment-nick-box"><a class="comment-nickname" href="#">{% firstof comment.writer.nickname comment.writer %}</a></div>
                 <div class="comment-text-box">
                     <p class="comment-text-view">
                         <span class="text-comment">{{ comment.text }}</span>
