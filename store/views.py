@@ -146,7 +146,6 @@ def comment_update(request, slug, pk):
             return JsonResponse({'is_updated': True, 'html': html})
 
 
-
 @login_required
 def comment_delete(request, slug, pk):
     store = get_object_or_404(Store, slug=slug)
@@ -165,6 +164,7 @@ class StoreDetailView(FormMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['form'] = CommentForm()
         context['comments'] = self.object.comment_set.all()
+        context['KAKAO_JAVASCRIPT'] = settings.KAKAO_JAVASCRIPT
         return context
 
 

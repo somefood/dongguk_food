@@ -9,5 +9,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 
-DISQUS_SHORTNAME = 'donnguk-food'
-DISQUS_MY_DOMAIN = 'http://somefood.pythonanywhere.com'
+KAKAO_JAVASCRIPT = os.environ['KAKAO_JAVASCRIPT']
